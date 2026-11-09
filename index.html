@@ -3,18 +3,69 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>App Support</title>
+<title>CalmAppsLab</title>
+<meta name="description" content="CalmAppsLab makes small, quiet apps for families: no ads, no tracking, and they work offline.">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
 <style>
-  body { margin: 0; background: #fbf8f0; color: #141a26; font: 17px/1.6 Georgia, serif; }
-  @media (prefers-color-scheme: dark) { body { background: #0c1224; color: #ece7da; } }
-  main { max-width: 680px; margin: 0 auto; padding: 48px 20px; }
+  :root {
+    color-scheme: light dark;
+    --bg: #f8f3e8; --card: #fffbf2; --ink: #1b1f3b; --muted: #615e72; --line: #e6dcc7; --gold: #c98a34;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #11152e; --card: #1a1f40; --ink: #efeadc; --muted: #a9a6c2; --line: #2c3263; --gold: #f2c27a; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 "Atkinson Hyperlegible", system-ui, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 56px 20px 64px; display: grid; gap: 40px; }
+  header { display: flex; align-items: center; gap: 18px; }
+  header img { width: 72px; height: 72px; flex: none; }
+  h1 { font: 600 38px/1.1 Fraunces, Georgia, serif; margin: 0; letter-spacing: -.01em; }
+  .tag { margin: 4px 0 0; color: var(--muted); }
+  .lead { margin: 0; font-size: 19px; max-width: 58ch; }
+  .apps { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+  .app { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 22px; display: grid; gap: 12px; align-content: start; }
+  .app .top { display: flex; align-items: center; gap: 14px; }
+  .app img { width: 64px; height: 64px; border-radius: 15px; flex: none; }
+  h2 { font: 600 23px/1.2 Fraunces, Georgia, serif; margin: 0; }
+  .for { margin: 2px 0 0; color: var(--muted); font-size: 15px; }
+  .app p { margin: 0; }
+  .links { display: flex; gap: 16px; flex-wrap: wrap; font-weight: 700; }
+  a { color: inherit; text-decoration-color: var(--gold); text-underline-offset: 3px; }
+  .promise { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 0; padding: 0; list-style: none; color: var(--muted); }
+  .promise li::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); margin-right: 8px; vertical-align: middle; }
+  footer { border-top: 1px solid var(--line); padding-top: 20px; color: var(--muted); font-size: 15px; }
 </style>
 </head>
 <body>
 <main>
-  <h1>App Support</h1>
-  <p>Support and privacy pages for our apps. Each app links to its own page.</p>
-  <p>Contact: calmappslab@gmail.com</p>
+  <header>
+    <img src="logo.svg" alt="">
+    <div>
+      <h1>CalmAppsLab</h1>
+      <p class="tag">Small, quiet apps for families</p>
+    </div>
+  </header>
+
+  <p class="lead">We make simple apps that do one thing well and then get out of the way. They have no ads and no tracking, and they work offline.</p>
+
+  <section class="apps" aria-label="Our app">
+    <article class="app">
+      <div class="top">
+        <img src="dn/icon.svg" alt="Dua Nest icon">
+        <div><h2>Dua Nest</h2><p class="for">For children 4–8 and their parents</p></div>
+      </div>
+      <p>A calm bedtime routine and everyday duas, with the words lighting up as they are recited.</p>
+      <div class="links"><a href="dn/">Support</a><a href="dn/privacy.html">Privacy</a></div>
+    </article>
+  </section>
+
+  <ul class="promise">
+    <li>No ads</li><li>No accounts</li><li>No data collected</li><li>Works offline</li>
+  </ul>
+
+  <footer>Contact: <a href="mailto:calmappslab@gmail.com">calmappslab@gmail.com</a></footer>
 </main>
 </body>
 </html>
