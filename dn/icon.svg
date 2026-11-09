@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2b3170"/><stop offset="1" stop-color="#161a38"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#f6d99a" stop-opacity=".55"/><stop offset="1" stop-color="#f6d99a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="nest" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e2a35a"/><stop offset="1" stop-color="#a8642c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#sky)"/>
+  <circle cx="512" cy="470" r="330" fill="url(#glow)"/>
+  <!-- crescent resting in the nest -->
+  <path d="M600 250a220 220 0 1 0 110 380a180 180 0 1 1-110-380z" fill="#f6d99a"/>
+  <!-- nest: a soft woven bowl -->
+  <path d="M232 590c40 170 160 250 280 250s240-80 280-250z" fill="url(#nest)"/>
+  <g fill="none" stroke="#7d4520" stroke-width="22" stroke-linecap="round" opacity=".55">
+    <path d="M262 640c120 40 380 40 500 0"/>
+    <path d="M300 712c100 32 324 32 424 0"/>
+    <path d="M372 780c60 18 220 18 280 0"/>
+  </g>
+  <path d="M220 590h584" stroke="#f0bd78" stroke-width="34" stroke-linecap="round"/>
+  <!-- stars -->
+  <g fill="#fff6dc">
+    <path d="M300 230l14 34 36 4-28 24 9 36-31-20-31 20 9-36-28-24 36-4z"/>
+    <circle cx="760" cy="260" r="14"/><circle cx="820" cy="400" r="9"/><circle cx="210" cy="400" r="10"/>
+  </g>
+</svg>
