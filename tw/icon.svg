@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 432 432"><rect width="432" height="432" rx="96" fill="#14232c"/>
+  <!-- a pass leaning slightly, a mountain on it and a green tick: "this pass is worth it" (adaptive icon foreground, safe zone in the middle) -->
+  <g transform="rotate(-8 216 216)">
+    <rect x="136" y="104" width="160" height="224" rx="18" fill="#ffffff"/>
+    <rect x="136" y="104" width="160" height="58" rx="18" fill="#2f9bd6"/><rect x="136" y="140" width="160" height="22" fill="#2f9bd6"/>
+    <path d="M150 300 L196 226 L222 262 L246 232 L282 300 Z" fill="#f08a1c"/>
+    <path d="M196 226 L208 244 L200 242 L192 248 L186 240 Z" fill="#ffffff"/>
+    <rect x="156" y="122" width="64" height="12" rx="6" fill="#ffffff" opacity=".9"/>
+  </g>
+  <circle cx="292" cy="296" r="42" fill="#2f8a5b"/><path d="M272 296 l14 14 l26 -28" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
