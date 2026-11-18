@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- a 3x3 puzzle grid with a pause sign in the middle tile: "a calm puzzle break" -->
+  <rect width="512" height="512" rx="96" fill="#2f6f6a"/>
+  <rect x="84" y="84" width="104" height="104" rx="22" fill="#f6f1e7"/>
+  <rect x="204" y="84" width="104" height="104" rx="22" fill="#efe4cf"/>
+  <rect x="324" y="84" width="104" height="104" rx="22" fill="#f6f1e7"/>
+  <rect x="84" y="204" width="104" height="104" rx="22" fill="#efe4cf"/>
+  <rect x="204" y="204" width="104" height="104" rx="22" fill="#f6f1e7"/>
+  <rect x="324" y="204" width="104" height="104" rx="22" fill="#efe4cf"/>
+  <rect x="84" y="324" width="104" height="104" rx="22" fill="#f6f1e7"/>
+  <rect x="204" y="324" width="104" height="104" rx="22" fill="#efe4cf"/>
+  <rect x="324" y="324" width="104" height="104" rx="22" fill="#e7b34a"/>
+  <rect x="234.2" y="230.0" width="16.6" height="52.0" rx="5.5" fill="#2f6f6a"/>
+  <rect x="261.2" y="230.0" width="16.6" height="52.0" rx="5.5" fill="#2f6f6a"/>
+</svg>
