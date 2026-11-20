@@ -6,6 +6,11 @@ on:
   schedule:
     - cron: '17 3 * * 1,4'
   workflow_dispatch:
+    inputs:
+      discover:
+        description: 'Only list which recitation resources Quran Foundation offers (no file is written)'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -23,9 +28,11 @@ jobs:
           QF_CLIENT_ID: ${{ secrets.QF_CLIENT_ID }}
           QF_CLIENT_SECRET: ${{ secrets.QF_CLIENT_SECRET }}
           QF_ENV: ${{ vars.QF_ENV }}
+          QF_DISCOVER: ${{ inputs.discover && '1' || '' }}
           QF_RECITATION: ${{ vars.QF_RECITATION }}
         run: node tools/qf_sync.js dn/qf-audio.json
       - name: Commit
+        if: ${{ !inputs.discover }}
         run: |
           git config user.name "calm-apps-lab"
           git config user.email "calm-apps-lab@users.noreply.github.com"
