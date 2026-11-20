@@ -100,7 +100,7 @@ async function discover(tok) {
   console.log('sample', JSON.stringify(rows.find(r => r.verse_key === '112:1') || rows[0] || null).slice(0, 600));
   const out = {
     source: 'Quran.com / Quran Foundation (Content Sync)',
-    reciter: { id: RECITATION, name: 'Mahmoud Khalil Al-Husary (Muallim)' },
+    reciter: { id: RECITATION, name: RECITATION === 12 ? 'Mahmoud Khalil Al-Husary (Muallim)' : `recitation ${RECITATION}` },
     synced: new Date().toISOString(),
     verses: {},
   };
