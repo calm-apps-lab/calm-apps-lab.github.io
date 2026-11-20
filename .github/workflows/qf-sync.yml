@@ -1,0 +1,34 @@
+# Twice-weekly Quran Foundation sync for Quran Nest: refreshes dn/qf-audio.json (audio URLs and word timings only,
+# no audio files). Needs repository secrets QF_CLIENT_ID and QF_CLIENT_SECRET from dev-console.quran.foundation.
+name: Quran Foundation sync (Quran Nest)
+
+on:
+  schedule:
+    - cron: '17 3 * * 1,4'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Fetch recitation data
+        env:
+          QF_CLIENT_ID: ${{ secrets.QF_CLIENT_ID }}
+          QF_CLIENT_SECRET: ${{ secrets.QF_CLIENT_SECRET }}
+          QF_ENV: ${{ vars.QF_ENV }}
+          QF_RECITATION: ${{ vars.QF_RECITATION }}
+        run: node tools/qf_sync.js dn/qf-audio.json
+      - name: Commit
+        run: |
+          git config user.name "calm-apps-lab"
+          git config user.email "calm-apps-lab@users.noreply.github.com"
+          git add dn/qf-audio.json
+          git commit -m "Weekly Quran Foundation sync" || echo "nothing changed"
+          git push
