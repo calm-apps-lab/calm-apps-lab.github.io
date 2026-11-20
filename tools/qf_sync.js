@@ -32,21 +32,37 @@ async function token() {
 }
 
 async function get(tok, path) {
-  const r = await fetch(path.startsWith('http') ? path : BASE + path, {
+  const r = await fetch(path.startsWith('http') ? path : BASE + (path.startsWith('/api/') ? '' : '/api/v4') + path, {
     headers: { 'x-auth-token': tok, 'x-client-id': process.env.QF_CLIENT_ID },
   });
   if (!r.ok) throw new Error(`${path}: ${r.status} ${(await r.text()).slice(0, 300)}`);
   return r.json();
 }
 
-// A full copy of the recitation through Content Sync.
+// A full copy of the recitation through Content Sync: a bootstrap sync lists the resource with its snapshot
+// address (RESOURCE_CREATE), and the snapshot holds every row. Rows sent inline as ROW_CREATE / ROW_UPDATE
+// mutations are kept as well, in case a resource comes without a snapshot.
 async function snapshot(tok) {
-  const rows = [];
-  let page = `/api/v4/resources/snapshots/recitations/${RECITATION}`;
+  const rows = [], snaps = new Set();
+  let page = `/api/v4/resources/sync?bootstrap=true&resources=recitations:${RECITATION}&per_page=500`;
+  let first = true;
   while (page) {
     const d = await get(tok, page);
-    rows.push(...(d.records || []));
-    page = d.has_more ? d.next_page_url : null;
+    const muts = (d.sync && d.sync.mutations) || d.mutations || [];
+    if (first) { console.log('sync page keys', Object.keys(d).join(','), '·', muts.length, 'mutations'); console.log('first mutation', JSON.stringify(muts[0] || null).slice(0, 500)); first = false; }
+    for (const m of muts) {
+      if (m.snapshot_url) snaps.add(m.snapshot_url);
+      const row = m.record || m.data || m.row;
+      if (row && /ROW_(CREATE|UPDATE)/.test(m.type || '')) rows.push(row);
+    }
+    page = d.has_more || (d.sync && d.sync.has_more) ? (d.next_page_url || d.sync.next_page_url) : null;
+  }
+  for (let url of snaps) {
+    while (url) {
+      const d = await get(tok, url);
+      rows.push(...(d.records || []));
+      url = d.has_more ? d.next_page_url : null;
+    }
   }
   return rows;
 }
