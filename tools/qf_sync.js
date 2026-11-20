@@ -25,7 +25,7 @@ async function token() {
       'Content-Type': 'application/x-www-form-urlencoded',
       Authorization: 'Basic ' + Buffer.from(`${process.env.QF_CLIENT_ID}:${process.env.QF_CLIENT_SECRET}`).toString('base64'),
     },
-    body: 'grant_type=client_credentials&scope=content.sync.read',
+    body: 'grant_type=client_credentials&scope=' + encodeURIComponent(process.env.QF_DISCOVER ? 'content.sync.read content.audio.read' : 'content.sync.read'),
   });
   if (!r.ok) throw new Error(`token: ${r.status} ${await r.text()}`);
   return (await r.json()).access_token;
@@ -72,8 +72,26 @@ async function snapshot(tok) {
 const audioUrl = u => !u ? null : u.startsWith('//') ? 'https:' + u : u.startsWith('http') ? u : 'https://verses.quran.com/' + u;
 const times = segs => (segs || []).map(s => s.slice(-2).map(Math.round));
 
+// Discovery (manual run with "discover" ticked): which recitation resources this environment offers.
+async function discover(tok) {
+  for (const f of ['recitations', 'chapter_recitations', '']) {
+    try {
+      const d = await get(tok, `/api/v4/resources/sync?bootstrap=true${f ? '&resources=' + f : ''}&per_page=100`);
+      const muts = (d.sync && d.sync.mutations) || [];
+      const res = {};
+      for (const m of muts) { const k = `${m.resource_group}:${m.resource_id}`; res[k] = (res[k] || '') + (m.type || '?')[9] ; }
+      console.log(`filter "${f}":`, muts.length, 'mutations;', Object.keys(res).slice(0, 80).join(' '), '| has_more', !!(d.sync && d.sync.has_more));
+      if (muts[0]) console.log('  first', JSON.stringify(muts[0]).slice(0, 400));
+    } catch (e) { console.log(`filter "${f}":`, e.message.slice(0, 300)); }
+  }
+  for (const path of ['/api/v4/resources/recitations', '/api/v4/recitations/12/by_ayah/112:1']) {
+    try { console.log(path, JSON.stringify(await get(tok, path)).slice(0, 600)); } catch (e) { console.log(path, e.message.slice(0, 300)); }
+  }
+}
+
 (async () => {
   const tok = await token();
+  if (process.env.QF_DISCOVER) return discover(tok);
   const rows = await snapshot(tok);
   // what came back, for the run log (content only, no credentials)
   const types = {};
