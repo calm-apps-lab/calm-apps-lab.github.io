@@ -44,7 +44,7 @@ async function get(tok, path) {
 // mutations are kept as well, in case a resource comes without a snapshot.
 async function snapshot(tok) {
   const rows = [], snaps = new Set();
-  let page = `/api/v4/resources/sync?bootstrap=true&resources=recitations:${RECITATION}&per_page=500`;
+  let page = `/api/v4/resources/sync?bootstrap=true&resources=recitations:${RECITATION}&per_page=100`;
   let first = true;
   while (page) {
     const d = await get(tok, page);
