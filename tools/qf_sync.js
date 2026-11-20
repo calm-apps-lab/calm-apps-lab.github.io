@@ -25,7 +25,7 @@ async function token() {
       'Content-Type': 'application/x-www-form-urlencoded',
       Authorization: 'Basic ' + Buffer.from(`${process.env.QF_CLIENT_ID}:${process.env.QF_CLIENT_SECRET}`).toString('base64'),
     },
-    body: 'grant_type=client_credentials&scope=content',
+    body: 'grant_type=client_credentials&scope=content.sync.read',
   });
   if (!r.ok) throw new Error(`token: ${r.status} ${await r.text()}`);
   return (await r.json()).access_token;
