@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CalmAppsLab</title>
-<meta name="description" content="CalmAppsLab makes small, quiet apps: no ads, no tracking, and they work offline.">
+<meta name="description" content="CalmAppsLab makes small, quiet apps: no ads, no tracking, and your data stays on your phone.">
 <link rel="icon" href="logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
@@ -31,7 +31,9 @@
   h2 { font: 600 23px/1.2 Fraunces, Georgia, serif; margin: 0; }
   .for { margin: 2px 0 0; color: var(--muted); font-size: 15px; }
   .app p { margin: 0; }
-  .links { display: flex; gap: 16px; flex-wrap: wrap; font-weight: 700; }
+  .links { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-weight: 700; }
+  .store { background: var(--ink); color: var(--bg); text-decoration: none; padding: 7px 16px; border-radius: 999px; }
+  h3 { font: 600 19px/1.2 Fraunces, Georgia, serif; margin: 8px 0 -22px; color: var(--muted); }
   a { color: inherit; text-decoration-color: var(--gold); text-underline-offset: 3px; }
   .promise { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 0; padding: 0; list-style: none; color: var(--muted); }
   .promise li::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); margin-right: 8px; vertical-align: middle; }
@@ -48,29 +50,65 @@
     </div>
   </header>
 
-  <p class="lead">We make simple apps that do one thing well and then get out of the way. They have no ads and no tracking, and they work offline.</p>
+  <p class="lead">We make simple apps that do one thing well and then get out of the way. They have no ads and no tracking, and what you enter stays on your phone.</p>
 
-  <section class="apps" aria-label="Our apps">
-    <article class="app">
-      <div class="top">
-        <img src="dn/icon.svg" alt="Dua Nest icon">
-        <div><h2>Dua Nest</h2><p class="for">For children 4–8 and their parents</p></div>
-      </div>
-      <p>A calm bedtime routine and everyday duas, with the words lighting up as they are recited.</p>
-      <div class="links"><a href="dn/">Support</a><a href="dn/privacy.html">Privacy</a></div>
-    </article>
+  <section class="apps" aria-label="Available now">
     <article class="app">
       <div class="top">
         <img src="tw/icon.svg" alt="Ticketwert icon">
         <div><h2>Ticketwert</h2><p class="for">For skiers and hikers in Tirol</p></div>
       </div>
       <p>Shows how much your Tirol annual or season pass has paid back, one tap per ski day, pool or museum visit.</p>
-      <div class="links"><a href="tw/">Support</a><a href="tw/privacy.html">Privacy</a></div>
+      <div class="links"><a class="store" href="https://apps.apple.com/app/id6835076160">App Store</a><a href="tw/">Support</a><a href="tw/privacy.html">Privacy</a></div>
+    </article>
+    <article class="app">
+      <div class="top">
+        <img src="sr/icon.webp" alt="Spades Reunion icon">
+        <div><h2>Spades Reunion</h2><p class="for">For card players</p></div>
+      </div>
+      <p>Classic four-player Spades at a 3D table: a career across eight rooms, a weekly Club Cup and a Deal of the Day. Plays fully offline.</p>
+      <div class="links"><a class="store" href="https://apps.apple.com/app/id6831807188">App Store</a><a href="sr/">Support</a><a href="sr/privacy.html">Privacy</a></div>
+    </article>
+  </section>
+
+  <h3>Coming soon</h3>
+  <section class="apps" aria-label="Coming soon">
+    <article class="app">
+      <div class="top">
+        <img src="dd/icon.svg" alt="Dua Day icon">
+        <div><h2>Dua Day</h2><p class="for">For children and their parents</p></div>
+      </div>
+      <p>Everyday duas as a little path through the day, from waking up to bedtime, with read-along words, stars and stickers.</p>
+      <div class="links"><a href="dd/">Support</a><a href="dd/privacy.html">Privacy</a></div>
+    </article>
+    <article class="app">
+      <div class="top">
+        <img src="dn/icon.svg" alt="Quran Nest icon">
+        <div><h2>Quran Nest</h2><p class="for">For children 4–8 and their parents</p></div>
+      </div>
+      <p>Short surahs and a calm bedtime routine, with each word lighting up as it is recited and time to repeat every verse.</p>
+      <div class="links"><a href="dn/">Support</a><a href="dn/privacy.html">Privacy</a></div>
+    </article>
+    <article class="app">
+      <div class="top">
+        <img src="pp/icon.svg" alt="Sudoku Pause icon">
+        <div><h2>Sudoku Pause</h2><p class="for">For a calm break</p></div>
+      </div>
+      <p>Three calm puzzles a day: a warm-up, a picture to uncover and a Sudoku. Big numbers, no time pressure, hints that explain.</p>
+      <div class="links"><a href="pp/">Support</a><a href="pp/privacy.html">Privacy</a></div>
+    </article>
+    <article class="app">
+      <div class="top">
+        <img src="gb/icon.svg" alt="Gatebeam icon">
+        <div><h2>Gatebeam</h2><p class="for">For travellers and the people who pick them up</p></div>
+      </div>
+      <p>Your flights and those of family and friends in one calm list: status, gate, baggage belt and where the aircraft is now.</p>
+      <div class="links"><a href="gb/">Support</a><a href="gb/privacy.html">Privacy</a></div>
     </article>
   </section>
 
   <ul class="promise">
-    <li>No ads</li><li>No accounts</li><li>No data collected</li><li>Works offline</li>
+    <li>No ads</li><li>No accounts</li><li>No data collected</li><li>Free</li>
   </ul>
 
   <footer>Contact: <a href="mailto:support@calmappslab.com">support@calmappslab.com</a></footer>
