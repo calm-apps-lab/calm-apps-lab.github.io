@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kilometerwert: Fahrtenbuch und Kilometergeld (in Entwicklung)</title>
 <meta name="description" content="Ein Fahrtenbuch, das sich fast von selbst führt: Fahrten erkennen, beruflich oder privat antippen, Kilometergeld ausrechnen, als PDF exportieren. Ohne Konto, alles auf dem Handy. In Entwicklung.">
+<link rel="alternate" hreflang="de" href="https://calmappslab.com/fb/">
+<link rel="alternate" hreflang="en" href="https://calmappslab.com/fb/?lang=en">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <style>
   :root { color-scheme: light dark; --ink: #17241f; --bg: #f1f4ef; --card: #ffffff; --muted: #56645d; --line: #d8e0d8; --accent: #c9862a; }
@@ -23,56 +25,94 @@
   .copy { font: inherit; font-size: 15px; font-weight: 700; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
   pre { margin: 0; white-space: pre-wrap; font: 15px/1.5 ui-monospace, Menlo, monospace; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
   .note { color: var(--muted); font-size: 15px; }
+  .langbar { display: flex; justify-content: flex-end; margin: -24px 0 14px; }
+  .lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--card); }
+  .lang button { font: 700 14px/1 system-ui, sans-serif; border: 0; background: none; color: var(--muted); padding: 7px 12px; border-radius: 999px; cursor: pointer; }
+  .lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
   .rate { font-variant-numeric: tabular-nums; }
 </style>
 <link rel="stylesheet" href="../app.css">
 </head>
 <body>
 <main>
+  <div class="langbar"><div class="lang" role="group" aria-label="Sprache / Language"><button type="button" data-l="de">DE</button><button type="button" data-l="en">EN</button></div></div>
   <header class="top">
     <img src="icon.svg" alt="">
-    <div><h1>Kilometerwert</h1><p>Fahrtenbuch und Kilometergeld · in Entwicklung</p></div>
+    <div><h1>Kilometerwert</h1><p data-i="tag">Fahrtenbuch und Kilometergeld · in Entwicklung</p></div>
   </header>
-  <div class="get"><span class="badge soon"><small>Geplant für</small><b>iPhone</b></span><span class="badge soon"><small>Geplant für</small><b>Android</b></span></div>
-  <a class="try" href="#interesse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg><span><b>Interesse? Sag uns Bescheid</b><small>Eine Mail genügt, wir melden uns einmal, wenn die App fertig ist</small></span></a>
+  <div class="get" data-i="get"><span class="badge soon"><small>Geplant für</small><b>iPhone</b></span><span class="badge soon"><small>Geplant für</small><b>Android</b></span></div>
+  <a class="try" href="#interesse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg><span data-i="try"><b>Interesse? Sag uns Bescheid</b><small>Eine Mail genügt, wir melden uns einmal, wenn die App fertig ist</small></span></a>
 
-  <p class="lead">Wer beruflich mit dem eigenen Auto fährt, bekommt in Österreich amtliches Kilometergeld: <b class="rate">0,50 € pro Kilometer</b>. Dafür braucht es ein Fahrtenbuch mit Datum, Start und Ziel, Kilometern und dem Zweck jeder Fahrt. Auf Papier oder in Excel geht schnell eine Fahrt verloren, und am Monatsende fehlt Geld.</p>
+  <p class="lead" data-i="lead">Wer beruflich mit dem eigenen Auto fährt, bekommt in Österreich amtliches Kilometergeld: <b class="rate">0,50 € pro Kilometer</b>. Dafür braucht es ein Fahrtenbuch mit Datum, Start und Ziel, Kilometern und dem Zweck jeder Fahrt. Auf Papier oder in Excel geht schnell eine Fahrt verloren, und am Monatsende fehlt Geld.</p>
 
-  <h2>Was die App können soll</h2>
-  <ul class="plan">
+  <h2 data-i="h2a">Was die App können soll</h2>
+  <ul class="plan" data-i="plan">
     <li><span>Fahrten von selbst erkennen. Du tippst nur noch an: beruflich oder privat.</span></li>
     <li><span>Häufige Ziele merken (Büro, Kunden, Baustelle), Zweck mit einem Tipp.</span></li>
     <li><span>Kilometergeld pro Monat und Jahr ausrechnen.</span></li>
     <li><span>Export als PDF und CSV für Arbeitgeber oder Steuerberatung.</span></li>
     <li><span>Kein Konto, keine Werbung. Deine Fahrten bleiben auf deinem Handy.</span></li>
   </ul>
-  <p class="note">Zuerst für Österreich. Für Deutschland prüfen wir noch, was das Finanzamt von einem elektronischen Fahrtenbuch verlangt.</p>
+  <p class="note" data-i="first">Zuerst für Österreich. Für Deutschland prüfen wir noch, was das Finanzamt von einem elektronischen Fahrtenbuch verlangt.</p>
 
-  <h2 id="interesse">Interesse?</h2>
+  <h2 id="interesse" data-i="h2b">Interesse?</h2>
   <div class="ask">
-    <p>Wir bauen die App nur, wenn genug Leute sie wirklich brauchen. Schreib uns eine kurze Mail, gern mit den Antworten unten. Das hilft uns sehr.</p>
-    <div class="mail"><code id="addr">support@calmappslab.com</code><button class="copy" type="button" data-copy="addr">Adresse kopieren</button>
-      <a class="copy" href="mailto:support@calmappslab.com?subject=Kilometerwert%3A%20Ich%20habe%20Interesse&amp;body=Land%20(AT%2FDE)%3A%0AIch%20fahre%20als%20(angestellt%2Fselbstst%C3%A4ndig)%3A%0AFahrten%20pro%20Monat%3A%0AWas%20w%C3%A4re%20dir%20die%20App%20pro%20Jahr%20wert%3A%0AWas%20nervt%20dich%20am%20Fahrtenbuch%20heute%3A%0A">Mail öffnen</a></div>
-    <pre id="qs">Betreff: Kilometerwert: Ich habe Interesse
+    <p data-i="ask">Wir bauen die App nur, wenn genug Leute sie wirklich brauchen. Schreib uns eine kurze Mail, gern mit den Antworten unten. Das hilft uns sehr.</p>
+    <div class="mail"><code id="addr">support@calmappslab.com</code><button class="copy" type="button" data-copy="addr" data-i="copyA">Adresse kopieren</button>
+      <a class="copy" id="mailto" data-i="open" href="mailto:support@calmappslab.com?subject=Kilometerwert%3A%20Ich%20habe%20Interesse&amp;body=Land%20(AT%2FDE)%3A%0AIch%20fahre%20als%20(angestellt%2Fselbstst%C3%A4ndig)%3A%0AFahrten%20pro%20Monat%3A%0AWas%20w%C3%A4re%20dir%20die%20App%20pro%20Jahr%20wert%3A%0AWas%20nervt%20dich%20am%20Fahrtenbuch%20heute%3A%0A">Mail öffnen</a></div>
+    <pre id="qs" data-i="qs">Betreff: Kilometerwert: Ich habe Interesse
 
 Land (AT/DE):
 Ich fahre als (angestellt/selbstständig):
 Fahrten pro Monat:
 Was wäre dir die App pro Jahr wert:
 Was nervt dich am Fahrtenbuch heute:</pre>
-    <button class="copy" type="button" data-copy="qs" style="justify-self:start">Fragen kopieren</button>
-    <p class="note">Deine Adresse nutzen wir nur für diese eine Nachricht, wenn die App fertig ist. Kein Newsletter, keine Weitergabe. Danach löschen wir sie.</p>
+    <button class="copy" type="button" data-copy="qs" style="justify-self:start" data-i="copyQ">Fragen kopieren</button>
+    <p class="note" data-i="priv">Deine Adresse nutzen wir nur für diese eine Nachricht, wenn die App fertig ist. Kein Newsletter, keine Weitergabe. Danach löschen wir sie.</p>
   </div>
 
-  <h2 lang="en">In English</h2>
-  <p lang="en">Kilometerwert is a planned mileage log for people who drive their own car for work in Austria: trips detected automatically, business or private with one tap, the official mileage allowance worked out, PDF and CSV export, no account. Interested? Write to support@calmappslab.com and we will tell you once when it is ready.</p>
 
-  <p class="note">Kilometerwert ist ein Arbeitstitel. Keine Steuerberatung: Angaben ohne Gewähr, Stand November 2026. CalmAppsLab · <a href="../">calmappslab.com</a></p>
+  <p class="note" data-i="foot">Kilometerwert ist ein Arbeitstitel. Keine Steuerberatung: Angaben ohne Gewähr, Stand November 2026. CalmAppsLab · <a href="../">calmappslab.com</a></p>
 </main>
 <script>
+// English for expats; the German text stays in the HTML for search engines and is read back from there
+const EN = {
+  tag: 'Mileage log and allowance · in the works',
+  get: '<span class="badge soon"><small>Planned for</small><b>iPhone</b></span><span class="badge soon"><small>Planned for</small><b>Android</b></span>',
+  try: '<b>Interested? Let us know</b><small>One email is enough, we will write once when the app is ready</small>',
+  lead: 'If you drive your own car for work in Austria, you can claim the official mileage allowance (Kilometergeld): <b class="rate">€0.50 per kilometre</b>. For that you need a mileage log with the date, start and destination, kilometres and the purpose of every trip. On paper or in a spreadsheet trips get lost, and money goes missing at the end of the month.',
+  h2a: 'What the app should do',
+  plan: '<li><span>Detect trips by itself. You only tap: business or private.</span></li><li><span>Remember frequent places (office, clients, sites) and set the purpose with one tap.</span></li><li><span>Work out the allowance per month and per year.</span></li><li><span>Export as PDF and CSV for your employer or tax adviser.</span></li><li><span>No account, no ads. Your trips stay on your phone. In English and German.</span></li>',
+  first: 'Austria first. For Germany we are still checking what the tax office expects from an electronic mileage log.',
+  h2b: 'Interested?',
+  ask: 'We will only build the app if enough people really need it. Send us a short email, ideally with the answers below. It helps a lot.',
+  copyA: 'Copy address', open: 'Open email', copyQ: 'Copy questions',
+  qs: 'Subject: Kilometerwert: I am interested\n\nCountry (AT/DE/other):\nI drive as (employee/self-employed):\nTrips per month:\nWhat would the app be worth to you per year:\nWhat bugs you about your mileage log today:',
+  priv: 'We use your address only for this one message when the app is ready. No newsletter, never shared. Then we delete it.',
+  foot: 'Kilometerwert is a working title. Not tax advice: no guarantee, as of November 2026. CalmAppsLab · <a href="../">calmappslab.com</a>',
+};
+const MAIL = {
+  de: 'mailto:support@calmappslab.com?subject=' + encodeURIComponent('Kilometerwert: Ich habe Interesse') + '&body=' + encodeURIComponent('Land (AT/DE):\nIch fahre als (angestellt/selbstständig):\nFahrten pro Monat:\nWas wäre dir die App pro Jahr wert:\nWas nervt dich am Fahrtenbuch heute:\n'),
+  en: 'mailto:support@calmappslab.com?subject=' + encodeURIComponent('Kilometerwert: I am interested') + '&body=' + encodeURIComponent('Country (AT/DE/other):\nI drive as (employee/self-employed):\nTrips per month:\nWhat would the app be worth to you per year:\nWhat bugs you about your mileage log today:\n'),
+};
+const DE = {};
+document.querySelectorAll('[data-i]').forEach(el => DE[el.dataset.i] = el.innerHTML);
+const TITLE = { de: document.title, en: 'Kilometerwert: mileage log and allowance for Austria (in the works)' };
+let lang = '';
+try { lang = new URLSearchParams(location.search).get('lang') || localStorage.getItem('fb-lang') || ''; } catch (e) {}
+if (lang !== 'de' && lang !== 'en') lang = /^de\b/i.test(navigator.language || '') ? 'de' : 'en';
+function setLang(l) {
+  lang = l; try { localStorage.setItem('fb-lang', l); } catch (e) {}
+  document.documentElement.lang = l; document.title = TITLE[l];
+  document.querySelectorAll('[data-i]').forEach(el => { el.innerHTML = (l === 'en' ? EN : DE)[el.dataset.i]; });
+  document.getElementById('mailto').href = MAIL[l];
+  document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.l === l)));
+}
+document.querySelectorAll('.lang button').forEach(b => b.onclick = () => setLang(b.dataset.l));
+setLang(lang);
 document.querySelectorAll('[data-copy]').forEach(b => b.onclick = async () => {
-  const el = document.getElementById(b.dataset.copy), old = b.textContent;
-  try { await navigator.clipboard.writeText(el.textContent); b.textContent = 'Kopiert'; }
+  const el = document.getElementById(b.dataset.copy), old = b.textContent, done = lang === 'en' ? 'Copied' : 'Kopiert';
+  try { await navigator.clipboard.writeText(el.textContent); b.textContent = done; }
   catch (e) { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
   setTimeout(() => { b.textContent = old; }, 2000);
 });
