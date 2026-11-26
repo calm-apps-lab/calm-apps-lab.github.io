@@ -27,7 +27,9 @@
   .group h2 { font: 600 24px/1.2 Fraunces, Georgia, serif; margin: 0; }
   .group .gsub { margin: -10px 0 0; color: var(--muted); font-size: 15px; }
   .apps { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
-  .app { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 20px; display: grid; gap: 12px; align-content: start; }
+  .app { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+  /* the description takes the free height, so buttons and links line up at the bottom of every card in a row */
+  .app > p:not(.more) { flex: 1 0 auto; }
   .app .top { display: flex; align-items: center; gap: 14px; color: inherit; text-decoration: none; }
   .app img { width: 60px; height: 60px; border-radius: 14px; flex: none; }
   h3 { font: 600 22px/1.2 Fraunces, Georgia, serif; margin: 0; }
