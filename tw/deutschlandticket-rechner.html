@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lohnt sich das Deutschlandticket 2027? Rechner für 66,80 €</title>
+<meta name="description" content="Kostenloser Rechner: Lohnt sich das Deutschlandticket bei 66,80 € ab Januar 2027 für dich? Fahrten eintragen, mit Einzeltickets und deiner Monatskarte vergleichen. Unabhängig, ohne Anmeldung, auch auf Englisch.">
+<link rel="alternate" hreflang="de" href="https://calmappslab.com/tw/deutschlandticket-rechner.html">
+<link rel="alternate" hreflang="en" href="https://calmappslab.com/tw/deutschlandticket-rechner.html?lang=en">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../fonts/barlow.css">
+<style>
+  :root {
+    color-scheme: light dark;
+    --ink: #14232c; --bg: #f3f1ef; --card: #ffffff; --muted: #56656d; --line: #d6e1df; --accent: #c2402f; --accent-ink: #9a2e20;
+    --good: #1f8a4c; --bad: #b4452c; --chip: #e2eceb;
+    --f-display: "Barlow Semi Condensed", "Arial Narrow", system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #e8eef1; --bg: #10191b; --card: #182427; --muted: #9fb0b3; --line: #29393b; --accent: #f07a66; --accent-ink: #ffa494;
+      --good: #5cc98a; --bad: #f08a72; --chip: #223236; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 28px max(16px, env(safe-area-inset-right, 0px)) 140px max(16px, env(safe-area-inset-left, 0px)); display: grid; gap: 22px; }
+  .bar0 { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 15px; }
+  .bar0 a { color: var(--muted); text-decoration: none; }
+  .lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--card); }
+  .lang button { font: 700 14px/1 system-ui, sans-serif; border: 0; background: none; color: var(--muted); padding: 7px 12px; border-radius: 999px; cursor: pointer; }
+  .lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  header { display: flex; align-items: center; gap: 16px; }
+  header img { width: 60px; height: 60px; border-radius: 14px; flex: none; }
+  h1 { font: 700 34px/1.08 var(--f-display); margin: 0; text-wrap: balance; }
+  h2 { font: 700 24px/1.15 var(--f-display); margin: 8px 0 0; text-wrap: balance; }
+  .sub { color: var(--muted); margin: 2px 0 0; }
+  p { margin: 0; }
+  a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; display: grid; gap: 14px; }
+  .lbl { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips button { font: inherit; font-size: 15px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+  .chips button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  select, input[type=text], input[type=number] { font: inherit; padding: 9px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--ink); min-width: 0; }
+  select { width: 100%; }
+  .row2 { display: grid; gap: 14px; }
+  .trips { display: grid; gap: 12px; }
+  .trip { display: grid; gap: 8px; padding: 12px; border: 1px solid var(--line); border-radius: 14px; }
+  .trip .l1 { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+  .trip .l2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .trip .l3 { display: flex; flex-wrap: wrap; gap: 8px; }
+  .trip label { display: grid; gap: 4px; font-size: 13px; color: var(--muted); min-width: 0; }
+  .trip .x { border: 0; background: none; color: var(--muted); font-size: 22px; cursor: pointer; padding: 0 6px; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+  .seg button { font: inherit; font-size: 14px; border: 0; background: var(--bg); color: var(--ink); padding: 6px 12px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  .add { font: inherit; font-size: 15px; font-weight: 700; justify-self: start; border: 1px dashed var(--accent); background: none; color: var(--accent-ink); border-radius: 999px; padding: 7px 16px; cursor: pointer; }
+  .check { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; }
+  .check input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--accent); }
+  .res { display: grid; gap: 10px; }
+  .opt { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: baseline; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--line); }
+  .opt.win { border: 2px solid var(--good); }
+  .opt b { font-size: 18px; }
+  .opt .sum { font: 700 24px/1 var(--f-display); white-space: nowrap; }
+  .opt small { grid-column: 1 / -1; color: var(--muted); font-size: 14px; }
+  .verdict { font: 700 22px/1.2 var(--f-display); text-wrap: balance; }
+  .hint { color: var(--muted); font-size: 15px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .btn { font: inherit; font-size: 15px; font-weight: 700; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 999px; padding: 8px 16px; cursor: pointer; text-decoration: none; }
+  .bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: var(--card); border-top: 1px solid var(--line); box-shadow: 0 -4px 18px rgb(0 0 0 / .08);
+    padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+  .bar .in { max-width: 720px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) auto; gap: 10px; align-items: center; }
+  .bar .k { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar .v { font: 700 21px/1.1 var(--f-display); white-space: nowrap; }
+  .bar .v.win { color: var(--good); }
+  .bar a { font-size: 14px; font-weight: 700; white-space: nowrap; }
+  .bar .zero { grid-column: 1 / -1; color: var(--muted); font-size: 15px; }
+  .app { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: center; }
+  .app img { width: 56px; height: 56px; border-radius: 13px; }
+  details { border-top: 1px solid var(--line); padding: 12px 0; }
+  details:last-child { border-bottom: 1px solid var(--line); }
+  summary { font-weight: 700; cursor: pointer; }
+  details p { margin-top: 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: 15px; }
+  th, td { text-align: left; padding: 5px 8px 5px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  td.r, th.r { text-align: right; white-space: nowrap; }
+  .tw { overflow-x: auto; }
+  [hidden] { display: none !important; }
+  .note { color: var(--muted); font-size: 14px; }
+  footer { color: var(--muted); font-size: 14px; display: grid; gap: 6px; }
+  @media (min-width: 620px) { .row2 { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 430px) { .bar .in { grid-template-columns: repeat(3, minmax(0, 1fr)); } .bar a { display: none; } .bar .v { font-size: 19px; } }
+</style>
+</head>
+<body>
+<main>
+  <div class="bar0"><a href="./" data-i="back">‹ Ticketwert</a><div class="lang" role="group" aria-label="Sprache / Language"><button type="button" data-l="de">DE</button><button type="button" data-l="en">EN</button></div></div>
+  <header>
+    <img src="icon.svg" alt="">
+    <div><h1 data-i="h1">Lohnt sich das Deutschlandticket noch?</h1><p class="sub" data-i="sub">Rechner für den neuen Preis von 66,80 € ab Januar 2027</p></div>
+  </header>
+
+  <p data-i="lead">Trag ein, wie oft du Bus und Bahn fährst und was eine Fahrt ohne Abo kostet. Der Rechner vergleicht pro Monat: Einzeltickets, deine bisherige Monatskarte und das Deutschlandticket. Ohne Anmeldung, nichts wird gespeichert außer in deinem Browser.</p>
+
+  <section class="card">
+    <div class="lbl" data-i="tariffL">Dein Deutschlandticket</div>
+    <div class="chips" id="tariff"></div>
+    <label class="check" id="ownWrap" hidden><span data-i="ownL">Dein Preis pro Monat (€), zum Beispiel dein Anteil am Jobticket:</span><input type="number" id="own" min="0" step="0.01" inputmode="decimal" style="width:7em"></label>
+    <label class="check"><span data-i="monthL">Bisherige Monatskarte oder Abo in deiner Stadt (€ pro Monat, optional):</span><input type="number" id="month" min="0" step="0.01" inputmode="decimal" style="width:7em"></label>
+  </section>
+
+  <section class="card">
+    <div class="lbl" data-i="tripsL">Deine Fahrten</div>
+    <p class="note" data-i="tripsN">Preis einer Fahrt ohne Abo, zum Beispiel ein Einzelticket deines Verkehrsverbunds. Hin und zurück sind zwei Fahrten. ICE, IC, EC und FlixTrain sind im Deutschlandticket nicht enthalten.</p>
+    <div class="trips" id="trips"></div>
+    <button class="add" id="add" type="button"></button>
+  </section>
+
+  <section class="card" id="result" aria-live="polite">
+    <div class="lbl" data-i="result">Ergebnis pro Monat</div>
+    <div class="res" id="res"></div>
+    <div class="actions"><button class="btn" id="share" type="button"></button><button class="btn" id="reset" type="button"></button></div>
+  </section>
+
+  <section class="card app">
+    <img src="icon.svg" alt="">
+    <p data-i="app"><b>Ticketwert</b> zählt deine Fahrten und Besuche und zeigt, wie viel sich deine Karte schon gelohnt hat. Das Deutschlandticket kommt bald dazu. <a href="./">Zur App</a></p>
+  </section>
+
+  <section>
+    <h2 data-i="faq">Häufige Fragen</h2>
+    <details><summary data-i="q1">Was kostet das Deutschlandticket 2027?</summary>
+      <p data-i="a1">Ab 1. Januar 2027 kostet es 66,80 € im Monat, 3,80 € mehr als 2026 (63 €). Das Jobticket kostet 63,46 €, das Semesterticket 40,08 €. Ab 2027 richtet sich der Preis nach einem Kostenindex. Quelle: Bayerisches Staatsministerium für Wohnen, Bau und Verkehr, 30.09.2026.</p></details>
+    <details><summary data-i="q2">Wo gilt das Deutschlandticket?</summary>
+      <p data-i="a2">Im ganzen Nahverkehr in Deutschland: Busse, Straßenbahnen, U- und S-Bahnen, Regionalzüge (RE, RB). Nicht in ICE, IC und EC und nicht bei FlixTrain. Eine Ausnahme ist die Strecke Rostock–Stralsund, dort sind auch IC und ICE erlaubt.</p></details>
+    <details><summary data-i="q3">Ab wie vielen Fahrten lohnt es sich?</summary>
+      <p data-i="a3">Das hängt vom Preis deiner Einzelfahrt ab: bei 3 € pro Fahrt ab 23 Fahrten im Monat, bei 4 € ab 17, bei 6 € ab 12. Wer eine Monatskarte hat, vergleicht am besten direkt mit ihrem Preis. Für Fahrten in andere Städte rechnet sich das Ticket oft schon nach wenigen Ausflügen.</p></details>
+    <details><summary data-i="q4">Kann ich jeden Monat kündigen?</summary>
+      <p data-i="a4">Ja, das Deutschlandticket ist ein Monatsabo. Gekündigt wird bis zum 10. eines Monats; ob das zum Ende desselben oder des nächsten Monats wirkt, regelt dein Verkehrsunternehmen. Prüf die Bedingungen dort.</p></details>
+  </section>
+
+  <footer>
+    <p data-i="f1">Ticketwert ist ein unabhängiges Projekt und gehört nicht zur Deutschen Bahn, zu einem Verkehrsverbund oder zum Deutschlandticket. Alle Angaben ohne Gewähr, Stand November 2026.</p>
+    <p>CalmAppsLab · <a href="klimaticket-rechner.html" data-i="f2">KlimaTicket-Rechner</a> · <a href="./" data-i="f3">Ticketwert</a> · <a href="../">calmappslab.com</a></p>
+  </footer>
+</main>
+
+<div class="bar"><div class="in" id="barIn"></div></div>
+<script>
+// euros per month; the price from 1 January 2027 and the one before it
+const TARIFFS = [{ id: 'normal', p: 66.8 }, { id: 'semester', p: 40.08 }, { id: 'own', p: 0 }];
+const OLD = 63;
+const T = {
+  de: { tariffs: ['Normal 66,80 €', 'Semesterticket 40,08 €', 'Eigener Preis'], add: '+ Fahrt hinzufügen', name: 'Strecke', price: 'Preis pro Fahrt (€)', count: 'Wie oft', per: ['pro Woche', 'pro Monat', 'pro Jahr'],
+    zones: ['in meiner Stadt', 'anderswo im Nahverkehr', 'ICE/IC/Fernbus'], del: 'Fahrt entfernen', ex: ['Zur Arbeit', 'In der Stadt', 'Ausflug am Wochenende'],
+    single: 'Einzeltickets', month: 'Deine Monatskarte', dt: 'Deutschlandticket', farAdd: x => ` + ${x} für Fernverkehr, den das Ticket nicht abdeckt`, outAdd: x => ` + ${x} für Fahrten außerhalb deiner Stadt`,
+    oldNote: x => `2026 waren es 63 €, also ${x} mehr im Monat.`, empty: 'Trag oben mindestens eine Fahrt mit Preis ein.',
+    vs: { single: 'Einzeltickets', month: 'deiner Monatskarte', dt: 'dem Deutschlandticket' },
+    win: n => `Für dich am günstigsten: ${n}.`,
+    savesM: (x, y, z) => `Das spart ${x} im Monat gegenüber ${y}, im Jahr etwa ${z}.`,
+    need: (n, p) => `Ab etwa ${n} Fahrten im Monat zu ${p} lohnt sich das Deutschlandticket.`, dtWin: 'Das Deutschlandticket lohnt sich für dich.',
+    share: 'Link zum Ergebnis kopieren', copied: 'Link kopiert', reset: 'Alles zurücksetzen', bar0: 'Trag deine Fahrten ein, das Ergebnis erscheint hier.', details: 'Details',
+    title: 'Lohnt sich das Deutschlandticket 2027? Rechner für 66,80 €', locale: 'de-DE' },
+  en: { tariffs: ['Regular €66.80', 'Semester ticket €40.08', 'My own price'], add: '+ Add a trip', name: 'Route', price: 'Price per trip (€)', count: 'How often', per: ['per week', 'per month', 'per year'],
+    zones: ['in my city', 'elsewhere, local transport', 'ICE/IC/long-distance'], del: 'Remove trip', ex: ['To work', 'Around town', 'Weekend trip'],
+    single: 'Single tickets', month: 'Your monthly pass', dt: 'Deutschlandticket', farAdd: x => ` + ${x} for long-distance trains the ticket does not cover`, outAdd: x => ` + ${x} for trips outside your city`,
+    oldNote: x => `In 2026 it was €63, so ${x} more per month.`, empty: 'Enter at least one trip with a price above.',
+    vs: { single: 'single tickets', month: 'your monthly pass', dt: 'the Deutschlandticket' },
+    win: n => `Cheapest for you: ${n}.`, savesM: (x, y, z) => `That saves ${x} a month compared with ${y}, about ${z} a year.`,
+    need: (n, p) => `The Deutschlandticket pays off from about ${n} trips a month at ${p}.`, dtWin: 'The Deutschlandticket pays off for you.',
+    share: 'Copy link to this result', copied: 'Link copied', reset: 'Reset all', bar0: 'Add your trips, the result appears here.', details: 'Details',
+    title: 'Does the Deutschlandticket pay off in 2027? Calculator for €66.80', locale: 'en-GB' },
+};
+const EN_STATIC = {
+  back: '‹ Ticketwert', h1: 'Does the Deutschlandticket still pay off?', sub: 'Calculator for the new price of €66.80 from January 2027',
+  lead: 'Enter how often you take the bus and train and what one trip costs without a subscription. The calculator compares per month: single tickets, your current monthly pass and the Deutschlandticket. No sign-up, nothing is stored except in your browser.',
+  tariffL: 'Your Deutschlandticket', ownL: 'Your price per month (€), for example your share of a job ticket:', monthL: 'Current monthly pass or subscription in your city (€ per month, optional):',
+  tripsL: 'Your trips', tripsN: 'Price of one trip without a subscription, for example a single ticket of your local network. A return trip counts as two trips. ICE, IC, EC and FlixTrain are not included in the Deutschlandticket.',
+  result: 'Result per month', app: '<b>Ticketwert</b> counts your trips and visits and shows how much your pass has already paid back. The Deutschlandticket is coming soon. <a href="./">See the app</a>',
+  faq: 'Questions', q1: 'How much is the Deutschlandticket in 2027?',
+  a1: 'From 1 January 2027 it costs €66.80 a month, €3.80 more than in 2026 (€63). The job ticket costs €63.46 and the semester ticket €40.08. From 2027 the price follows a cost index. Source: Bavarian State Ministry for Housing, Building and Transport, 30 September 2026.',
+  q2: 'Where is the Deutschlandticket valid?', a2: 'On all local public transport in Germany: buses, trams, underground and S-Bahn, regional trains (RE, RB). Not on ICE, IC and EC and not on FlixTrain. One exception is Rostock–Stralsund, where IC and ICE are allowed too.',
+  q3: 'From how many trips does it pay off?', a3: 'It depends on the price of your single trip: at €3 per trip from 23 trips a month, at €4 from 17, at €6 from 12. If you have a monthly pass, compare with its price directly. For trips to other cities the ticket often pays off after a few outings.',
+  q4: 'Can I cancel every month?', a4: 'Yes, the Deutschlandticket is a monthly subscription. You cancel by the 10th of a month; whether that takes effect at the end of the same or the next month depends on your transport company. Check its terms.',
+  f1: 'Ticketwert is an independent project and not affiliated with Deutsche Bahn, any transport network or the Deutschlandticket. No guarantee, as of November 2026.', f2: 'KlimaTicket calculator', f3: 'Ticketwert',
+};
+const DE_STATIC = {};
+document.querySelectorAll('[data-i]').forEach(el => DE_STATIC[el.dataset.i] = el.innerHTML);
+const $ = id => document.getElementById(id);
+const S = { l: '', t: 0, own: 0, month: 0, trips: null };
+try { Object.assign(S, JSON.parse(localStorage.getItem('dt-rechner') || '{}')); } catch (e) {}
+// a shared link: ?lang=en&tf=0&own=30&m=49&t=price*count*per*zone*name~... (zone 0 city, 1 elsewhere, 2 long distance)
+try {
+  const u = new URLSearchParams(location.search);
+  if (u.get('lang') === 'de' || u.get('lang') === 'en') S.l = u.get('lang');
+  if (['0', '1', '2'].includes(u.get('tf'))) S.t = +u.get('tf');
+  if (u.get('own')) S.own = Math.max(0, parseFloat(u.get('own')) || 0);
+  if (u.get('m')) S.month = Math.max(0, parseFloat(u.get('m')) || 0);
+  if (u.get('t')) S.trips = u.get('t').split('~').map(x => { const [p, c, per, far, ...n] = x.split('*'); return { n: decodeURIComponent(n.join('*') || ''), p: +p || 0, c: +c || 0, per: +per || 0, z: Math.min(2, Math.max(0, +far || 0)) }; }).slice(0, 12);
+} catch (e) {}
+if (!T[S.l]) S.l = /^de\b/i.test(navigator.language || '') ? 'de' : 'en';
+if (!Array.isArray(S.trips) || !S.trips.length) S.trips = [{ n: '', p: 0, c: 10, per: 0, z: 0 }];
+S.trips.forEach(x => { if (x.z == null) x.z = x.far ? 2 : 0; delete x.far; });
+const L = () => T[S.l];
+const num = (x, d) => x.toLocaleString(L().locale, { minimumFractionDigits: d, maximumFractionDigits: d });
+const eur = x => { const d = Math.abs(x - Math.round(x)) < 0.005 ? 0 : 2; return S.l === 'de' ? num(x, d) + ' €' : '€' + num(x, d); };
+const save = () => { try { localStorage.setItem('dt-rechner', JSON.stringify({ l: S.l, t: S.t, own: S.own, month: S.month, trips: S.trips })); } catch (e) {} };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const PERM = [52 / 12, 1, 1 / 12];
+const dtPrice = () => S.t === 2 ? S.own : TARIFFS[S.t].p;
+
+function statics() {
+  document.documentElement.lang = S.l; document.title = L().title;
+  document.querySelectorAll('[data-i]').forEach(el => { el.innerHTML = (S.l === 'en' ? EN_STATIC : DE_STATIC)[el.dataset.i]; });
+  document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.l === S.l)));
+  $('add').textContent = L().add; $('share').textContent = L().share; $('reset').textContent = L().reset;
+  $('tariff').innerHTML = L().tariffs.map((x, i) => `<button type="button" data-t="${i}" aria-pressed="${i === S.t}">${x}</button>`).join('');
+  $('tariff').querySelectorAll('button').forEach(b => b.onclick = () => { S.t = +b.dataset.t; save(); statics(); result(); });
+  $('ownWrap').hidden = S.t !== 2; $('own').value = S.own || ''; $('month').value = S.month || '';
+}
+
+function trips() {
+  const t = L();
+  $('trips').innerHTML = S.trips.map((x, i) => `<div class="trip" data-k="${i}">
+    <div class="l1"><label>${t.name}<input type="text" data-f="n" value="${esc(x.n)}" placeholder="${t.ex[i % 3]}"></label><button class="x" type="button" data-del="${i}" aria-label="${t.del}">×</button></div>
+    <div class="l2"><label>${t.price}<input type="number" inputmode="decimal" min="0" step="0.1" data-f="p" value="${x.p || ''}" placeholder="0"></label>
+      <label>${t.count}<span style="display:flex;gap:6px"><input type="number" inputmode="numeric" min="0" data-f="c" value="${x.c || ''}" style="width:5em"><select data-f="per">${t.per.map((p, j) => `<option value="${j}"${j === x.per ? ' selected' : ''}>${p}</option>`).join('')}</select></span></label></div>
+    <div class="l3"><span class="seg">${t.zones.map((zn, j) => `<button type="button" data-v="${j}" aria-pressed="${x.z === j}">${zn}</button>`).join('')}</span></div>
+  </div>`).join('');
+  $('trips').querySelectorAll('input, select').forEach(el => el.oninput = el.onchange = () => {
+    const x = S.trips[+el.closest('.trip').dataset.k], f = el.dataset.f;
+    x[f] = f === 'n' ? el.value.slice(0, 60) : f === 'per' ? +el.value : Math.max(0, parseFloat(el.value) || 0);
+    save(); result();
+  });
+  $('trips').querySelectorAll('.seg button').forEach(b => b.onclick = () => {
+    const x = S.trips[+b.closest('.trip').dataset.k]; x.z = +b.dataset.v;
+    b.parentNode.querySelectorAll('button').forEach(o => o.setAttribute('aria-pressed', String(o === b)));
+    save(); result();
+  });
+  $('trips').querySelectorAll('[data-del]').forEach(b => b.onclick = () => { S.trips.splice(+b.dataset.del, 1); if (!S.trips.length) S.trips.push({ n: '', p: 0, c: 0, per: 0, z: 0 }); save(); trips(); result(); });
+}
+
+function calc() {
+  // zones: 0 own city (monthly pass and D-Ticket), 1 elsewhere on local transport (D-Ticket only), 2 long distance (neither)
+  let city = 0, out = 0, far = 0, top = null;
+  for (const x of S.trips) {
+    const y = x.p * x.c * PERM[x.per]; if (!y) continue;
+    if (x.z === 2) far += y; else { if (x.z === 1) out += y; else city += y; if (!top || x.p > top.p) top = x; }
+  }
+  const dt = dtPrice();
+  return { single: city + out + far, out, far, dt, dtUsed: dt + far, month: S.month ? S.month + out + far : 0, top };
+}
+
+function result() {
+  const r = calc(), t = L();
+  if (r.single <= 0) { $('res').innerHTML = `<p class="hint">${t.empty}</p>`; $('barIn').innerHTML = `<div class="zero">${t.bar0}</div>`; return; }
+  const opts = [['single', t.single, r.single], ['dt', t.dt, r.dtUsed]];
+  if (S.month) opts.splice(1, 0, ['month', t.month, r.month]);
+  const sorted = [...opts].sort((a, b) => a[2] - b[2]), best = sorted[0], second = sorted[1];
+  const farTxt = r.far ? t.farAdd(eur(r.far)) : '';
+  const small = { single: S.l === 'de' ? `${eur(r.single * 12)} im Jahr` : `${eur(r.single * 12)} a year`, month: `${eur(S.month)}${r.out ? t.outAdd(eur(r.out)) : ''}${farTxt}`, dt: `${eur(r.dt)}${farTxt}${S.t === 0 ? ' · ' + t.oldNote(eur(r.dt - OLD)) : ''}` };
+  const d = second[2] - best[2];
+  let hint = t.savesM(eur(d), t.vs[second[0]], eur(d * 12));
+  // only single tickets win: more trips would change that; a cheaper monthly pass does not depend on trips
+  if (best[0] === 'single' && r.top && r.top.p > 0 && r.dt > 0) hint += ' ' + t.need(Math.ceil(r.dt / r.top.p), eur(r.top.p));
+  $('res').innerHTML = `<p class="verdict">${best[0] === 'dt' ? t.dtWin : t.win(best[1])}</p>` +
+    opts.map(([k, n, v]) => `<div class="opt${k === best[0] ? ' win' : ''}"><b>${n}</b><span class="sum">${eur(v)}</span><small>${small[k]}</small></div>`).join('') +
+    `<p class="hint">${hint}</p>`;
+  const cell = (k, n, v) => `<div><div class="k">${n}</div><div class="v${k === best[0] ? ' win' : ''}">${eur(v)}</div></div>`;
+  $('barIn').innerHTML = cell('single', t.single, r.single) + (S.month ? cell('month', t.month, r.month) : '<div></div>') + cell('dt', 'D-Ticket', r.dtUsed) + `<a href="#result">${t.details}</a>`;
+}
+
+function render() { statics(); trips(); result(); }
+document.querySelectorAll('.lang button').forEach(b => b.onclick = () => { S.l = b.dataset.l; save(); render(); });
+$('own').oninput = () => { S.own = Math.max(0, parseFloat($('own').value) || 0); save(); result(); };
+$('month').oninput = () => { S.month = Math.max(0, parseFloat($('month').value) || 0); save(); result(); };
+$('add').onclick = () => { if (S.trips.length < 12) { S.trips.push({ n: '', p: 0, c: 0, per: 1, z: 1 }); save(); trips(); result(); } };
+$('reset').onclick = () => { S.trips = [{ n: '', p: 0, c: 10, per: 0, z: 0 }]; S.month = 0; S.own = 0; S.t = 0; save(); render(); };
+$('share').onclick = async () => {
+  const tt = S.trips.filter(x => x.p && x.c).map(x => [x.p, x.c, x.per, x.z, encodeURIComponent(x.n)].join('*')).join('~');
+  const url = location.origin + location.pathname + `?lang=${S.l}&tf=${S.t}` + (S.t === 2 ? `&own=${S.own}` : '') + (S.month ? `&m=${S.month}` : '') + (tt ? '&t=' + tt : '');
+  try { await navigator.clipboard.writeText(url); $('share').textContent = L().copied; } catch (e) { $('share').textContent = url; }
+  setTimeout(() => { $('share').textContent = L().share; }, 2500);
+};
+render();
+</script>
+</body>
+</html>
