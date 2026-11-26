@@ -32,6 +32,16 @@
   .app p { margin: 0; }
   .links { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-weight: 700; }
   .store { background: var(--ink); color: var(--bg); text-decoration: none; padding: 7px 16px; border-radius: 999px; }
+  .app .top { display: flex; align-items: center; gap: 14px; color: inherit; text-decoration: none; }
+  .app .top:hover h2 { text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 3px; }
+  .acts { display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; }
+  .badge { display: inline-flex; flex-direction: column; justify-content: center; padding: 5px 16px; border-radius: 11px; background: var(--ink); color: var(--bg); text-decoration: none; line-height: 1.15; }
+  .badge small { font-size: 11px; opacity: .85; } .badge b { font-size: 17px; }
+  .trybtn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 11px; border: 2px solid var(--gold); color: var(--ink); text-decoration: none; font-weight: 700; }
+  .trybtn svg { width: 22px; height: 22px; color: var(--gold); }
+  .trybtn:hover { background: color-mix(in srgb, var(--gold) 14%, transparent); }
+  .more { font-size: 14px; color: var(--muted); }
+  .more a { color: var(--muted); }
   .off { justify-self: start; font-size: 14px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 1px 10px; }
   h3 { font: 600 19px/1.2 Fraunces, Georgia, serif; margin: 8px 0 -22px; color: var(--muted); }
   a { color: inherit; text-decoration-color: var(--gold); text-underline-offset: 3px; }
@@ -54,61 +64,68 @@
 
   <section class="apps" aria-label="Available now">
     <article class="app">
-      <div class="top">
-        <img src="tw/icon.svg" alt="Ticketwert icon">
+      <a class="top" href="tw/">
+        <img src="tw/icon.svg" alt="">
         <div><h2>Ticketwert</h2><p class="for">For skiers and hikers in Tirol</p></div>
-      </div>
+      </a>
       <span class="off">Works offline</span>
       <p>Shows how much your Tirol annual or season pass has paid back, one tap per ski day, pool or museum visit.</p>
-      <div class="links"><a class="store" href="https://apps.apple.com/app/id6835076160">App Store</a><a href="tw/rechner.html">Rechner</a><a href="tw/">Support</a><a href="tw/privacy.html">Privacy</a></div>
+      <div class="acts"><a class="badge" href="https://apps.apple.com/app/id6835076160"><small>Download on the</small><b>App Store</b></a><a class="trybtn" href="tw/rechner.html?lang=en"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8 7h8M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01M8.5 15h.01M12 15h.01M15.5 15v2.5M8.5 18h.01M12 18h.01"/></svg>Pass calculator</a></div>
+      <p class="more"><a href="tw/">About the app</a> · <a href="tw/privacy.html">Privacy</a></p>
     </article>
     <article class="app">
-      <div class="top">
-        <img src="sr/icon.webp" alt="Spades Reunion icon">
+      <a class="top" href="sr/">
+        <img src="sr/icon.webp" alt="">
         <div><h2>Spades Reunion</h2><p class="for">For card players</p></div>
-      </div>
+      </a>
       <span class="off">Works offline</span>
       <p>Classic four-player Spades at a 3D table: a career across eight rooms, a weekly Club Cup and a Deal of the Day.</p>
-      <div class="links"><a class="store" href="https://apps.apple.com/app/id6831807188">App Store</a><a href="sr/">Support</a><a href="sr/privacy.html">Privacy</a></div>
+      <div class="acts"><a class="badge" href="https://apps.apple.com/app/id6831807188"><small>Download on the</small><b>App Store</b></a></div>
+      <p class="more"><a href="sr/">About the app</a> · <a href="sr/privacy.html">Privacy</a></p>
     </article>
   </section>
 
-  <h3>Coming soon</h3>
+  <h3>Coming soon to the App Store and Google Play</h3>
   <section class="apps" aria-label="Coming soon">
     <article class="app">
-      <div class="top">
-        <img src="dd/icon.svg" alt="Dua Day icon">
-        <div><h2>Dua Day</h2><p class="for">For children and their parents</p></div>
-      </div>
-      <span class="off">Works offline</span>
-      <p>Everyday duas as a little path through the day, from waking up to bedtime, with read-along words, stars and stickers.</p>
-      <div class="links"><a href="dd/">Support</a><a href="dd/privacy.html">Privacy</a></div>
-    </article>
-    <article class="app">
-      <div class="top">
-        <img src="dn/icon.svg" alt="Quran Nest icon">
-        <div><h2>Quran Nest</h2><p class="for">For children 4–8 and their parents</p></div>
-      </div>
-      <span class="off">Offline once the recitation is saved</span>
-      <p>Short surahs and a calm bedtime routine, with each word lighting up as it is recited and time to repeat every verse.</p>
-      <div class="links"><a href="dn/">Support</a><a href="dn/privacy.html">Privacy</a></div>
-    </article>
-    <article class="app">
-      <div class="top">
-        <img src="pp/icon.svg" alt="Sudoku Pause icon">
+      <a class="top" href="pp/">
+        <img src="pp/icon.svg" alt="">
         <div><h2>Sudoku Pause</h2><p class="for">For a calm break</p></div>
-      </div>
+      </a>
       <span class="off">Works offline</span>
       <p>Three calm puzzles a day: a warm-up, a picture to uncover and a Sudoku. Big numbers, no time pressure, hints that explain.</p>
-      <div class="links"><a class="store" href="pp/play/">Play online</a><a href="pp/">Support</a><a href="pp/privacy.html">Privacy</a></div>
+      <div class="acts"><a class="trybtn" href="pp/play/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M9.2 3.5v17M14.8 3.5v17M3.5 9.2h17M3.5 14.8h17"/></svg>Play online</a></div>
+      <p class="more"><a href="pp/">About the app</a> · <a href="pp/privacy.html">Privacy</a></p>
     </article>
     <article class="app">
-      <div class="top">
-        <img src="gb/icon.svg" alt="Gatebeam icon">
+      <a class="top" href="dd/">
+        <img src="dd/icon.svg" alt="">
+        <div><h2>Dua Day</h2><p class="for">For children and their parents</p></div>
+      </a>
+      <span class="off">Works offline</span>
+      <p>Everyday duas as a little path through the day, from waking up to bedtime, with read-along words, stars and stickers.</p>
+      
+      <p class="more"><a href="dd/">About the app</a> · <a href="dd/privacy.html">Privacy</a></p>
+    </article>
+    <article class="app">
+      <a class="top" href="dn/">
+        <img src="dn/icon.svg" alt="">
+        <div><h2>Quran Nest</h2><p class="for">For children 4–8 and their parents</p></div>
+      </a>
+      <span class="off">Offline once the recitation is saved</span>
+      <p>Short surahs and a calm bedtime routine, with each word lighting up as it is recited and time to repeat every verse.</p>
+      
+      <p class="more"><a href="dn/">About the app</a> · <a href="dn/privacy.html">Privacy</a></p>
+    </article>
+    <article class="app">
+      <a class="top" href="gb/">
+        <img src="gb/icon.svg" alt="">
         <div><h2>Gatebeam</h2><p class="for">For travellers and the people who pick them up</p></div>
-      </div>
+      </a>
+      
       <p>Your flights and those of family and friends in one calm list: status, gate, baggage belt and where the aircraft is now.</p>
-      <div class="links"><a href="gb/">Support</a><a href="gb/privacy.html">Privacy</a></div>
+      
+      <p class="more"><a href="gb/">About the app</a> · <a href="gb/privacy.html">Privacy</a></p>
     </article>
   </section>
 
