@@ -23,17 +23,17 @@
   .shots { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 4px -20px 8px; padding: 4px 20px 14px; scrollbar-width: thin; }
   .shots img { flex: none; height: min(440px, 72vh); width: auto; aspect-ratio: 9 / 16; border-radius: 18px; scroll-snap-align: start; box-shadow: 0 2px 10px rgb(0 0 0 / .14); }
 </style>
+<link rel="stylesheet" href="../app.css">
 </head>
 <body>
 <main>
-  <header>
+  <header class="top">
     <img src="icon.svg" alt="">
-    <div><h1>Sudoku Pause</h1><p class="sub">Three calm puzzles a day · Support</p></div>
+    <div><h1>Sudoku Pause</h1><p>Three calm puzzles a day</p></div>
   </header>
-  <hr>
-  <p>Sudoku Pause gives you a small set of logic puzzles every day: a warm-up (Mini Sudoku, Signs, Bridges or Stars), a picture to uncover and a Sudoku. More Sudoku, Signs, Bridges, Stars, pictures and patterns are there whenever you want them. Big, readable numbers, adjustable text size, no time pressure, and hints that explain the next step. No account, your progress stays on your phone.</p>
-
-  <p><a class="play" href="play/">Play in your browser</a> <span class="note">&nbsp;Free, no sign-up. The app for Android and iPhone is on its way.</span></p>
+  <div class="get"><span class="badge soon"><small>Coming soon to the</small><b>App Store</b></span><span class="badge soon"><small>Coming soon to</small><b>Google Play</b></span></div>
+  <a class="try" href="play/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M9.2 3.5v17M14.8 3.5v17M3.5 9.2h17M3.5 14.8h17"/></svg><span><b>Play in your browser</b><small>Free, no sign-up, today's puzzles</small></span></a>
+  <p class="lead">Sudoku Pause gives you a small set of logic puzzles every day: a warm-up (Mini Sudoku, Signs, Bridges or Stars), a picture to uncover and a Sudoku. More Sudoku, Signs, Bridges, Stars, pictures and patterns are there whenever you want them. Big, readable numbers, adjustable text size, no time pressure, and hints that explain the next step. No account, your progress stays on your phone.</p>
 
   <div class="shots" role="region" aria-label="Screenshots" tabindex="0">
     <img src="shots/1.jpg" width="540" height="960" alt="Today: three calm puzzles">
@@ -41,6 +41,14 @@
     <img src="shots/3.jpg" width="540" height="960" alt="Picture logic: uncover a hidden image" loading="lazy">
     <img src="shots/4.jpg" width="540" height="960" alt="Signs puzzle with number signs" loading="lazy">
   </div>
+
+  <h2>What's new</h2>
+  <ul class="ver">
+    <li><b>0.1.2</b><span>The Back button asks before leaving a puzzle; your progress is saved.</span></li>
+    <li><b>0.1.1</b><span>On foldables the board leaves room for the number keys.</span></li>
+    <li><b>0.1.0</b><span>First test: Sudoku, Picture Logic, Signs, Bridges and Stars.</span></li>
+  </ul>
+  <p class="vnote">Test versions on Google Play.</p>
 
   <h2>Contact</h2>
   <p>Questions, a bug, or an idea for a picture: <a href="mailto:support@calmappslab.com">support@calmappslab.com</a>. We usually reply within two working days.</p>
