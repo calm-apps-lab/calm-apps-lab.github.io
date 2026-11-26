@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lohnt sich das Freizeitticket Tirol? Rechner 2026/27</title>
+<meta name="description" content="Kostenloser Rechner: Lohnt sich das Freizeitticket Tirol oder die Snow Card Tirol für dich? Besuche eintragen, mit den Kassenpreisen 2026/27 vergleichen. Unabhängig, ohne Anmeldung.">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&display=swap">
+<style>
+  :root {
+    color-scheme: light dark;
+    --ink: #14232c; --bg: #eef3f5; --card: #ffffff; --muted: #56656d; --line: #d9e2e6; --accent: #e8792b; --accent-ink: #b85510;
+    --blue: #2f8fd3; --good: #1f8a4c; --bad: #b4452c; --chip: #e2eaee;
+    --f-display: "Barlow Semi Condensed", "Arial Narrow", system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #e8eef1; --bg: #121c22; --card: #1a262d; --muted: #9fb0b8; --line: #2a3a43; --accent: #f08a3e; --accent-ink: #ffab6b;
+      --blue: #5aaee8; --good: #5cc98a; --bad: #f08a72; --chip: #24343c; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 40px max(16px, env(safe-area-inset-right, 0px)) 140px max(16px, env(safe-area-inset-left, 0px)); display: grid; gap: 22px; }
+  header { display: flex; align-items: center; gap: 16px; }
+  header img { width: 60px; height: 60px; border-radius: 14px; flex: none; }
+  h1 { font: 700 34px/1.08 var(--f-display); margin: 0; text-wrap: balance; }
+  h2 { font: 700 24px/1.15 var(--f-display); margin: 8px 0 0; text-wrap: balance; }
+  .sub { color: var(--muted); margin: 2px 0 0; }
+  p { margin: 0; }
+  a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+  .lead { max-width: 62ch; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; display: grid; gap: 14px; }
+  .lbl { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips button, .tabs button { font: inherit; font-size: 15px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+  .chips button[aria-pressed="true"], .tabs button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .row2 { display: grid; gap: 14px; }
+  .tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: thin; }
+  .tabs button { flex: none; }
+  .tabs .n { display: inline-block; min-width: 1.5em; margin-left: 6px; padding: 0 6px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; text-align: center; }
+  .search { width: 100%; font: inherit; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--ink); }
+  .list { display: grid; gap: 0; margin: 0 -18px; }
+  .item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 18px; border-top: 1px solid var(--line); }
+  .item.on { background: color-mix(in srgb, var(--accent) 9%, transparent); }
+  .item .nm { font-weight: 650; overflow-wrap: anywhere; }
+  .item .meta { font-size: 14px; color: var(--muted); }
+  .tag { display: inline-block; font-size: 12px; font-weight: 700; border-radius: 6px; padding: 0 6px; margin-right: 4px; vertical-align: 1px; }
+  .tag.ft { background: color-mix(in srgb, var(--accent) 18%, transparent); color: var(--accent-ink); }
+  .tag.sc { background: color-mix(in srgb, var(--blue) 18%, transparent); color: var(--blue); }
+  .step { display: flex; align-items: center; gap: 4px; }
+  .step button { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: 600 22px/1 system-ui, sans-serif; cursor: pointer; }
+  .step button:disabled { opacity: .35; cursor: default; }
+  .step input { width: 3.2ch; text-align: center; font: 700 18px/1 system-ui, sans-serif; border: 0; background: transparent; color: var(--ink); -moz-appearance: textfield; }
+  .step input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .more { font: inherit; font-size: 15px; justify-self: start; background: none; border: 0; color: var(--accent-ink); font-weight: 700; cursor: pointer; padding: 4px 0; }
+  .empty { color: var(--muted); font-size: 15px; padding: 10px 0; }
+
+  .res { display: grid; gap: 10px; }
+  .opt { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: baseline; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--line); }
+  .opt.win { border: 2px solid var(--good); }
+  .opt b { font-size: 18px; }
+  .opt .sum { font: 700 24px/1 var(--f-display); white-space: nowrap; }
+  .opt small { grid-column: 1 / -1; color: var(--muted); font-size: 14px; }
+  .opt small.good { color: var(--good); font-weight: 650; }
+  .opt small.bad { color: var(--bad); font-weight: 650; }
+  .verdict { font: 700 22px/1.2 var(--f-display); text-wrap: balance; }
+  .hint { color: var(--muted); font-size: 15px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .btn { font: inherit; font-size: 15px; font-weight: 700; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 999px; padding: 8px 16px; cursor: pointer; text-decoration: none; }
+  .btn.dark { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+  .bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: var(--card); border-top: 1px solid var(--line); box-shadow: 0 -4px 18px rgb(0 0 0 / .08);
+    padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+  .bar .in { max-width: 720px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) auto; gap: 10px; align-items: center; }
+  .bar .k { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar .v { font: 700 21px/1.1 var(--f-display); white-space: nowrap; }
+  .bar .v.win { color: var(--good); }
+  .bar a { font-size: 14px; font-weight: 700; white-space: nowrap; }
+  .bar .zero { grid-column: 1 / -1; color: var(--muted); font-size: 15px; }
+
+  .app { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: center; }
+  .app img { width: 56px; height: 56px; border-radius: 13px; }
+  details { border-top: 1px solid var(--line); padding: 12px 0; }
+  details:last-child { border-bottom: 1px solid var(--line); }
+  summary { font-weight: 700; cursor: pointer; }
+  details p { margin-top: 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: 15px; }
+  th, td { text-align: left; padding: 5px 8px 5px 0; border-bottom: 1px solid var(--line); }
+  td.r, th.r { text-align: right; }
+  .tw { overflow-x: auto; }
+  .note { color: var(--muted); font-size: 14px; }
+  footer { color: var(--muted); font-size: 14px; display: grid; gap: 6px; }
+  @media (min-width: 620px) { .row2 { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 430px) { .bar .in { grid-template-columns: repeat(3, minmax(0, 1fr)); } .bar a { display: none; } .bar .v { font-size: 19px; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="icon.svg" alt="">
+    <div><h1>Lohnt sich das Freizeitticket?</h1><p class="sub">Rechner für Freizeitticket Tirol und Snow Card Tirol · 2026/27</p></div>
+  </header>
+
+  <p class="lead">Trag ein, wie oft du in dieser Saison wohin willst. Der Rechner vergleicht die Kassenpreise mit dem Preis der Karte und zeigt, was sich für dich rechnet. Ohne Anmeldung, nichts wird gespeichert außer in deinem Browser.</p>
+
+  <section class="card" aria-label="Wer und welcher Preis">
+    <div class="row2">
+      <div><div class="lbl">Für wen?</div><div class="chips" id="who"></div></div>
+      <div><div class="lbl">Kartenpreis</div><div class="chips" id="tariff"></div></div>
+    </div>
+  </section>
+
+  <section class="card" aria-label="Besuche eintragen">
+    <div class="lbl">Wie oft gehst du wohin?</div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <input class="search" id="q" type="search" placeholder="Ort suchen, z. B. Nordkette, Tivoli, Sölden" autocomplete="off">
+    <div class="list" id="list"></div>
+    <button class="more" id="more" type="button" hidden></button>
+    <p class="note"><span class="tag ft">FT</span> im Freizeitticket enthalten · <span class="tag sc">SC</span> mit der Snow Card · ≈ Preis geschätzt · ° Preis der Vorsaison</p>
+  </section>
+
+  <section class="card" id="result" aria-live="polite">
+    <div class="lbl">Ergebnis</div>
+    <div class="res" id="res"></div>
+    <div class="actions"><button class="btn" id="share" type="button">Link zum Ergebnis kopieren</button><button class="btn" id="reset" type="button">Alles auf 0</button></div>
+  </section>
+
+  <section class="card app">
+    <img src="icon.svg" alt="">
+    <div style="display:grid;gap:10px">
+      <p><b>Die Karte schon gekauft?</b> Die App Ticketwert zählt jeden Besuch mit einem Tipp und zeigt, wie viel sich deine Karte schon gelohnt hat. Kostenlos, ohne Werbung und ohne Konto.</p>
+      <div class="actions"><a class="btn dark" href="https://apps.apple.com/app/id6835076160">Im App Store laden</a><span class="note">Android: bald bei Google Play</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Häufige Fragen</h2>
+    <details><summary>Was kostet das Freizeitticket Tirol 2026/27?</summary>
+      <div class="tw"><table>
+        <tr><th>Tarif</th><th class="r">Vorverkauf (bis 31.10.)</th><th class="r">ab 1.11.2026</th></tr>
+        <tr><td>Erwachsene</td><td class="r">789 €</td><td class="r">908 €</td></tr>
+        <tr><td>U23 (Jg. 2003–2007)</td><td class="r">710 €</td><td class="r">817 €</td></tr>
+        <tr><td>Jugend (Jg. 2008–2010)</td><td class="r">631 €</td><td class="r">726 €</td></tr>
+        <tr><td>Kinder (Jg. 2011 und jünger)</td><td class="r">410 €</td><td class="r">472 €</td></tr>
+        <tr><td>Senioren (Jg. 1961 und älter)</td><td class="r">750 €</td><td class="r">862 €</td></tr>
+      </table></div>
+      <p>Gültig vom 1.10.2026 bis 30.9.2027, dazu 3 € Pfand für die Keycard. Für Familien gibt es günstigere Kinder-, Jugend- und U23-Tarife. Quelle: freizeitticket.at.</p></details>
+    <details><summary>Ab wie vielen Skitagen lohnt sich das Freizeitticket?</summary>
+      <p>Für Erwachsene zum Preis ab 1.11. (908 €): etwa 16 Tage an der Nordkette (Tageskarte 59 €) oder 13 Tage am Stubaier Gletscher (75,50 €). Wer im Sommer auch Bergbahnen, Bäder und Museen nutzt, braucht weniger Skitage. Der Rechner oben zählt das genau.</p></details>
+    <details><summary>Freizeitticket oder Snow Card Tirol?</summary>
+      <p>Das Freizeitticket gilt das ganze Jahr in den Skigebieten rund um Innsbruck, auf Bergbahnen im Sommer, in Bädern, Eishallen und Museen. Die Snow Card Tirol (Erwachsene 1.227 € ab 1.11., Vorverkauf 1.080 €) gilt nur zum Skifahren, dafür in über 90 Skigebieten in ganz Tirol, auch in Sölden, Kitzbühel, im Zillertal und in Serfaus-Fiss-Ladis.</p></details>
+    <details><summary>Wie genau ist der Rechner?</summary>
+      <p>Die meisten Preise stammen aus den offiziellen Preislisten 2026/27 oder aus Übersichten mit den Preisen der Saison. Wo es noch keine neuen Preise gibt, nimmt der Rechner die Vorsaison (°) oder eine Schätzung (≈). Verglichen wird immer mit der Tageskarte oder dem normalen Eintritt. Halbtageskarten, Familienrabatte und Aktionen sind nicht eingerechnet.</p></details>
+    <details><summary>Gibt es Grenzen bei den Besuchen?</summary>
+      <p>Bei einigen Partnern gilt das Freizeitticket nur 3× im Jahr, zum Beispiel in Ischgl, Ski Arlberg, bei Swarovski Kristallwelten und in den Tiroler Landesmuseen. Ab dem 4. Besuch rechnet der Rechner den vollen Preis. Am Pitztaler und Kaunertaler Gletscher zahlst du mit dem Freizeitticket den Bonuspreis.</p></details>
+  </section>
+
+  <footer>
+    <p>Ticketwert ist ein unabhängiges Projekt und gehört nicht zum Freizeitticket Tirol, zur Snow Card Tirol oder zu einer Bergbahn. Alle Angaben ohne Gewähr, Preise Stand November 2026.</p>
+    <p>CalmAppsLab · <a href="./">Ticketwert Support</a> · <a href="privacy.html">Datenschutz</a> · <a href="../">calmappslab.com</a></p>
+  </footer>
+</main>
+
+<div class="bar" id="bar"><div class="in" id="barIn"></div></div>
+
+<script>
+const PL=[["nordkette","Nordkette","Innsbruck","ski","day",[59,54.3,47.2,35.4,54.3],"ok",{"f":1,"s":1}],["nordkette","Nordkette","Innsbruck","berg","upDownTo",[59,54.3,47.2,35.4,54.3],"ok",{"f":1}],["patscherkofel","Patscherkofel","Igls","ski","day",[55,47,44.5,30.5,49.5],"ok",{"f":1,"s":1}],["patscherkofel","Patscherkofel","Igls","night","evening",[22,18.5,18,12,20],"ok",{"f":1}],["patscherkofel","Patscherkofel","Igls","berg","upDown",[35,30,29.7,19.5,31.5],"ok",{"f":1}],["axamer-lizum","Axamer Lizum","Axams","ski","day",[67,60.5,53.5,40,60.5],"ok",{"f":1,"s":1}],["muttereralm","Muttereralm","Mutters","ski","day",[57,46,46,38,46],"ok",{"f":1,"s":1}],["muttereralm","Muttereralm","Mutters","berg","upDown",[29,24,24,20,24],"ok",{"f":1}],["glungezer","Glungezer","Tulfes","ski","day",[50,45.5,37.5,29.5,45.5],"old",{"f":1,"s":1}],["stubaier-gletscher","Stubaier Gletscher","Neustift","ski","day",[75.5,60.4,49.1,37.8,60.4],"ok",{"f":1,"s":1}],["schlick-2000","Schlick 2000","Fulpmes","ski","day",[61.5,52.3,43.1,31.4,52.3],"ok",{"f":1,"s":1}],["serlesbahn-mieders","Serles","Mieders","ski","day",[49.5,42,40.5,27,42],"ok",{"f":1,"s":1}],["serlesbahn-mieders","Serles","Mieders","rodel","rodelUp",[17,14.5,14,13,14.5],"ok",{"f":1}],["elferbahnen","Elfer","Neustift","ski","day",[51,43.5,38.5,28,46],"ok",{"f":1,"s":1}],["elferbahnen","Elfer","Neustift","rodel","rodelUp",[16,15,13,9,15],"ok",{"f":1}],["kuehtai","Kühtai","Kühtai","ski","day",[63,53.5,50.5,34.5,56.5],"ok",{"f":1,"s":1}],["rangger-koepfl","Rangger Köpfl","Oberperfuss","ski","day",[49,45,26,26,45],"ok",{"f":1,"s":1}],["hallenbad-amraser-strasse","Hallenbad Amraser Straße","Innsbruck","swim","entryFor",[9.5,7.6,5.7,3.8,7.6],"ok",{"f":1}],["hallenbad-olympisches-dorf","Hallenbad O-Dorf","Innsbruck","swim","entryFor",[9.5,7.6,5.7,3.8,7.6],"ok",{"f":1}],["freibad-tivoli","Tivoli Freibad","Innsbruck","swim","dayEntry",[6.6,5.3,4,2.7,5.3],"ok",{"f":1}],["swarovski-kristallwelten","Swarovski Kristallwelten","Wattens","kultur","entry",[27,23,20.5,15,24.5],"ok",{"f":1,"l":3}],["hofkirche","Hofkirche","Innsbruck","kultur","entry",[9,7,0,0,7],"ok",{"f":1,"l":3}],["volkskunstmuseum","Volkskunstmuseum","Innsbruck","kultur","entry",[9,7,0,0,7],"ok",{"f":1,"l":3}],["zeughaus","Zeughaus","Innsbruck","kultur","entry",[9,7,0,0,7],"ok",{"f":1,"l":3}],["tirol-panorama","Tirol Panorama","Innsbruck","kultur","entry",[9,7,0,0,7],"ok",{"f":1,"l":3}],["berger-alm","Bergeralm","Steinach","ski","day",[60.2,51,45,36.1,54],"agg",{"f":1,"s":1}],["rosshuette-seefeld","Rosshütte","Seefeld","ski","day",[64.5,55,48.5,45.5,58],"agg",{"f":1,"s":1}],["kellerjoch","Kellerjoch","Schwaz","ski","day",[47,40,35.5,27,42.5],"agg",{"f":1,"s":1}],["katzenkopf-leutasch","Katzenkopf","Leutasch","ski","day",[44,37.5,33,24,39.5],"ski",{"f":1,"s":1}],["hochkoessen","Hochkössen","Kössen","ski","day",[46.5,39.5,35,25.5,42],"ski",{"f":1,"s":1}],["silvretta-galtuer","Galtür Silvapark","Galtür","ski","day",[63,53.5,47.5,34.5,56.5],"ski",{"f":1,"s":1}],["kappl","Kappl","Kappl","ski","day",[73,62,55,47,65.5],"agg",{"f":1,"s":1}],["skiregion-gurgl","Gurgl","Obergurgl","ski","day",[69.5,59,52,38.5,62.5],"agg",{"f":1,"s":1}],["ischgl","Ischgl","Ischgl","ski","day",[83,70.5,62.5,51,74.5],"agg",{"f":1,"l":3,"s":1}],["ski-arlberg","Ski Arlberg","St. Anton","ski","day",[85,72.5,64,51,76.5],"agg",{"f":1,"l":3}],["birkenlift","Birkenlift","Seefeld","ski","day",[40,34,30,22,36],"agg",{"f":1}],["geigenbuehel","Geigenbühel","Seefeld","ski","day",[40,34,30,22,36],"agg",{"f":1}],["kinderland-rinn","Archenstadel","Rinn","ski","day",[24,20.5,18,13,21.5],"ski",{"f":1}],["skilift-trins","Skilift Trins","Trins","ski","day",[20.5,17.5,15.5,11.5,18.5],"ski",{"f":1}],["sonnenbahn-milders","Sonnenbahn Milders","Neustift","ski","day",[20,17,15,11,18],"est",{"f":1}],["sonnenberglift","Sonnenberglift","Gries i. S.","ski","day",[19.5,16.5,14.5,10.5,17.5],"ski",{"f":1}],["burglift-stans","Burglift","Stans","ski","day",[30,25.5,22.5,16.5,27],"ski",{"f":1}],["skilift-kolsassberg","Kolsassberg","Kolsassberg","ski","day",[28,24,21,15.5,25],"ski",{"f":1,"s":1}],["voegelsberg","Vögelsberg","Wattens","ski","day",[19.5,16.5,14.5,10.5,17.5],"ski",{"f":1,"s":1}],["huettegglift","Hüttegglift","Weerberg","ski","day",[25,21.5,19,14,22.5],"ski",{"f":1,"s":1}],["wildstaettlift-wattenberg","Wildstättlift","Wattenberg","ski","day",[10,8.5,7.5,5.5,9],"ski",{"f":1}],["axamer-lizum","Axamer Lizum","Axams","berg","upDown",[29,26,23,13.5,26],"ok",{"f":1}],["glungezer","Glungezer","Tulfes","berg","upDown",[20.5,18,16,12,18],"ok",{"f":1}],["schlick-2000","Schlick 2000","Fulpmes","berg","upDown",[35.5,30.2,30.2,18.8,30.2],"ok",{"f":1}],["elferbahnen","Elfer","Neustift","berg","upDown",[24.5,21,18.5,12.5,22],"ok",{"f":1}],["serlesbahn-mieders","Serles","Mieders","berg","upDown",[26,22,21,17,23.5],"ok",{"f":1}],["kuehtai","Kühtai (Dreiseenbahn)","Kühtai","berg","upDown",[25,21.5,22.5,12.5,22.5],"ok",{"f":1}],["stubaier-gletscher","Stubaier Gletscher","Neustift","berg","upDown",[50,42.5,37.5,27.5,45],"est",{"f":1}],["rangger-koepfl","Rangger Köpfl","Oberperfuss","berg","upDown",[25,21.5,19,14,22.5],"est",{"f":1}],["rosshuette-seefeld","Rosshütte","Seefeld","berg","upDown",[32,27,24,17.5,29],"est",{"f":1}],["berger-alm","Bergeralm","Steinach","berg","upDown",[22,18.5,16.5,12,20],"est",{"f":1}],["kellerjoch","Kellerjoch","Schwaz","berg","upDown",[25,21.5,19,14,22.5],"est",{"f":1}],["katzenkopf-leutasch","Katzenkopf","Leutasch","berg","upDown",[18,15.5,13.5,10,16],"est",{"f":1}],["hochkoessen","Hochkössen","Kössen","berg","upDown",[24,20.5,18,13,21.5],"est",{"f":1}],["silvretta-galtuer","Galtür Silvapark","Galtür","berg","upDown",[25,21.5,19,14,22.5],"est",{"f":1}],["kappl","Kappl","Kappl","berg","upDown",[25,21.5,19,14,22.5],"est",{"f":1}],["skiregion-gurgl","Gurgl","Obergurgl","berg","upDown",[35,30,26.5,19.5,31.5],"est",{"f":1}],["ischgl","Ischgl","Ischgl","berg","upDown",[40,34,30,22,36],"est",{"f":1,"l":3}],["ski-arlberg","Ski Arlberg","St. Anton","berg","upDown",[40,34,30,22,36],"est",{"f":1,"l":3}],["kappl","Kappl","Kappl","night","night",[33,28,25,18,29.5],"est",{"f":1}],["kuehtai","Kühtai","Kühtai","night","night",[28.5,24,21.5,15.5,25.5],"est",{"f":1}],["rosshuette-seefeld","Rosshütte","Seefeld","night","night",[28,24,21,15.5,25],"est",{"f":1}],["silvretta-galtuer","Galtür Silvapark","Galtür","night","night",[28.5,24,21.5,15.5,25.5],"est",{"f":1}],["berger-alm","Bergeralm","Steinach","night","night",[27,23,20.5,15,24.5],"est",{"f":1}],["elferbahnen","Elfer","Neustift","night","night",[23,19.5,17.5,12.5,20.5],"est",{"f":1}],["skiregion-gurgl","Gurgl","Obergurgl","night","night",[34.5,29.5,26,19,31],"est",{"f":1}],["nordkette","Nordkette","Innsbruck","night","night",[26.5,22.5,20,14.5,24],"est",{"f":1}],["katzenkopf-leutasch","Katzenkopf","Leutasch","night","night",[20,17,15,11,18],"est",{"f":1}],["rangger-koepfl","Rangger Köpfl","Oberperfuss","night","night",[22,18.5,16.5,12,20],"est",{"f":1}],["schlick-2000","Schlick 2000","Fulpmes","night","night",[27.5,23.5,20.5,15,25],"est",{"f":1}],["serlesbahn-mieders","Serles","Mieders","night","night",[22.5,19,17,12.5,20.5],"est",{"f":1}],["kinderland-rinn","Archenstadel","Rinn","night","night",[11,9.5,8.5,6,10],"est",{"f":1}],["skilift-trins","Skilift Trins","Trins","night","night",[9,7.5,7,5,8],"est",{"f":1}],["sonnenbahn-milders","Sonnenbahn Milders","Neustift","night","night",[9,7.5,7,5,8],"est",{"f":1}],["sonnenberglift","Sonnenberglift","Gries i. S.","night","night",[9,7.5,7,5,8],"est",{"f":1}],["voegelsberg","Vögelsberg","Wattens","night","night",[9,7.5,7,5,8],"est",{"f":1}],["kappl","Kappl","Kappl","rodel","rodelUp",[15,13,11.5,8.5,13.5],"est",{"f":1}],["kuehtai","Kühtai","Kühtai","rodel","rodelUp",[14,12,10.5,7.5,12.5],"est",{"f":1}],["berger-alm","Bergeralm","Steinach","rodel","rodelUp",[14,12,10.5,7.5,12.5],"est",{"f":1}],["glungezer","Glungezer","Tulfes","rodel","rodelUp",[14.5,12.5,11,8,13],"old",{"f":1}],["skiregion-gurgl","Gurgl","Obergurgl","rodel","rodelUp",[16,13.5,12,9,14.5],"est",{"f":1}],["katzenkopf-leutasch","Katzenkopf","Leutasch","rodel","rodelUp",[12,10,9,6.5,11],"est",{"f":1}],["kellerjoch","Kellerjoch","Schwaz","rodel","rodelUp",[15,13,11.5,8.5,13.5],"est",{"f":1}],["rangger-koepfl","Rangger Köpfl","Oberperfuss","rodel","rodelUp",[15,13,11.5,8.5,13.5],"est",{"f":1}],["schlick-2000","Schlick 2000","Fulpmes","rodel","rodelUp",[17,14.5,13,9.5,15.5],"est",{"f":1}],["hallenbad-hoettinger-au","Hallenbad Höttinger Au","Innsbruck","swim","entryFor",[7.5,6.5,5.5,4,7],"est",{"f":1}],["baggersee","Baggersee Roßau","Innsbruck","swim","entryFor",[6.6,5.5,5,3.5,6],"est",{"f":1}],["telfer-bad","Telfer Bad","Telfs","swim","dayEntry",[12,10,9,6.5,11],"est",{"f":1,"l":3}],["natterersee","Natterer See","Natters","swim","dayEntry",[6,5,4.5,3.5,5.5],"est",{"f":1,"l":3}],["alpenbad-wattens","Alpenbad","Wattens","swim","dayEntry",[6,5,4.5,3.5,5.5],"est",{"f":1}],["erlebnisschwimmbad-schwaz","Erlebnisschwimmbad","Schwaz","swim","dayEntry",[9,7.5,7,5,8],"est",{"f":1}],["familienbad-mutters","Familienbad","Mutters","swim","dayEntry",[6,5,4.5,3.5,5.5],"est",{"f":1}],["schwimmbad-steinach","Freischwimmbad","Steinach","swim","dayEntry",[5,4.5,4,3,4.5],"est",{"f":1}],["voelser-badl","Völser Badl","Völs","swim","dayEntry",[5.5,4.5,4,3,5],"est",{"f":1}],["schwimmbad-hall","Schwimmbad","Hall","swim","dayEntry",[6,5,4.5,3.5,5.5],"est",{"f":1}],["schwimmbad-inzing","Schwimmbad","Inzing","swim","dayEntry",[4.5,4,3.5,2.5,4],"est",{"f":1}],["schwimmbad-mieders","Schwimmbad","Mieders","swim","dayEntry",[5,4.5,4,3,4.5],"est",{"f":1}],["strandperle","Strandperle","Seefeld","swim","dayEntry",[6.5,5.5,5,3.5,6],"est",{"f":1}],["badesee-weisslan","Badesee Weißlahn","Terfens","swim","dayEntry",[5,4.5,4,3,4.5],"est",{"f":1}],["badeanlage-zirl","Badeanlage","Zirl","swim","dayEntry",[4.5,4,3.5,2.5,4],"est",{"f":1}],["olympiaworld-innsbruck","Olympiaworld","Innsbruck","ice","entry",[7,6,5.5,4,6.5],"est",{"f":1}],["eislaufplatz-hoetting-west","Eislaufplatz Hötting-West","Innsbruck","ice","entry",[5,4.5,4,3,4.5],"est",{"f":1}],["eislaufplatz-igls","Eislaufplatz","Igls","ice","entry",[5,4.5,4,3,4.5],"est",{"f":1}],["eislaufplatz-baggersee","Eislaufplatz Baggersee","Innsbruck","ice","entry",[5,4.5,4,3,4.5],"est",{"f":1}],["eishalle-goetzens","Eishalle","Götzens","ice","entry",[5.5,4.5,4,3,5],"est",{"f":1}],["eishalle-steinach","Eishalle","Steinach","ice","entry",[5.5,4.5,4,3,5],"est",{"f":1}],["eislaufplatz-schwaz","Eislaufplatz","Schwaz","ice","entry",[5,4.5,4,3,4.5],"est",{"f":1}],["eislaufplatz-silz","Eislaufplatz","Silz","ice","entry",[4.5,4,3.5,2.5,4],"est",{"f":1}],["eislaufplatz-trins","Eislaufplatz","Trins","ice","entry",[4.5,4,3.5,2.5,4],"est",{"f":1}],["eislaufplatz-vomp","Eislaufplatz","Vomp","ice","entry",[4.5,4,3.5,2.5,4],"est",{"f":1}],["eislaufplatz-wattens","Eislaufplatz","Wattens","ice","entry",[5,4.5,4,3,4.5],"est",{"f":1}],["eislaufplatz-zirl","Eislaufplatz","Zirl","ice","entry",[4.5,4,3.5,2.5,4],"est",{"f":1}],["goldenes-dachl","Museum Goldenes Dachl","Innsbruck","kultur","entry",[6,5,4.5,3.5,5.5],"est",{"f":1}],["audioversum","Audioversum","Innsbruck","kultur","entry",[10,8.5,7.5,5.5,9],"est",{"f":1,"l":3}],["grassmayer","Glockenmuseum Grassmayr","Innsbruck","kultur","entry",[9,7.5,7,5,8],"est",{"f":1}],["stadtmuseum","Stadtmuseum","Innsbruck","kultur","entry",[5,4.5,4,3,4.5],"est",{"f":1}],["museum-der-voelker","Museum der Völker","Schwaz","kultur","entry",[9,7.5,7,5,8],"est",{"f":1}],["muenze-hall","Münze Hall","Hall","kultur","entry",[9,7.5,7,5,8],"est",{"f":1,"l":3}],["tiroler-abende-familie-gundolf-oktoberfest","Tiroler Abend Gundolf","Innsbruck","kultur","entry",[35,30,26.5,19.5,31.5],"est",{"f":1,"l":3}],["pitztaler-gletscher","Pitztaler Gletscher & Rifflsee","Pitztal","ski","day",[77,77,65,46,77],"ok",{"b":[29,25,17,29],"s":1}],["kaunertaler-gletscher","Kaunertaler Gletscher","Kaunertal","ski","day",[77,77,65,46,77],"ok",{"b":[29,25,17,29],"s":1}],["serfaus-fiss-ladis","Serfaus-Fiss-Ladis","Serfaus","ski","day",[80.5,68.5,60.5,52,72.5],"agg",{"s":1}],["skiwelt","SkiWelt Wilder Kaiser-Brixental","Söll","ski","day",[79.5,67.5,59.5,40,71.5],"agg",{"s":1}],["kitzski","KitzSki Kitzbühel/Kirchberg","Kitzbühel","ski","day",[86,73,64.5,42,77.5],"agg",{"s":1}],["soelden","Sölden","Sölden","ski","day",[86.5,73.5,65,47.5,78],"agg",{"s":1}],["mayrhofen","Mayrhofen (Penken, Ahorn, Rastkogel, Eggalm)","Mayrhofen","ski","day",[82,69.5,61.5,37,74],"agg",{"s":1}],["zillertal-arena","Zillertal Arena","Zell am Ziller","ski","day",[82,69.5,61.5,37,74],"agg",{"s":1}],["hintertux","Hintertuxer Gletscher","Hintertux","ski","day",[82,69.5,61.5,37,74],"agg",{"s":1}],["hochzillertal","Hochzillertal / Hochfügen","Kaltenbach","ski","day",[82,69.5,61.5,37,74],"agg",{"s":1}],["spieljoch","Spieljoch Fügen","Fügen","ski","day",[83,70.5,62.5,37,74.5],"agg",{"s":1}],["ski-juwel","Ski Juwel Alpbachtal Wildschönau","Alpbach","ski","day",[71.5,61,53.5,36,64.5],"agg",{"s":1}],["wildkogel","Wildkogel-Arena","Neukirchen","ski","day",[72,61,54,39.5,65],"ski",{"s":1}],["see-paznaun","See im Paznaun","See","ski","day",[73,62,55,40,65.5],"ski",{"s":1}],["kals-matrei","Großglockner Resort Kals-Matrei","Matrei","ski","day",[74,63,55.5,40.5,66.5],"ski",{"s":1}],["lienz","Lienz Zettersfeld & Hochstein","Lienz","ski","day",[74,63,55.5,37,66.5],"agg",{"s":1}],["sillian","Skizentrum Sillian Hochpustertal","Sillian","ski","day",[74,63,55.5,40.5,66.5],"ski",{"s":1}],["st-jakob-defereggen","St. Jakob im Defereggental","St. Jakob i. D.","ski","day",[74,63,55.5,40.5,66.5],"ski",{"s":1}],["ehrwalder-alm","Ehrwalder Alm","Ehrwald","ski","day",[70.5,60,53,35.5,63.5],"agg",{"s":1}],["lermoos","Lermoos Grubigstein","Lermoos","ski","day",[70.5,60,53,35.5,63.5],"agg",{"s":1}],["berwang","Berwang","Berwang","ski","day",[70.5,60,53,35.5,63.5],"agg",{"s":1}],["christlum","Christlum Achenkirch","Achenkirch","ski","day",[69,58.5,52,37,62],"agg",{"s":1}],["hochzeiger","Hochzeiger Pitztal","Jerzens","ski","day",[69,58.5,52,41,62],"agg",{"s":1}],["hochoetz","Hochoetz","Oetz","ski","day",[66.5,56.5,50,36.5,60],"agg",{"s":1}],["nauders","Nauders Bergkastel","Nauders","ski","day",[70,59.5,52.5,31.5,63],"agg",{"s":1}],["st-johann","St. Johann in Tirol","St. Johann","ski","day",[65,55.5,49,36,58.5],"ski",{"s":1}],["gschwandtkopf","Gschwandtkopf Seefeld","Seefeld","ski","day",[58.5,49.5,44,39,52.5],"agg",{"s":1}],["ehrwalder-wetterstein","Ehrwalder Wettersteinbahnen","Ehrwald","ski","day",[60,51,45,30,54],"agg",{"s":1}],["fendels","Fendels","Fendels","ski","day",[58,49.5,43.5,35,52],"agg",{"s":1}],["joechelspitze","Jöchelspitze Lechtal","Bach","ski","day",[54,46,40.5,30,48.5],"old",{"s":1}],["schattwald","Schattwald-Zöblen","Schattwald","ski","day",[53,45,40,29,47.5],"ski",{"s":1}],["hahnenkamm-reutte","Bergwelt Hahnenkamm","Höfen","ski","day",[53,45,40,21,47.5],"agg",{"s":1}],["neunerkoepfle","Neunerköpfle Tannheim","Tannheim","ski","day",[54,46,40.5,22,48.5],"agg",{"s":1}],["fuessener-joechle","Füssener Jöchle Grän","Grän","ski","day",[53,45,40,29,47.5],"ski",{"s":1}],["pillersee","Buchensteinwand Pillersee","St. Ulrich a. P.","ski","day",[50,42.5,37.5,27.5,45],"ski",{"s":1}],["kartitsch","Dorfberg Kartitsch","Kartitsch","ski","day",[51.5,44,38.5,31.5,46.5],"agg",{"s":1}],["obertilliach","Obertilliacher Bergbahnen","Obertilliach","ski","day",[48,41,36,26.5,43],"ski",{"s":1}],["hoch-imst","Hoch-Imst","Imst","ski","day",[49.4,42,37,25.7,44.5],"agg",{"s":1}],["rofan","Rofanseilbahn Maurach","Maurach","ski","day",[46.5,39.5,35,27.5,42],"agg",{"s":1}],["nesselwaengle","Krinnenalpe Nesselwängle","Nesselwängle","ski","day",[54,46,40.5,22,48.5],"agg",{"s":1}],["venet","Venet Landeck-Zams","Landeck","ski","day",[44,37.5,33,26,39.5],"agg",{"s":1}],["pertisau","Karwendel-Bergbahn Pertisau","Pertisau","ski","day",[37,31.5,28,20.5,33.5],"ski",{"s":1}],["niederthai","Niederthai","Umhausen","ski","day",[36,30.5,27,20,32.5],"ski",{"s":1}],["knittel","Skilifte Knittel","Elbigenalp","ski","day",[28,24,21,15.5,25],"ski",{"s":1}],["kirchdorf","Skilifte Kirchdorf","Kirchdorf","ski","day",[27.5,23.5,20.5,15,25],"agg",{"s":1}],["laerchenhof","Skilifte Lärchenhof","Erpfendorf","ski","day",[27.5,23.5,20.5,15,25],"agg",{"s":1}],["schneeberg-thiersee","Schneeberglifte Thiersee","Thiersee","ski","day",[27,23,20.5,15,24.5],"ski",{"s":1}],["tirolina","Tirolina Thiersee","Thiersee","ski","day",[27,23,20.5,15,24.5],"ski",{"s":1}]];
+// pass prices 2026/27: [presale, normal]
+const GROUPS = [
+  { id: 'adult', n: 'Erwachsene', ft: [789, 908], sc: [1080, 1227], b: 0 },
+  { id: 'u23', n: 'U23', ft: [710, 817], sc: [1080, 1227], b: 0 },
+  { id: 'youth', n: 'Jugend', ft: [631, 726], sc: [658, 982], b: 1 },
+  { id: 'child', n: 'Kinder', ft: [410, 472], sc: [367, 613], b: 2 },
+  { id: 'senior', n: 'Senioren', ft: [750, 862], sc: [1080, 1227], b: 3 },
+];
+const CATS = [['ski', 'Skifahren'], ['berg', 'Bergbahn Sommer'], ['swim', 'Bäder'], ['ice', 'Eislaufen'], ['kultur', 'Museen'], ['rodel', 'Rodeln'], ['night', 'Abends'], ['mine', 'Meine Auswahl']];
+const VAR = { day: 'Tageskarte', upDown: 'Berg & Tal', upDownTo: 'Berg & Tal', evening: 'Abendskilauf', night: 'Abendskilauf', rodelUp: 'Auffahrt', entryFor: 'Eintritt', dayEntry: 'Tageseintritt', entry: 'Eintritt' };
+const SHOW = 12;
+const key = p => p[0] + '.' + p[3];
+const S = { g: 'adult', t: 1, c: 'ski', q: '', all: false, n: {} };
+try { Object.assign(S, JSON.parse(localStorage.getItem('tw-rechner') || '{}'), { q: '', all: false }); } catch (e) {}
+// a shared link: ?g=adult&t=1&v=nordkette.ski*5,tivoli.swim*3
+try {
+  const u = new URLSearchParams(location.search);
+  if (u.get('v')) { S.n = {}; for (const part of u.get('v').split(',')) { const [k, c] = part.split('*'); if (PL.some(p => key(p) === k) && +c > 0) S.n[k] = Math.min(365, +c); } }
+  if (GROUPS.some(g => g.id === u.get('g'))) S.g = u.get('g');
+  if (u.get('t') === '0' || u.get('t') === '1') S.t = +u.get('t');
+} catch (e) {}
+const $ = id => document.getElementById(id);
+const eur = x => (Math.round(x * 100) / 100).toLocaleString('de-AT', { minimumFractionDigits: x % 1 ? 2 : 0, maximumFractionDigits: 2 }) + ' €';
+const eur0 = x => Math.round(x).toLocaleString('de-AT') + ' €';
+const grp = () => GROUPS.find(g => g.id === S.g) || GROUPS[0];
+const gi = () => GROUPS.indexOf(grp());
+const price = p => p[5][gi()];
+const save = () => { try { localStorage.setItem('tw-rechner', JSON.stringify({ g: S.g, t: S.t, c: S.c, n: S.n })); } catch (e) {} };
+
+function calc() {
+  const g = grp(); let single = 0, ft = g.ft[S.t], sc = g.sc[S.t], ftCover = 0, scCover = 0, limited = [], top = null;
+  for (const p of PL) {
+    const n = S.n[key(p)] || 0; if (!n) continue;
+    const pr = price(p), x = p[7]; single += n * pr;
+    if (x.f) { const paid = x.l ? Math.max(0, n - x.l) : 0; ft += paid * pr; ftCover += (n - paid) * pr; if (paid) limited.push(p[1]); }
+    else if (x.b) { const pay = x.b[g.b]; ft += n * pay; ftCover += n * (pr - pay); }
+    else ft += n * pr;
+    if (x.s) scCover += n * pr; else sc += n * pr;
+    if (!top || n * pr > top.v) top = { p, v: n * pr };
+  }
+  return { single, ft, sc, ftCover, scCover, limited, top, g };
+}
+
+function chips() {
+  $('who').innerHTML = GROUPS.map(g => `<button type="button" data-g="${g.id}" aria-pressed="${g.id === S.g}">${g.n}</button>`).join('');
+  $('tariff').innerHTML = [[1, 'Normal (ab 1.11.)'], [0, 'Vorverkauf']].map(([v, l]) => `<button type="button" data-t="${v}" aria-pressed="${v === S.t}">${l}</button>`).join('');
+  $('who').querySelectorAll('button').forEach(b => b.onclick = () => { S.g = b.dataset.g; save(); render(); });
+  $('tariff').querySelectorAll('button').forEach(b => b.onclick = () => { S.t = +b.dataset.t; save(); render(); });
+}
+
+function tabs() {
+  const count = c => PL.filter(p => (c === 'mine' ? true : p[3] === c) && S.n[key(p)]).length;
+  $('tabs').innerHTML = CATS.map(([c, l]) => { const n = count(c); return `<button type="button" role="tab" data-c="${c}" aria-pressed="${c === S.c && !S.q}">${l}${n ? `<span class="n">${n}</span>` : ''}</button>`; }).join('');
+  $('tabs').querySelectorAll('button').forEach(b => b.onclick = () => { S.c = b.dataset.c; S.q = ''; $('q').value = ''; S.all = false; save(); render(); });
+}
+
+function list() {
+  const q = S.q.trim().toLowerCase();
+  let items = q ? PL.filter(p => (p[1] + ' ' + p[2]).toLowerCase().includes(q))
+    : S.c === 'mine' ? PL.filter(p => S.n[key(p)]) : PL.filter(p => p[3] === S.c);
+  const total = items.length;
+  if (!S.all && !q && S.c !== 'mine') items = items.slice(0, SHOW);
+  const cat = Object.fromEntries(CATS);
+  $('list').innerHTML = items.length ? items.map(p => {
+    const k = key(p), n = S.n[k] || 0, x = p[7];
+    const mark = p[6] === 'est' ? ' ≈' : (p[6] === 'old' || p[6] === 'ski') ? ' °' : '';
+    const tags = (x.f ? `<span class="tag ft">FT${x.l ? ' 3×' : ''}</span>` : x.b ? `<span class="tag ft">FT Bonus</span>` : '') + (x.s ? '<span class="tag sc">SC</span>' : '');
+    return `<div class="item${n ? ' on' : ''}"><div><div class="nm">${p[1]}</div><div class="meta">${tags}${p[2]}${q || S.c === 'mine' ? ' · ' + cat[p[3]] : ''} · ${VAR[p[4]] || ''} ${eur(price(p))}${mark}</div></div>
+      <div class="step"><button type="button" data-k="${k}" data-d="-1" aria-label="weniger" ${n ? '' : 'disabled'}>−</button><input data-k="${k}" type="number" inputmode="numeric" min="0" max="365" value="${n}" aria-label="Besuche ${p[1]}"><button type="button" data-k="${k}" data-d="1" aria-label="mehr">+</button></div></div>`;
+  }).join('') : `<p class="empty" style="padding:10px 18px">${S.c === 'mine' && !q ? 'Noch nichts gewählt.' : 'Nichts gefunden. Der Rechner kennt Orte aus dem Freizeitticket und der Snow Card.'}</p>`;
+  $('more').hidden = S.all || q || S.c === 'mine' || total <= SHOW;
+  $('more').textContent = `Alle ${total} anzeigen`;
+  $('list').querySelectorAll('button[data-d]').forEach(b => b.onclick = () => set(b.dataset.k, (S.n[b.dataset.k] || 0) + +b.dataset.d));
+  $('list').querySelectorAll('input').forEach(i => i.onchange = () => set(i.dataset.k, parseInt(i.value, 10) || 0));
+}
+
+function set(k, v) {
+  v = Math.max(0, Math.min(365, v)); if (v) S.n[k] = v; else delete S.n[k];
+  save(); tabs(); result();
+  const row = $('list').querySelector(`input[data-k="${CSS.escape(k)}"]`);
+  if (row) { row.value = v; row.closest('.item').classList.toggle('on', !!v); row.previousElementSibling.disabled = !v; }
+}
+
+function result() {
+  const r = calc(), any = r.single > 0, name = { ft: 'Freizeitticket', sc: 'Snow Card' };
+  const best = [['single', r.single], ['ft', r.ft], ['sc', r.sc]].sort((a, b) => a[1] - b[1])[0][0];
+  const cardLine = (k, total, cover) => {
+    const d = r.single - total;
+    return d >= 0 ? `<small class="good">spart ${eur0(d)} gegenüber Einzeltickets</small>` : `<small class="bad">${eur0(-d)} teurer als Einzeltickets${cover ? `, die Karte deckt ${eur0(cover)}` : ''}</small>`;
+  };
+  if (!any) {
+    $('res').innerHTML = `<p class="hint">Wähle oben Orte und wie oft du hingehst. Zum Vergleich: für ${r.g.n} kostet das Freizeitticket ${eur0(r.g.ft[S.t])}, die Snow Card ${eur0(r.g.sc[S.t])}.</p>`;
+    $('barIn').innerHTML = `<div class="zero">Trag Besuche ein, das Ergebnis erscheint hier.</div>`;
+    return;
+  }
+  let verdict, hint = '';
+  if (best === 'single') {
+    const cheaper = r.ft <= r.sc ? 'ft' : 'sc', missing = (cheaper === 'ft' ? r.ft : r.sc) - r.single, top = r.top.p, pr = price(top);
+    const covered = cheaper === 'ft' ? top[7].f || top[7].b : top[7].s;
+    verdict = 'Einzeltickets sind für dich günstiger.';
+    if (covered && pr > 0) hint = `Mit etwa ${Math.ceil(missing / pr)} Besuchen mehr bei ${top[1]} würde sich das ${name[cheaper]} rechnen.`;
+    else hint = `Bis das ${name[cheaper]} sich rechnet, fehlen etwa ${eur0(missing)}.`;
+  } else {
+    verdict = `Das ${name[best]} lohnt sich für dich.`;
+    const other = best === 'ft' ? 'sc' : 'ft', diff = (best === 'ft' ? r.sc : r.ft) - (best === 'ft' ? r.ft : r.sc);
+    hint = `Es ist ${eur0(r.single - (best === 'ft' ? r.ft : r.sc))} günstiger als Einzeltickets und ${eur0(diff)} günstiger als die ${name[other]}.`;
+  }
+  if (r.limited.length) hint += ` Bei ${r.limited.join(', ')} gilt das Freizeitticket nur 3× im Jahr, die weiteren Besuche sind voll eingerechnet.`;
+  const tl = S.t ? 'ab 1.11.' : 'Vorverkauf';
+  $('res').innerHTML = `<p class="verdict">${verdict}</p>
+    <div class="opt${best === 'single' ? ' win' : ''}"><b>Einzeltickets</b><span class="sum">${eur0(r.single)}</span><small>Tageskarten und Eintritte an der Kasse</small></div>
+    <div class="opt${best === 'ft' ? ' win' : ''}"><b>Freizeitticket</b><span class="sum">${eur0(r.ft)}</span><small>Karte ${eur0(r.g.ft[S.t])} (${tl})${r.ft > r.g.ft[S.t] ? ` + ${eur0(r.ft - r.g.ft[S.t])} für Orte ohne Freizeitticket` : ''}</small>${cardLine('ft', r.ft, r.ftCover)}</div>
+    <div class="opt${best === 'sc' ? ' win' : ''}"><b>Snow Card Tirol</b><span class="sum">${eur0(r.sc)}</span><small>Karte ${eur0(r.g.sc[S.t])} (${tl})${r.sc > r.g.sc[S.t] ? ` + ${eur0(r.sc - r.g.sc[S.t])} für alles außer Skifahren` : ''}</small>${cardLine('sc', r.sc, r.scCover)}</div>
+    <p class="hint">${hint}</p>`;
+  const cell = (k, l, v) => `<div><div class="k">${l}</div><div class="v${best === k ? ' win' : ''}">${eur0(v)}</div></div>`;
+  $('barIn').innerHTML = cell('single', 'Einzeln', r.single) + cell('ft', 'Freizeitticket', r.ft) + cell('sc', 'Snow Card', r.sc) + `<a href="#result">Details</a>`;
+}
+
+function render() { chips(); tabs(); list(); result(); }
+$('q').oninput = () => { S.q = $('q').value; S.all = false; tabs(); list(); };
+$('more').onclick = () => { S.all = true; list(); };
+$('reset').onclick = () => { S.n = {}; save(); render(); };
+$('share').onclick = async () => {
+  const v = Object.entries(S.n).map(([k, c]) => k + '*' + c).join(',');
+  const url = location.origin + location.pathname + '?g=' + S.g + '&t=' + S.t + (v ? '&v=' + v : '');
+  try { await navigator.clipboard.writeText(url); $('share').textContent = 'Link kopiert'; }
+  catch (e) { $('share').textContent = url; }
+  setTimeout(() => { $('share').textContent = 'Link zum Ergebnis kopieren'; }, 2500);
+};
+render();
+</script>
+</body>
+</html>

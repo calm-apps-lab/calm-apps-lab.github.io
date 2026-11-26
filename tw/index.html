@@ -21,6 +21,8 @@
   .store { display: inline-block; background: var(--ink); color: var(--bg); text-decoration: none; font-weight: 700; padding: 10px 20px; border-radius: 999px; }
   .ver { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 10px; }
   .ver b { display: inline-block; min-width: 4.2em; }
+  .shots { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 4px -20px 8px; padding: 4px 20px 14px; scrollbar-width: thin; }
+  .shots img { flex: none; height: min(440px, 72vh); width: auto; aspect-ratio: 9 / 16; border-radius: 18px; scroll-snap-align: start; box-shadow: 0 2px 10px rgb(0 0 0 / .14); }
 </style>
 </head>
 <body>
@@ -30,8 +32,15 @@
     <div><h1>Ticketwert</h1><p class="sub">Jahreskarten-Rechner für Tirol · Support</p></div>
   </header>
   <hr>
-  <p><a class="store" href="https://apps.apple.com/app/id6835076160">Im App Store laden</a></p>
+  <p><a class="store" href="https://apps.apple.com/app/id6835076160">Im App Store laden</a> &nbsp; <a href="rechner.html"><b>Lohnt sich das Freizeitticket? Zum Rechner</b></a></p>
   <p>Ticketwert zeigt, wie viel sich deine Jahres- oder Saisonkarte schon gelohnt hat. Du trägst Skitage, Bergbahnen, Bäder und Museen mit einem Tipp ein, die App rechnet mit den aktuellen Kassenpreisen. Funktioniert für das Freizeitticket Tirol, die Snow Card Tirol und auch ganz ohne Karte. Keine Werbung, kein Konto, alles bleibt auf deinem Handy.</p>
+
+  <div class="shots" role="region" aria-label="Bildschirmfotos" tabindex="0">
+    <img src="shots/1.jpg" width="540" height="960" alt="Startseite mit Karte und gespartem Betrag">
+    <img src="shots/2.jpg" width="540" height="960" alt="Saisonrückblick zum Teilen" loading="lazy">
+    <img src="shots/3.jpg" width="540" height="960" alt="Verlauf mit Kalender" loading="lazy">
+    <img src="shots/4.jpg" width="540" height="960" alt="Besuch eintragen: Orte in der Nähe" loading="lazy">
+  </div>
 
   <h2>Kontakt</h2>
   <p>Fragen, Fehler oder ein Preis, der nicht stimmt: <a href="mailto:support@calmappslab.com">support@calmappslab.com</a>. Wir antworten meistens innerhalb von zwei Werktagen.</p>
