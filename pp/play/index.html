@@ -219,6 +219,10 @@ h1, h2, h3 { margin: 0; line-height: 1.2; text-wrap: balance; }
 .gtitle small { display: block; font-weight: 400; color: var(--ink-3); font-size: .82rem; }
 .timer { display: flex; align-items: center; gap: 4px; font-variant-numeric: tabular-nums; font-weight: 700; color: var(--ink-2); min-height: 48px; padding: 0 6px; border-radius: 12px; }
 .timer svg { width: 22px; height: 22px; }
+.gright { display: flex; align-items: center; gap: 2px; justify-self: end; }
+.mk { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--bad); padding: 0 4px; white-space: nowrap; }
+.mk.pop { animation: mkpop .35s ease; }
+@keyframes mkpop { 40% { transform: scale(1.35); } }
 .gbody { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 8px 0; }
 .msg { min-height: 3.2em; padding: 10px 14px; border-radius: 14px; background: var(--accent-soft); color: var(--ink); font-size: .98rem; display: flex; align-items: center; gap: 10px; }
 .msg.empty { background: transparent; }
@@ -279,6 +283,7 @@ h1, h2, h3 { margin: 0; line-height: 1.2; text-wrap: balance; }
 .pcell.x::before, .pcell.x::after { content: ''; position: absolute; left: 22%; right: 22%; top: 50%; height: 2px; background: var(--cross); border-radius: 1px; transform: rotate(45deg); }
 .pcell.x::after { transform: rotate(-45deg); }
 .pcell.bad::before, .pcell.bad::after { background: var(--bad); }
+.pcell.f.bad { background: var(--bad); }
 .pcell.hint { box-shadow: inset 0 0 0 3px var(--gold); }
 .pcell.reveal { transition: background .5s; }
 .modes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: var(--surface-2); padding: 4px; border-radius: 16px; }
@@ -318,6 +323,8 @@ h1, h2, h3 { margin: 0; line-height: 1.2; text-wrap: balance; }
 .adfull .box { width: min(320px, 80vw); aspect-ratio: 9 / 12; max-width: 100%; border: 2px dashed #4b5563; border-radius: 16px; display: grid; place-items: center; color: #9aa4b2; padding: 16px; }
 .adfull .btn { background: #e8edf2; color: #0e131a; }
 .toast { position: fixed; left: 50%; bottom: calc(110px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 70; background: var(--ink); color: var(--bg); padding: 12px 18px; border-radius: 14px; font-weight: 700; max-width: 90vw; text-align: center; animation: fade .2s ease; }
+.toast { pointer-events: none; }
+.toast.top { bottom: auto; top: calc(64px + env(safe-area-inset-top, 0px)); font-weight: 600; width: max-content; }
 .coach { display: flex; flex-direction: column; gap: 14px; }
 .coach .demo { display: grid; place-items: center; padding: 8px; }
 .size-preview { font-size: 1.25rem; font-weight: 700; padding: 14px; border-radius: 14px; background: var(--surface-2); text-align: center; }
@@ -2615,6 +2622,19 @@ table.st td.n { text-align: right; font-variant-numeric: tabular-nums; font-weig
   };
   for (const k in x) Object.assign(root.PP.texts[k], x[k]);
 })(typeof window !== 'undefined' ? window : globalThis);
+(function (root) {
+  const x = {
+    en: { mistakeFirst: 'Not quite. Mistakes are counted next to the timer. You can turn this off in Settings.' },
+    de: { mistakeFirst: 'Nicht ganz. Fehler werden neben der Zeit gezählt. Das lässt sich in den Einstellungen abschalten.' },
+    ru: { mistakeFirst: 'Не совсем. Ошибки считаются рядом с таймером. Это можно выключить в настройках.' },
+    fr: { mistakeFirst: 'Pas tout à fait. Les erreurs sont comptées à côté du chrono. Vous pouvez désactiver cela dans les réglages.' },
+    es: { mistakeFirst: 'No del todo. Los errores se cuentan junto al tiempo. Puedes desactivarlo en Ajustes.' },
+    pt: { mistakeFirst: 'Não exatamente. Os erros são contados ao lado do tempo. Você pode desativar isso nos Ajustes.' },
+    it: { mistakeFirst: 'Non proprio. Gli errori vengono contati accanto al tempo. Puoi disattivarlo nelle Impostazioni.' },
+    ja: { mistakeFirst: 'おしい！ミスはタイマーの横で数えられます。設定でオフにできます。' },
+  };
+  for (const k in x) Object.assign(root.PP.texts[k], x[k]);
+})(typeof window !== 'undefined' ? window : globalThis);
 
 (function (root) {
   const off = () => false, later = () => Promise.resolve(false), none = () => {};
@@ -2734,11 +2754,14 @@ table.st td.n { text-align: right; font-variant-numeric: tabular-nums; font-weig
   const chime = () => [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => beep(f, 0.18, 0.06), i * 110));
   const buzz = ms => { if (S.vibrate && navigator.vibrate) try { navigator.vibrate(ms); } catch (e) { /* ignore */ } };
   let toastTimer;
-  function toast(msg) {
+  function toast(msg, top, ms) {
     let el = $('toast');
-    if (!el) { el = document.createElement('div'); el.id = 'toast'; el.className = 'toast'; document.body.appendChild(el); }
+    if (!el) { el = document.createElement('div'); el.id = 'toast'; document.body.appendChild(el); }
+    el.className = 'toast' + (top ? ' top' : '');
     el.textContent = msg; el.hidden = false;
-    clearTimeout(toastTimer); toastTimer = setTimeout(() => el.remove(), 2200);
+    const head = top && document.querySelector('.gtop');
+    el.style.top = head ? Math.round(head.getBoundingClientRect().bottom + 6) + 'px' : '';
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => el.remove(), ms || 2200);
   }
 
   /* ---------- daily reminder ---------- */
@@ -3343,8 +3366,7 @@ table.st td.n { text-align: right; font-variant-numeric: tabular-nums; font-weig
     app.innerHTML = `<div class="screen game">
       <div class="gtop"><button class="icon-btn" data-gact="back" aria-label="Back">${ic.back}</button>
         <div class="gtitle">${esc(G.title)}<small>${esc(G.sub || '')}</small></div>
-        <button class="timer ${S.timer ? '' : 'hidden'}" data-gact="pause" aria-label="${t('paused')}">${ic.clock}<span id="tm">${fmtTime(G.time)}</span></button>
-        ${S.timer ? '' : '<span></span>'}</div>
+        <div class="gright"><span class="mk ${S.check && G.mistakes ? '' : 'hidden'}" id="mk" aria-label="${t('mistakes')}">✕ ${G.mistakes}</span><button class="timer ${S.timer ? '' : 'hidden'}" data-gact="pause" aria-label="${t('paused')}">${ic.clock}<span id="tm">${fmtTime(G.time)}</span></button></div></div>
       <div class="gbody" id="gbody"></div>
       ${showBanner && !M.ads.ready() ? `<div class="adbar">${t('adBanner')} ${canSell() ? `<button data-gact="paywall">${t('removeAds')}</button>` : ''}</div>` : ''}
     </div>`;
@@ -3364,6 +3386,12 @@ table.st td.n { text-align: right; font-variant-numeric: tabular-nums; font-weig
     if (act === 'pause') return pauseTimer(!paused);
     if (act === 'paywall') return paywall(() => renderGame());
     if (G.kind === 'pic') picAct(act, d); else if (G.kind === 'bridges') bridgesAct(act, d); else if (G.kind === 'stars') starsAct(act, d); else sudokuAct(act, d);
+  }
+  function mistake() {
+    G.mistakes++; buzz(60); beep(220, 0.12, 0.05);
+    const el = $('mk');
+    if (el) { el.classList.remove('hidden', 'pop'); el.textContent = '✕ ' + G.mistakes; void el.offsetWidth; el.classList.add('pop'); }
+    if (!S.coach.mistake) { S.coach.mistake = true; save(); toast(t('mistakeFirst'), true, 4500); }
   }
   function startTimer() {
     stopTimer(); paused = false;
@@ -3657,7 +3685,7 @@ table.st td.n { text-align: right; font-variant-numeric: tabular-nums; font-weig
     if (v && v === G.solution[i] && S.autoNotes)
       peersOf(i).forEach(p => { if (G.notes[p] & (1 << v)) { batch.push({ i: p, v: G.values[p], notes: G.notes[p] }); G.notes[p] &= ~(1 << v); } });
     undoStack.push(batch);
-    if (v && v !== G.solution[i]) { if (S.check) { G.mistakes++; buzz(60); beep(220, 0.12, 0.05); } }
+    if (v && v !== G.solution[i]) { if (S.check) mistake(); }
     else if (v) { beep(560, 0.04); buzz(8); }
     hintMark = null; setMsg('');
     save(); drawSudoku();
@@ -3761,8 +3789,8 @@ table.st td.n { text-align: right; font-variant-numeric: tabular-nums; font-weig
       if (m !== stroke.from || m >= 3) return;
       stroke.batch.push({ r, c, m });
       let v = stroke.target;
-      if (S.check && v === 1 && !G.solution[r][c]) { v = 4; G.mistakes++; stroke.stop = true; buzz(60); beep(220, 0.12, 0.05); }
-      else if (S.check && v === 2 && G.solution[r][c]) { v = 3; G.mistakes++; stroke.stop = true; buzz(60); beep(220, 0.12, 0.05); }
+      if (S.check && v === 1 && !G.solution[r][c]) { v = 4; stroke.stop = true; mistake(); }
+      else if (S.check && v === 2 && G.solution[r][c]) { v = 3; stroke.stop = true; mistake(); }
       else if (v === 1) { beep(480 + 20 * stroke.batch.length, 0.03, 0.03); buzz(6); }
       G.marks[r][c] = v;
       cur = { r, c };
@@ -3896,7 +3924,7 @@ table.st td.n { text-align: right; font-variant-numeric: tabular-nums; font-weig
   function setEdge(e, v) {
     undoStack.push([{ e, v: G.bridges[e] }]);
     G.bridges[e] = v;
-    if (S.check && v > G.solution[e]) { G.mistakes++; buzz(60); beep(220, 0.12, 0.05); }
+    if (S.check && v > G.solution[e]) mistake();
     else if (v) { beep(520 + v * 60, 0.04); buzz(8); }
     bHint = null; save(); drawBridges();
     if (G.bridges.every((x, k) => x === G.solution[k])) { bSel = -1; drawBridges(true); win(); }
@@ -4005,7 +4033,7 @@ table.st td.n { text-align: right; font-variant-numeric: tabular-nums; font-weig
     undoStack.push(list.map(x => ({ k: x.k, m: G.marks[x.k] })));
     let bad = false;
     list.forEach(x => { G.marks[x.k] = x.v; if (S.check && ((x.v === 1 && !G.solution[x.k]) || (x.v === 2 && G.solution[x.k]))) bad = true; });
-    if (bad) { G.mistakes++; buzz(60); beep(220, 0.12, 0.05); } else if (list.some(x => x.v === 1)) { beep(660, 0.05); buzz(8); } else beep(500, 0.02, 0.02);
+    if (bad) mistake(); else if (list.some(x => x.v === 1)) { beep(660, 0.05); buzz(8); } else beep(500, 0.02, 0.02);
     sHint = null; save(); drawStars();
     if (G.solution.every((s, k) => !!s === (G.marks[k] === 1))) {
       document.querySelectorAll('#stb .stc').forEach(el => { const k = +el.dataset.k; el.style.animationDelay = ((k % G.n) + Math.floor(k / G.n)) * 30 + 'ms'; el.classList.add('wave'); });
