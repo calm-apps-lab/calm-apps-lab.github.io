@@ -19,6 +19,8 @@
   .lang { margin-top: 56px; padding-top: 8px; border-top: 1px solid color-mix(in srgb, var(--muted) 30%, transparent); }
   .note { color: var(--muted); font-size: 15px; }
   a { color: inherit; }
+  .shots { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 4px -20px 8px; padding: 4px 20px 14px; scrollbar-width: thin; }
+  .shots img { flex: none; height: min(440px, 72vh); width: auto; aspect-ratio: 9 / 16; border-radius: 18px; scroll-snap-align: start; box-shadow: 0 2px 10px rgb(0 0 0 / .14); }
 </style>
 </head>
 <body>
@@ -29,6 +31,13 @@
   </header>
   <hr>
   <p>Sudoku Pause gives you a small set of logic puzzles every day: a warm-up (Mini Sudoku, Signs, Bridges or Stars), a picture to uncover and a Sudoku. More Sudoku, Signs, Bridges, Stars, pictures and patterns are there whenever you want them. Big, readable numbers, adjustable text size, no time pressure, and hints that explain the next step. No account, your progress stays on your phone.</p>
+
+  <div class="shots" role="region" aria-label="Screenshots" tabindex="0">
+    <img src="shots/1.jpg" width="540" height="960" alt="Today: three calm puzzles">
+    <img src="shots/2.jpg" width="540" height="960" alt="A hint that explains the next step" loading="lazy">
+    <img src="shots/3.jpg" width="540" height="960" alt="Picture logic: uncover a hidden image" loading="lazy">
+    <img src="shots/4.jpg" width="540" height="960" alt="Signs puzzle with number signs" loading="lazy">
+  </div>
 
   <h2>Contact</h2>
   <p>Questions, a bug, or an idea for a picture: <a href="mailto:support@calmappslab.com">support@calmappslab.com</a>. We usually reply within two working days.</p>
