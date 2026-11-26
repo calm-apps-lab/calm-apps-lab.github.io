@@ -17,6 +17,8 @@
   .sub, .date { color: var(--muted); margin: 0; }
   hr { border: 0; border-top: 3px solid var(--accent); width: 64px; margin: 22px 0 28px; }
   a { color: inherit; }
+  .shots { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 4px -20px 8px; padding: 4px 20px 14px; scrollbar-width: thin; }
+  .shots img { flex: none; height: min(440px, 72vh); width: auto; aspect-ratio: 9 / 16; border-radius: 18px; scroll-snap-align: start; box-shadow: 0 2px 10px rgb(0 0 0 / .14); }
 </style>
 </head>
 <body>
@@ -27,6 +29,13 @@
   </header>
   <hr>
   <p>Gatebeam keeps your flights and those of family and friends in one calm list: status, gate, baggage belt, how the flight did last week, and where the aircraft is right now. No account, no ads, your flights stay on your phone.</p>
+
+  <div class="shots" role="region" aria-label="Screenshots" tabindex="0">
+    <img src="shots/1.jpg" width="540" height="960" alt="My flights with status, gate and live position">
+    <img src="shots/2.jpg" width="540" height="960" alt="Flight details: times, terminal, gate and belt" loading="lazy">
+    <img src="shots/3.jpg" width="540" height="960" alt="A friend's flight with a pick-up hint" loading="lazy">
+    <img src="shots/4.jpg" width="540" height="960" alt="Departure board of an airport" loading="lazy">
+  </div>
 
   <h2>Contact</h2>
   <p>Questions, bugs or ideas: <a href="mailto:support@calmappslab.com">support@calmappslab.com</a>. We usually reply within two working days.</p>
