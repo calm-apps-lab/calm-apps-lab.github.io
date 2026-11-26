@@ -23,6 +23,16 @@
   .copy { font: inherit; font-size: 15px; font-weight: 700; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 999px; padding: 6px 14px; cursor: pointer; text-decoration: none; }
   pre { margin: 0; white-space: pre-wrap; font: 15px/1.5 ui-monospace, Menlo, monospace; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
   .note { color: var(--muted); font-size: 15px; }
+  .form { display: grid; gap: 12px; }
+  .form label { display: grid; gap: 4px; font-size: 15px; font-weight: 600; }
+  .form input, .form select, .form textarea { font: inherit; font-weight: 400; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--ink); width: 100%; box-sizing: border-box; }
+  .form textarea { min-height: 84px; resize: vertical; }
+  .form .row { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .form button { font: inherit; font-weight: 700; justify-self: start; border: 0; background: var(--ink); color: var(--bg); border-radius: 999px; padding: 11px 22px; cursor: pointer; }
+  .form button:disabled { opacity: .6; cursor: default; }
+  .status { font-weight: 600; } .status.ok { color: #1f8a4c; } .status.err { color: #b4452c; }
+  .opt { color: var(--muted); font-weight: 400; }
 </style>
 <link rel="stylesheet" href="../app.css">
 </head>
@@ -48,29 +58,47 @@
 
   <h2 id="interest">Interested?</h2>
   <div class="ask">
-    <p>We only build the app if enough skiers want it. Send us a short email, ideally with the answers below. It helps a lot.</p>
-    <div class="mail"><code id="addr">support@calmappslab.com</code><button class="copy" type="button" data-copy="addr">Copy address</button>
-      <a class="copy" href="mailto:support@calmappslab.com?subject=Skiworth%3A%20I%20am%20interested&amp;body=My%20pass%20(Epic%2FEpic%20Local%2FIkon%2FIkon%20Base%2Fother)%3A%0ASki%20days%20per%20season%3A%0AHome%20mountain%3A%0AWhat%20would%20the%20app%20be%20worth%20to%20you%20per%20season%3A%0AWhat%20do%20you%20use%20today%20to%20count%20your%20days%3A%0A">Open email</a></div>
-    <pre id="qs">Subject: Skiworth: I am interested
-
-My pass (Epic/Epic Local/Ikon/Ikon Base/other):
-Ski days per season:
-Home mountain:
-What would the app be worth to you per season:
-What do you use today to count your days:</pre>
-    <button class="copy" type="button" data-copy="qs" style="justify-self:start">Copy questions</button>
-    <p class="note">We use your address only to tell you once when the app is ready. No newsletter, never shared, deleted afterwards.</p>
+    <p>We only build the app if enough skiers want it. Leave your email and a few answers, we will tell you once when it is ready.</p>
+    <form class="form" id="form" novalidate>
+      <div class="row">
+        <label>Email<input type="email" name="email" required autocomplete="email" placeholder="you@example.com"></label>
+        <label>Name <span class="opt">(optional)</span><input type="text" name="name" autocomplete="given-name" maxlength="60"></label>
+      </div>
+      <div class="row">
+        <label>Your pass<select data-q="Pass"><option>Epic Pass</option><option>Epic Local</option><option>Ikon Pass</option><option>Ikon Base</option><option>Other pass</option><option>No pass yet</option></select></label>
+        <label>Ski days per season<select data-q="Days"><option>1–5</option><option selected>6–10</option><option>11–20</option><option>21–40</option><option>40+</option></select></label>
+        <label>Worth to you per season<select data-q="Worth"><option>Only if free</option><option>$1–3</option><option>$4–6</option><option>$7 or more</option></select></label>
+      </div>
+      <label>Anything else? <span class="opt">(optional)</span><textarea name="message" maxlength="2000" placeholder="Your home mountain, what you use today to count days, what you would like to see"></textarea></label>
+      <label class="hp" aria-hidden="true">Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+      <button type="submit">Notify me</button>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </form>
+    <p class="note">We use your email only to tell you once when the app is ready. Sent through Cloudflare straight to our inbox, not stored on a server, never shared. Prefer email? <a href="mailto:support@calmappslab.com">support@calmappslab.com</a></p>
   </div>
 
   <p class="note" style="margin-top:28px">Skiworth is an independent project by CalmAppsLab and is not affiliated with Vail Resorts (Epic Pass), Alterra Mountain Company (Ikon Pass) or any resort. Epic Pass and Ikon Pass are trademarks of their owners. · <a href="../">calmappslab.com</a></p>
 </main>
 <script>
-document.querySelectorAll('[data-copy]').forEach(b => b.onclick = async () => {
-  const el = document.getElementById(b.dataset.copy), old = b.textContent;
-  try { await navigator.clipboard.writeText(el.textContent); b.textContent = 'Copied'; }
-  catch (e) { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
-  setTimeout(() => { b.textContent = old; }, 2000);
-});
+// the interest form goes to our Cloudflare Worker, which mails it to us; nothing is stored
+const FORM_T0 = Date.now();
+function wireForm(app, msgs) {
+  const f = document.getElementById('form'), st = document.getElementById('status');
+  f.onsubmit = async e => {
+    e.preventDefault();
+    const L = msgs(), fd = new FormData(f), answers = {};
+    f.querySelectorAll('select').forEach(s => { answers[s.dataset.q] = s.options[s.selectedIndex].text; });
+    const b = f.querySelector('button'); b.disabled = true; st.className = 'status'; st.textContent = L.sending;
+    try {
+      const r = await fetch('https://calm-forms.calmappslab.workers.dev', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ app, email: fd.get('email'), name: fd.get('name'), lang: document.documentElement.lang, answers, message: fd.get('message'), page: location.pathname, t: FORM_T0, website: fd.get('website') }) });
+      const j = await r.json().catch(() => ({}));
+      if (j.ok) { st.className = 'status ok'; st.textContent = L.thanks; f.reset(); }
+      else { st.className = 'status err'; st.textContent = j.error === 'email' ? L.badEmail : j.error === 'rate' ? L.rate : L.fail; b.disabled = false; }
+    } catch (err) { st.className = 'status err'; st.textContent = L.fail; b.disabled = false; }
+  };
+}
+wireForm('skiworth', () => ({ sending: 'Sending…', thanks: 'Thank you! We will write once when Skiworth is ready.', badEmail: 'Please check your email address.', rate: 'Too many tries, please wait a little.', fail: 'Could not send. Please try again or write to support@calmappslab.com.' }));
 </script>
 </body>
 </html>
