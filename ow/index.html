@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Öffiwert: Was bringt dir dein KlimaTicket? (in Entwicklung)</title>
+<meta name="description" content="Öffiwert ist eine geplante App für KlimaTicket- und Jahreskarten-Besitzer in Österreich: Fahrten zählen, Ersparnis gegenüber Einzeltickets sehen. Jetzt schon: kostenloser KlimaTicket-Rechner.">
+<link rel="alternate" hreflang="de" href="https://calmappslab.com/ow/">
+<link rel="alternate" hreflang="en" href="https://calmappslab.com/ow/?lang=en">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+  :root { color-scheme: light dark; --ink: #14261f; --bg: #eef5f1; --card: #ffffff; --muted: #55665e; --line: #d4e3db; --accent: #1f8a5b; }
+  @media (prefers-color-scheme: dark) { :root { --ink: #e9efe9; --bg: #111a16; --card: #18241f; --muted: #9fb0a7; --line: #2a3a33; --accent: #4cc48d; } }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 680px; margin: 0 auto; padding: 48px max(20px, env(safe-area-inset-right, 0px)) 64px max(20px, env(safe-area-inset-left, 0px)); }
+  h1 { font-size: 34px; line-height: 1.15; }
+  h2 { font-size: 21px; margin: 32px 0 6px; }
+  a { color: inherit; }
+  .plan { display: grid; gap: 10px; margin: 8px 0 0; padding: 0; list-style: none; }
+  .plan li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 8px; }
+  .plan li::before { content: ""; width: 10px; height: 10px; margin: 9px 0 0 6px; border-radius: 50%; background: var(--accent); }
+  .ask { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; display: grid; gap: 12px; margin-top: 12px; }
+  .mail { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .mail code { font: 600 16px/1.4 ui-monospace, Menlo, monospace; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 6px 10px; user-select: all; }
+  .copy { font: inherit; font-size: 15px; font-weight: 700; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+  pre { margin: 0; white-space: pre-wrap; font: 15px/1.5 ui-monospace, Menlo, monospace; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
+  .note { color: var(--muted); font-size: 15px; }
+  .langbar { display: flex; justify-content: flex-end; margin: -24px 0 14px; }
+  .lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--card); }
+  .lang button { font: 700 14px/1 system-ui, sans-serif; border: 0; background: none; color: var(--muted); padding: 7px 12px; border-radius: 999px; cursor: pointer; }
+  .lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  .rate { font-variant-numeric: tabular-nums; }
+</style>
+<link rel="stylesheet" href="../app.css">
+</head>
+<body>
+<main>
+  <div class="langbar"><div class="lang" role="group" aria-label="Sprache / Language"><button type="button" data-l="de">DE</button><button type="button" data-l="en">EN</button></div></div>
+  <header class="top">
+    <img src="icon.svg" alt="">
+    <div><h1>Öffiwert</h1><p data-i="tag">Was bringt dir dein KlimaTicket? · in Entwicklung</p></div>
+  </header>
+  <div class="get" data-i="get"><span class="badge soon"><small>Geplant für</small><b>iPhone</b></span><span class="badge soon"><small>Geplant für</small><b>Android</b></span></div>
+  <a class="try" href="rechner.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8 7h8M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01M8.5 15h.01M12 15h.01M15.5 15v2.5M8.5 18h.01M12 18h.01"/></svg><span data-i="try"><b>Lohnt sich das KlimaTicket?</b><small>Kostenloser Rechner für Österreich und alle Bundesländer</small></span></a>
+
+  <p class="lead" data-i="lead">Ein KlimaTicket kostet 1.400 € im Jahr, regional 400 bis 1.000 €. Ob es sich lohnt, merkst du erst übers Jahr: Pendeln, Ausflüge, Besuche. Öffiwert soll das mitzählen und jederzeit zeigen, wie viel du gegenüber Einzeltickets schon gespart hast.</p>
+
+  <h2 data-i="h2a">Was die App können soll</h2>
+  <ul class="plan" data-i="plan">
+    <li><span>Fahrten mit einem Tipp eintragen, häufige Strecken als Favoriten.</span></li>
+    <li><span>Jede Fahrt mit dem Preis eines normalen Tickets bewerten und die Ersparnis pro Monat und Jahr zeigen.</span></li>
+    <li><span>KlimaTicket Österreich, alle regionalen KlimaTickets und Jahreskarten wie die Wiener Linien.</span></li>
+    <li><span>Vor der Verlängerung zeigen, ob sich das nächste Jahr lohnt, oder ob die regionale Karte reicht.</span></li>
+    <li><span>Kein Konto, keine Werbung. Deine Fahrten bleiben auf deinem Handy.</span></li>
+  </ul>
+
+  <h2 id="interesse" data-i="h2b">Interesse?</h2>
+  <div class="ask">
+    <p data-i="ask">Wir bauen die App nur, wenn genug Leute sie wirklich brauchen. Schreib uns eine kurze Mail, gern mit den Antworten unten. Das hilft uns sehr.</p>
+    <div class="mail"><code id="addr">support@calmappslab.com</code><button class="copy" type="button" data-copy="addr" data-i="copyA">Adresse kopieren</button>
+      <a class="copy" id="mailto" data-i="open" href="#">Mail öffnen</a></div>
+    <pre id="qs" data-i="qs">Betreff: Öffiwert: Ich habe Interesse
+
+Mein Ticket (KlimaTicket Österreich / regional / Jahreskarte):
+Bundesland:
+Fahrten pro Woche:
+Was wäre dir die App pro Jahr wert:
+Was möchtest du wissen, was heute fehlt:</pre>
+    <button class="copy" type="button" data-copy="qs" style="justify-self:start" data-i="copyQ">Fragen kopieren</button>
+    <p class="note" data-i="priv">Deine Adresse nutzen wir nur für diese eine Nachricht, wenn die App fertig ist. Kein Newsletter, keine Weitergabe. Danach löschen wir sie.</p>
+  </div>
+
+  <p class="note" data-i="foot">Öffiwert ist ein Arbeitstitel und ein unabhängiges Projekt; es gehört nicht zum KlimaTicket, zu den ÖBB oder zu einem Verkehrsverbund. CalmAppsLab · <a href="../">calmappslab.com</a></p>
+</main>
+<script>
+// English for expats; the German text stays in the HTML for search engines and is read back from there
+const EN = {
+  tag: 'What is your KlimaTicket worth? · in the works',
+  get: '<span class="badge soon"><small>Planned for</small><b>iPhone</b></span><span class="badge soon"><small>Planned for</small><b>Android</b></span>',
+  try: '<b>Does the KlimaTicket pay off?</b><small>Free calculator for Austria and every state</small>',
+  lead: 'A KlimaTicket costs €1,400 a year, regional ones €400 to €1,000. Whether it pays off only shows over the year: commuting, day trips, visits. Öffiwert will keep count and show at any time how much you have saved compared with single tickets.',
+  h2a: 'What the app should do',
+  plan: '<li><span>Log trips with one tap, frequent routes as favourites.</span></li><li><span>Value every trip at the price of a normal ticket and show your savings per month and year.</span></li><li><span>KlimaTicket Austria, every regional KlimaTicket and annual passes such as Wiener Linien.</span></li><li><span>Before renewal, show whether next year pays off or the regional pass is enough.</span></li><li><span>No account, no ads. Your trips stay on your phone. In English and German.</span></li>',
+  h2b: 'Interested?',
+  ask: 'We will only build the app if enough people really need it. Send us a short email, ideally with the answers below. It helps a lot.',
+  copyA: 'Copy address', open: 'Open email', copyQ: 'Copy questions',
+  qs: 'Subject: Öffiwert: I am interested\n\nMy ticket (KlimaTicket Austria / regional / annual pass):\nState:\nTrips per week:\nWhat would the app be worth to you per year:\nWhat would you like to know, what is missing today:',
+  priv: 'We use your address only for this one message when the app is ready. No newsletter, never shared. Then we delete it.',
+  foot: 'Öffiwert is a working title and an independent project, not affiliated with the KlimaTicket, ÖBB or any transport network. CalmAppsLab · <a href="../">calmappslab.com</a>',
+};
+const MAIL = {
+  de: 'mailto:support@calmappslab.com?subject=' + encodeURIComponent('Öffiwert: Ich habe Interesse') + '&body=' + encodeURIComponent('Mein Ticket (KlimaTicket Österreich / regional / Jahreskarte):\nBundesland:\nFahrten pro Woche:\nWas wäre dir die App pro Jahr wert:\nWas möchtest du wissen, was heute fehlt:\n'),
+  en: 'mailto:support@calmappslab.com?subject=' + encodeURIComponent('Öffiwert: I am interested') + '&body=' + encodeURIComponent('My ticket (KlimaTicket Austria / regional / annual pass):\nState:\nTrips per week:\nWhat would the app be worth to you per year:\nWhat would you like to know, what is missing today:\n'),
+};
+const DE = {};
+document.querySelectorAll('[data-i]').forEach(el => DE[el.dataset.i] = el.innerHTML);
+const TITLE = { de: document.title, en: 'Öffiwert: what is your KlimaTicket worth? (in the works)' };
+let lang = '';
+try { lang = new URLSearchParams(location.search).get('lang') || localStorage.getItem('ow-lang') || ''; } catch (e) {}
+if (lang !== 'de' && lang !== 'en') lang = /^de\b/i.test(navigator.language || '') ? 'de' : 'en';
+function setLang(l) {
+  lang = l; try { localStorage.setItem('ow-lang', l); } catch (e) {}
+  document.documentElement.lang = l; document.title = TITLE[l];
+  document.querySelectorAll('[data-i]').forEach(el => { el.innerHTML = (l === 'en' ? EN : DE)[el.dataset.i]; });
+  document.getElementById('mailto').href = MAIL[l];
+  document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.l === l)));
+}
+document.querySelectorAll('.lang button').forEach(b => b.onclick = () => setLang(b.dataset.l));
+setLang(lang);
+document.querySelectorAll('[data-copy]').forEach(b => b.onclick = async () => {
+  const el = document.getElementById(b.dataset.copy), old = b.textContent, done = lang === 'en' ? 'Copied' : 'Kopiert';
+  try { await navigator.clipboard.writeText(el.textContent); b.textContent = done; }
+  catch (e) { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+  setTimeout(() => { b.textContent = old; }, 2000);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lohnt sich das KlimaTicket? Rechner 2026 für Österreich und alle Bundesländer</title>
+<meta name="description" content="Kostenloser Rechner: Lohnt sich das KlimaTicket Österreich, das regionale KlimaTicket deines Bundeslandes oder doch Einzeltickets mit Vorteilscard? Deine Fahrten eintragen, Jahreskosten vergleichen. Unabhängig, ohne Anmeldung, auch auf Englisch.">
+<link rel="alternate" hreflang="de" href="https://calmappslab.com/ow/rechner.html">
+<link rel="alternate" hreflang="en" href="https://calmappslab.com/ow/rechner.html?lang=en">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../fonts/barlow.css">
+<style>
+  :root {
+    color-scheme: light dark;
+    --ink: #14232c; --bg: #eef3f3; --card: #ffffff; --muted: #56656d; --line: #d6e1df; --accent: #1f8a5b; --accent-ink: #136742;
+    --good: #1f8a4c; --bad: #b4452c; --chip: #e2eceb;
+    --f-display: "Barlow Semi Condensed", "Arial Narrow", system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #e8eef1; --bg: #10191b; --card: #182427; --muted: #9fb0b3; --line: #29393b; --accent: #4cc48d; --accent-ink: #7fdcb1;
+      --good: #5cc98a; --bad: #f08a72; --chip: #223236; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 28px max(16px, env(safe-area-inset-right, 0px)) 140px max(16px, env(safe-area-inset-left, 0px)); display: grid; gap: 22px; }
+  .bar0 { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 15px; }
+  .bar0 a { color: var(--muted); text-decoration: none; }
+  .lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--card); }
+  .lang button { font: 700 14px/1 system-ui, sans-serif; border: 0; background: none; color: var(--muted); padding: 7px 12px; border-radius: 999px; cursor: pointer; }
+  .lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  header { display: flex; align-items: center; gap: 16px; }
+  header img { width: 60px; height: 60px; border-radius: 14px; flex: none; }
+  h1 { font: 700 34px/1.08 var(--f-display); margin: 0; text-wrap: balance; }
+  h2 { font: 700 24px/1.15 var(--f-display); margin: 8px 0 0; text-wrap: balance; }
+  .sub { color: var(--muted); margin: 2px 0 0; }
+  p { margin: 0; }
+  a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; display: grid; gap: 14px; }
+  .lbl { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips button { font: inherit; font-size: 15px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+  .chips button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  select, input[type=text], input[type=number] { font: inherit; padding: 9px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--ink); min-width: 0; }
+  select { width: 100%; }
+  .row2 { display: grid; gap: 14px; }
+  .trips { display: grid; gap: 12px; }
+  .trip { display: grid; gap: 8px; padding: 12px; border: 1px solid var(--line); border-radius: 14px; }
+  .trip .l1 { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+  .trip .l2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .trip .l3 { display: flex; flex-wrap: wrap; gap: 8px; }
+  .trip label { display: grid; gap: 4px; font-size: 13px; color: var(--muted); min-width: 0; }
+  .trip .x { border: 0; background: none; color: var(--muted); font-size: 22px; cursor: pointer; padding: 0 6px; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+  .seg button { font: inherit; font-size: 14px; border: 0; background: var(--bg); color: var(--ink); padding: 6px 12px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  .add { font: inherit; font-size: 15px; font-weight: 700; justify-self: start; border: 1px dashed var(--accent); background: none; color: var(--accent-ink); border-radius: 999px; padding: 7px 16px; cursor: pointer; }
+  .check { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; }
+  .check input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--accent); }
+  .res { display: grid; gap: 10px; }
+  .opt { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: baseline; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--line); }
+  .opt.win { border: 2px solid var(--good); }
+  .opt b { font-size: 18px; }
+  .opt .sum { font: 700 24px/1 var(--f-display); white-space: nowrap; }
+  .opt small { grid-column: 1 / -1; color: var(--muted); font-size: 14px; }
+  .verdict { font: 700 22px/1.2 var(--f-display); text-wrap: balance; }
+  .hint { color: var(--muted); font-size: 15px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .btn { font: inherit; font-size: 15px; font-weight: 700; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 999px; padding: 8px 16px; cursor: pointer; text-decoration: none; }
+  .bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: var(--card); border-top: 1px solid var(--line); box-shadow: 0 -4px 18px rgb(0 0 0 / .08);
+    padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+  .bar .in { max-width: 720px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) auto; gap: 10px; align-items: center; }
+  .bar .k { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar .v { font: 700 21px/1.1 var(--f-display); white-space: nowrap; }
+  .bar .v.win { color: var(--good); }
+  .bar a { font-size: 14px; font-weight: 700; white-space: nowrap; }
+  .bar .zero { grid-column: 1 / -1; color: var(--muted); font-size: 15px; }
+  .app { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: center; }
+  .app img { width: 56px; height: 56px; border-radius: 13px; }
+  details { border-top: 1px solid var(--line); padding: 12px 0; }
+  details:last-child { border-bottom: 1px solid var(--line); }
+  summary { font-weight: 700; cursor: pointer; }
+  details p { margin-top: 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: 15px; }
+  th, td { text-align: left; padding: 5px 8px 5px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  td.r, th.r { text-align: right; white-space: nowrap; }
+  .tw { overflow-x: auto; }
+  .note { color: var(--muted); font-size: 14px; }
+  footer { color: var(--muted); font-size: 14px; display: grid; gap: 6px; }
+  @media (min-width: 620px) { .row2 { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 430px) { .bar .in { grid-template-columns: repeat(3, minmax(0, 1fr)); } .bar a { display: none; } .bar .v { font-size: 19px; } }
+</style>
+</head>
+<body>
+<main>
+  <div class="bar0"><a href="./" data-i="back">‹ Öffiwert</a><div class="lang" role="group" aria-label="Sprache / Language"><button type="button" data-l="de">DE</button><button type="button" data-l="en">EN</button></div></div>
+  <header>
+    <img src="icon.svg" alt="">
+    <div><h1 data-i="h1">Lohnt sich das KlimaTicket?</h1><p class="sub" data-i="sub">Rechner für das KlimaTicket Österreich und die regionalen KlimaTickets · Preise 2026</p></div>
+  </header>
+
+  <p data-i="lead">Trag deine üblichen Fahrten mit dem Preis eines normalen Tickets ein. Der Rechner vergleicht über ein Jahr: Einzeltickets, Einzeltickets mit Vorteilscard, das KlimaTicket deines Bundeslandes und das KlimaTicket Österreich. Ohne Anmeldung, nichts wird gespeichert außer in deinem Browser.</p>
+
+  <section class="card">
+    <div class="row2">
+      <div><div class="lbl" data-i="who">Für wen?</div><div class="chips" id="who"></div></div>
+      <div><div class="lbl" data-i="state">Dein Bundesland</div><select id="state" aria-label="Bundesland"></select></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="lbl" data-i="tripsL">Deine Fahrten</div>
+    <p class="note" data-i="tripsN">Preis einer Fahrt ohne Ermäßigung, zum Beispiel aus der ÖBB-App oder vom Automaten. Hin und zurück sind zwei Fahrten.</p>
+    <div class="trips" id="trips"></div>
+    <button class="add" id="add" type="button"></button>
+    <label class="check"><input type="checkbox" id="vc"><span data-i="vc">Einzeltickets auch mit Vorteilscard Classic vergleichen (73 € im Jahr, −50 % auf ÖBB-Standardtickets)</span></label>
+  </section>
+
+  <section class="card" id="result" aria-live="polite">
+    <div class="lbl" data-i="result">Ergebnis pro Jahr</div>
+    <div class="res" id="res"></div>
+    <div class="actions"><button class="btn" id="share" type="button"></button><button class="btn" id="reset" type="button"></button></div>
+  </section>
+
+  <section class="card app">
+    <img src="icon.svg" alt="">
+    <p data-i="app"><b>Öffiwert</b> soll deine Fahrten mitzählen und zeigen, wie viel dir dein KlimaTicket schon gebracht hat. Die App ist in Planung. <a href="./#interesse">Sag uns, ob du sie willst</a></p>
+  </section>
+
+  <section>
+    <h2 data-i="faq">Häufige Fragen</h2>
+    <details><summary data-i="q1">Was kostet das KlimaTicket Österreich 2026?</summary>
+      <p data-i="a1">Classic 1.400 € im Jahr (rund 117 € im Monat). Jugend (unter 26), Senior (ab 65) und Spezial 1.050 €. Für 2027 ist eine Erhöhung auf etwa 1.428 € geplant, künftige Erhöhungen sollen auf 2 % begrenzt werden. Quelle: Bundesgesetzblatt, Klimaticketgesetz (Regierungsvorlage November 2026).</p></details>
+    <details><summary data-i="q2">Was kosten die regionalen KlimaTickets?</summary>
+      <div class="tw"><table id="regtab"></table></div>
+      <p class="note" data-i="a2">Angaben der Verkehrsverbünde und aus Medienberichten, Stand November 2026, ohne Gewähr. Familien- und Haushaltsrabatte sind nicht eingerechnet.</p></details>
+    <details><summary data-i="q3">Ab wann lohnt sich das KlimaTicket Österreich?</summary>
+      <p data-i="a3">Wenn du im Jahr mehr als 1.400 € für normale Tickets ausgeben würdest. Mit Vorteilscard verschiebt sich die Grenze: Dann zahlst du für ÖBB-Fahrten nur die Hälfte, und das KlimaTicket lohnt sich erst ab etwa 2.650 € Ticketkosten im Jahr. Das KlimaTicket deines Bundeslandes ist oft die günstigere Wahl, wenn du selten über die Landesgrenze fährst.</p></details>
+    <details><summary data-i="q4">Wie genau ist der Rechner?</summary>
+      <p data-i="a4">So genau wie die Preise, die du einträgst. Die Vorteilscard gibt 50 % auf ÖBB-Standardtickets, bei Privatbahnen und im Verbundtarif kann der Rabatt kleiner sein. Sparschiene-Angebote, Familienrabatte und Jobtickets sind nicht eingerechnet. Das regionale KlimaTicket gilt nur innerhalb des Bundeslandes; Fahrten darüber hinaus rechnet der Rechner zum vollen Preis.</p></details>
+  </section>
+
+  <footer>
+    <p data-i="f1">Öffiwert ist ein unabhängiges Projekt und gehört nicht zum KlimaTicket, zu den ÖBB oder zu einem Verkehrsverbund. Alle Angaben ohne Gewähr, Preise Stand November 2026.</p>
+    <p>CalmAppsLab · <a href="./" data-i="f2">Öffiwert</a> · <a href="../">calmappslab.com</a></p>
+  </footer>
+</main>
+
+<div class="bar"><div class="in" id="barIn"></div></div>
+
+<script>
+// prices in euros per year: [regular, reduced (under 26 / 65+)]; null where no reduced tariff is known
+const KTO = [1400, 1050];
+const VC = 73;
+const STATES = [
+  { id: 'tirol', de: 'Tirol', en: 'Tyrol', t: 'KlimaTicket Tirol', p: [625.6, 319] },
+  { id: 'wien', de: 'Wien', en: 'Vienna', t: 'Wiener Linien Jahreskarte', p: [467, 299] },
+  { id: 'metro', de: 'Wien, NÖ, Burgenland', en: 'Vienna, Lower Austria, Burgenland', t: 'KlimaTicket MetropolRegion', p: [1000, null] },
+  { id: 'salzburg', de: 'Salzburg', en: 'Salzburg', t: 'KlimaTicket Salzburg', p: [399, 299] },
+  { id: 'ooe', de: 'Oberösterreich', en: 'Upper Austria', t: 'KlimaTicket OÖ Gesamt', p: [703, null] },
+  { id: 'stmk', de: 'Steiermark', en: 'Styria', t: 'KlimaTicket Steiermark', p: [532, null] },
+  { id: 'ktn', de: 'Kärnten', en: 'Carinthia', t: 'Kärnten Ticket', p: [449, null] },
+  { id: 'vbg', de: 'Vorarlberg', en: 'Vorarlberg', t: 'KlimaTicket Vorarlberg', p: [448, null] },
+];
+const T = {
+  de: { who: ['Erwachsene', 'Unter 26', 'Ab 65'], add: '+ Fahrt hinzufügen', name: 'Strecke', price: 'Preis pro Fahrt (€)', count: 'Wie oft', per: ['pro Woche', 'pro Monat', 'pro Jahr'],
+    inside: 'im Bundesland', outside: 'über die Landesgrenze', oebb: 'mit der Bahn (ÖBB)', city: 'Bus/Tram/Verbund', del: 'Fahrt entfernen',
+    ex: ['Pendeln zur Arbeit', 'Wochenende', 'Besuch / Urlaub'], single: 'Einzeltickets', singleVC: 'Einzeltickets + Vorteilscard', kto: 'KlimaTicket Österreich',
+    reg: s => s.t, regNone: 'kein ermäßigter Tarif bekannt, Normalpreis gerechnet', outsideAdd: x => ` + ${x} für Fahrten außerhalb des Bundeslandes`,
+    vcM: x => `Vorteilscard 73 € + ${x} für Tickets`, perMonth: x => `${x} pro Monat`, empty: 'Trag oben mindestens eine Fahrt mit Preis ein.',
+    win: n => `Für dich am günstigsten: ${n}.`, saves: (x, y) => `Das spart ${x} im Jahr gegenüber ${y}.`,
+    need: (x, n) => `Bis sich ein KlimaTicket lohnt, fehlen noch Fahrten im Wert von etwa ${x}${n ? `, das sind rund ${n} Fahrten deiner teuersten Strecke` : ''}.`,
+    border: 'Fährst du öfter über die Landesgrenze, kann das KlimaTicket Österreich günstiger werden. Trag solche Fahrten als „über die Landesgrenze“ ein.',
+    ktoWin: 'Das KlimaTicket Österreich hat sich für dich gelohnt.', share: 'Link zum Ergebnis kopieren', copied: 'Link kopiert', reset: 'Alles zurücksetzen',
+    bar0: 'Trag deine Fahrten ein, das Ergebnis erscheint hier.', details: 'Details', regTh: ['Bundesland', 'Ticket', 'Normal', 'Ermäßigt'], title: 'Lohnt sich das KlimaTicket? Rechner 2026 für Österreich und alle Bundesländer', locale: 'de-AT' },
+  en: { who: ['Adults', 'Under 26', '65 and over'], add: '+ Add a trip', name: 'Route', price: 'Price per trip (€)', count: 'How often', per: ['per week', 'per month', 'per year'],
+    inside: 'within my state', outside: 'across state borders', oebb: 'by train (ÖBB)', city: 'bus/tram/local network', del: 'Remove trip',
+    ex: ['Commute to work', 'Weekends', 'Visits / holidays'], single: 'Single tickets', singleVC: 'Single tickets + Vorteilscard', kto: 'KlimaTicket Austria',
+    reg: s => s.t, regNone: 'no reduced fare known, regular price used', outsideAdd: x => ` + ${x} for trips outside the state`,
+    vcM: x => `Vorteilscard €73 + ${x} for tickets`, perMonth: x => `${x} a month`, empty: 'Enter at least one trip with a price above.',
+    win: n => `Cheapest for you: ${n}.`, saves: (x, y) => `That saves ${x} a year compared with ${y}.`,
+    need: (x, n) => `A KlimaTicket would pay off with about ${x} more in trips${n ? `, roughly ${n} more trips on your most expensive route` : ''}.`,
+    border: 'If you often cross the state border, the KlimaTicket Austria can become cheaper. Add such trips as “across state borders”.',
+    ktoWin: 'The KlimaTicket Austria pays off for you.', share: 'Copy link to this result', copied: 'Link copied', reset: 'Reset all',
+    bar0: 'Add your trips, the result appears here.', details: 'Details', regTh: ['State', 'Ticket', 'Regular', 'Reduced'], title: 'Does the KlimaTicket pay off? Calculator 2026 for Austria and every state', locale: 'en-GB' },
+};
+const EN_STATIC = {
+  back: '‹ Öffiwert', h1: 'Does the KlimaTicket pay off?', sub: 'Calculator for the KlimaTicket Austria and the regional KlimaTickets · 2026 prices',
+  lead: 'Enter your usual trips with the price of a normal ticket. The calculator compares one year of single tickets, single tickets with a Vorteilscard, your state\'s regional KlimaTicket and the KlimaTicket Austria. No sign-up, nothing is stored except in your browser.',
+  who: 'For whom?', state: 'Your state', tripsL: 'Your trips', tripsN: 'Price of one trip without discounts, for example from the ÖBB app or a ticket machine. A return trip counts as two trips.',
+  vc: 'Also compare single tickets with a Vorteilscard Classic (€73 a year, 50% off ÖBB standard tickets)', result: 'Result per year',
+  app: '<b>Öffiwert</b> will count your trips and show how much your KlimaTicket has already saved you. The app is in planning. <a href="./#interesse">Tell us if you want it</a>',
+  faq: 'Questions', q1: 'How much is the KlimaTicket Austria in 2026?',
+  a1: 'Classic €1,400 a year (about €117 a month). Youth (under 26), senior (65 and over) and special €1,050. For 2027 a rise to about €1,428 is planned, and future increases are to be capped at 2%. Source: Federal Law Gazette, KlimaTicket Act (government bill, November 2026).',
+  q2: 'How much are the regional KlimaTickets?', a2: 'Figures from the transport networks and news reports, as of November 2026, no guarantee. Family and household discounts are not included.',
+  q3: 'When does the KlimaTicket Austria pay off?',
+  a3: 'When you would spend more than €1,400 a year on normal tickets. With a Vorteilscard the line moves: you pay only half for ÖBB trips, so the KlimaTicket pays off from about €2,650 of ticket value a year. Your state\'s KlimaTicket is often the cheaper choice if you rarely cross the state border.',
+  q4: 'How accurate is the calculator?',
+  a4: 'As accurate as the prices you enter. The Vorteilscard gives 50% off ÖBB standard tickets; on private railways and local network fares the discount can be smaller. Sparschiene offers, family discounts and job tickets are not included. A regional KlimaTicket is valid only within its state; trips beyond it are counted at full price.',
+  f1: 'Öffiwert is an independent project and not affiliated with the KlimaTicket, ÖBB or any transport network. No guarantee, prices as of November 2026.', f2: 'Öffiwert',
+};
+const DE_STATIC = {};
+document.querySelectorAll('[data-i]').forEach(el => DE_STATIC[el.dataset.i] = el.innerHTML);
+const $ = id => document.getElementById(id);
+const S = { l: '', w: 0, s: 'tirol', vc: false, trips: null };
+try { Object.assign(S, JSON.parse(localStorage.getItem('kt-rechner') || '{}')); } catch (e) {}
+// a shared link: ?lang=en&w=0&s=tirol&vc=1&t=price*count*per*inside*oebb~...
+try {
+  const u = new URLSearchParams(location.search);
+  if (u.get('lang') === 'de' || u.get('lang') === 'en') S.l = u.get('lang');
+  if (['0', '1', '2'].includes(u.get('w'))) S.w = +u.get('w');
+  if (STATES.some(s => s.id === u.get('s'))) S.s = u.get('s');
+  if (u.get('vc')) S.vc = u.get('vc') === '1';
+  if (u.get('t')) S.trips = u.get('t').split('~').map(x => { const [p, c, per, ins, rail, ...n] = x.split('*'); return { n: decodeURIComponent(n.join('*') || ''), p: +p || 0, c: +c || 0, per: +per || 0, in: ins !== '0', rail: rail !== '0' }; }).slice(0, 12);
+} catch (e) {}
+if (!T[S.l]) S.l = /^de\b/i.test(navigator.language || '') ? 'de' : 'en';
+if (!Array.isArray(S.trips) || !S.trips.length) S.trips = [{ n: '', p: 0, c: 5, per: 0, in: true, rail: true }];
+const L = () => T[S.l];
+const num = (x, d) => x.toLocaleString(L().locale, { minimumFractionDigits: d, maximumFractionDigits: d });
+const eur = x => S.l === 'de' ? num(Math.round(x), 0) + ' €' : '€' + num(Math.round(x), 0);
+const save = () => { try { localStorage.setItem('kt-rechner', JSON.stringify({ l: S.l, w: S.w, s: S.s, vc: S.vc, trips: S.trips })); } catch (e) {} };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const PER = [52, 12, 1];
+
+function statics() {
+  document.documentElement.lang = S.l; document.title = L().title;
+  document.querySelectorAll('[data-i]').forEach(el => { el.innerHTML = (S.l === 'en' ? EN_STATIC : DE_STATIC)[el.dataset.i]; });
+  document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.l === S.l)));
+  $('add').textContent = L().add; $('share').textContent = L().share; $('reset').textContent = L().reset; $('vc').checked = S.vc;
+  $('state').innerHTML = STATES.map(s => `<option value="${s.id}"${s.id === S.s ? ' selected' : ''}>${s[S.l]}</option>`).join('');
+  $('who').innerHTML = L().who.map((w, i) => `<button type="button" data-w="${i}" aria-pressed="${i === S.w}">${w}</button>`).join('');
+  $('who').querySelectorAll('button').forEach(b => b.onclick = () => { S.w = +b.dataset.w; save(); statics(); result(); });
+  const th = L().regTh, red = s => s.p[1] != null ? eur(s.p[1]) : '–';
+  $('regtab').innerHTML = `<tr><th>${th[0]}</th><th>${th[1]}</th><th class="r">${th[2]}</th><th class="r">${th[3]}</th></tr>` + STATES.map(s => `<tr><td>${s[S.l]}</td><td>${s.t}</td><td class="r">${eur(s.p[0])}</td><td class="r">${red(s)}</td></tr>`).join('');
+}
+
+function trips() {
+  const t = L();
+  $('trips').innerHTML = S.trips.map((x, i) => `<div class="trip" data-k="${i}">
+    <div class="l1"><label>${t.name}<input type="text" data-f="n" value="${esc(x.n)}" placeholder="${t.ex[i % 3]}"></label><button class="x" type="button" data-del="${i}" aria-label="${t.del}">×</button></div>
+    <div class="l2"><label>${t.price}<input type="number" inputmode="decimal" min="0" step="0.1" data-f="p" value="${x.p || ''}" placeholder="0"></label>
+      <label>${t.count}<span style="display:flex;gap:6px"><input type="number" inputmode="numeric" min="0" data-f="c" value="${x.c || ''}" style="width:5em"><select data-f="per">${t.per.map((p, j) => `<option value="${j}"${j === x.per ? ' selected' : ''}>${p}</option>`).join('')}</select></span></label></div>
+    <div class="l3"><span class="seg"><button type="button" data-f="in" data-v="1" aria-pressed="${x.in}">${t.inside}</button><button type="button" data-f="in" data-v="0" aria-pressed="${!x.in}">${t.outside}</button></span>
+      <span class="seg"><button type="button" data-f="rail" data-v="1" aria-pressed="${x.rail}">${t.oebb}</button><button type="button" data-f="rail" data-v="0" aria-pressed="${!x.rail}">${t.city}</button></span></div>
+  </div>`).join('');
+  $('trips').querySelectorAll('input, select').forEach(el => el.oninput = el.onchange = () => {
+    const x = S.trips[+el.closest('.trip').dataset.k], f = el.dataset.f;
+    x[f] = f === 'n' ? el.value.slice(0, 60) : f === 'per' ? +el.value : Math.max(0, parseFloat(el.value) || 0);
+    save(); result();
+  });
+  $('trips').querySelectorAll('.seg button').forEach(b => b.onclick = () => {
+    const x = S.trips[+b.closest('.trip').dataset.k]; x[b.dataset.f] = b.dataset.v === '1';
+    b.parentNode.querySelectorAll('button').forEach(o => o.setAttribute('aria-pressed', String(o === b)));
+    save(); result();
+  });
+  $('trips').querySelectorAll('[data-del]').forEach(b => b.onclick = () => { S.trips.splice(+b.dataset.del, 1); if (!S.trips.length) S.trips.push({ n: '', p: 0, c: 0, per: 0, in: true, rail: true }); save(); trips(); result(); });
+}
+
+function calc() {
+  const st = STATES.find(s => s.id === S.s) || STATES[0], red = S.w > 0;
+  const kto = KTO[red ? 1 : 0], reg = red && st.p[1] != null ? st.p[1] : st.p[0];
+  let single = 0, vcTickets = 0, outside = 0, top = null;
+  for (const x of S.trips) {
+    const y = x.p * x.c * PER[x.per]; if (!y) continue;
+    single += y; vcTickets += x.rail ? y / 2 : y; if (!x.in) outside += y;
+    if (!top || x.p > top.p) top = x;
+  }
+  return { st, red, kto, reg, regUsed: reg + outside, outside, single, vc: VC + vcTickets, vcTickets, top, regNoReduced: red && st.p[1] == null };
+}
+
+function result() {
+  const r = calc(), t = L();
+  if (r.single <= 0) { $('res').innerHTML = `<p class="hint">${t.empty}</p>`; $('barIn').innerHTML = `<div class="zero">${t.bar0}</div>`; return; }
+  const opts = [['single', t.single, r.single], ['reg', t.reg(r.st), r.regUsed], ['kto', t.kto, r.kto]];
+  if (S.vc) opts.splice(1, 0, ['vc', t.singleVC, r.vc]);
+  const sorted = [...opts].sort((a, b) => a[2] - b[2]), best = sorted[0], second = sorted[1];
+  const small = { single: t.perMonth(eur(r.single / 12)), vc: t.vcM(eur(r.vcTickets)), reg: `${eur(r.reg)}${r.outside ? t.outsideAdd(eur(r.outside)) : ''}${r.regNoReduced ? ' · ' + t.regNone : ''}`, kto: t.perMonth(eur(r.kto / 12)) };
+  let hint = t.saves(eur(second[2] - best[2]), second[1]);
+  // no pass beats single tickets yet: say how much is missing; the regional pass wins: point at trips across the border
+  if (best[0] === 'single' || best[0] === 'vc') {
+    const gap = Math.min(r.kto, r.regUsed) - best[2];
+    hint += ' ' + t.need(eur(gap), r.top && r.top.p ? Math.ceil(gap / r.top.p) : 0);
+  } else if (best[0] === 'reg') hint += ' ' + t.border;
+  $('res').innerHTML = `<p class="verdict">${best[0] === 'kto' ? t.ktoWin : t.win(best[1])}</p>` +
+    opts.map(([k, n, v]) => `<div class="opt${k === best[0] ? ' win' : ''}"><b>${n}</b><span class="sum">${eur(v)}</span><small>${small[k]}</small></div>`).join('') +
+    `<p class="hint">${hint}</p>`;
+  const cell = (k, n, v) => `<div><div class="k">${n}</div><div class="v${k === best[0] ? ' win' : ''}">${eur(v)}</div></div>`;
+  const regShort = S.l === 'de' ? 'Regional' : 'Regional';
+  $('barIn').innerHTML = cell('single', t.single, r.single) + cell('reg', regShort, r.regUsed) + cell('kto', 'KlimaTicket Ö', r.kto) + `<a href="#result">${t.details}</a>`;
+}
+
+function render() { statics(); trips(); result(); }
+document.querySelectorAll('.lang button').forEach(b => b.onclick = () => { S.l = b.dataset.l; save(); render(); });
+$('state').onchange = () => { S.s = $('state').value; save(); result(); };
+$('vc').onchange = () => { S.vc = $('vc').checked; save(); result(); };
+$('add').onclick = () => { if (S.trips.length < 12) { S.trips.push({ n: '', p: 0, c: 0, per: S.trips.length >= 2 ? 2 : 1, in: true, rail: true }); save(); trips(); result(); } };
+$('reset').onclick = () => { S.trips = [{ n: '', p: 0, c: 5, per: 0, in: true, rail: true }]; S.vc = false; save(); render(); };
+$('share').onclick = async () => {
+  const tt = S.trips.filter(x => x.p && x.c).map(x => [x.p, x.c, x.per, x.in ? 1 : 0, x.rail ? 1 : 0, encodeURIComponent(x.n)].join('*')).join('~');
+  const url = location.origin + location.pathname + `?lang=${S.l}&w=${S.w}&s=${S.s}&vc=${S.vc ? 1 : 0}` + (tt ? '&t=' + tt : '');
+  try { await navigator.clipboard.writeText(url); $('share').textContent = L().copied; } catch (e) { $('share').textContent = url; }
+  setTimeout(() => { $('share').textContent = L().share; }, 2500);
+};
+render();
+</script>
+</body>
+</html>
