@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skiworth: is your ski pass paying off? (coming soon)</title>
+<meta name="description" content="Skiworth is a coming app for Epic and Ikon pass holders: ski days logged automatically at 75+ US resorts, real window prices, cost per day and how much your pass has paid back. Try the free calculator now.">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+  :root { color-scheme: light dark; --ink: #10233d; --bg: #eef3f9; --card: #ffffff; --muted: #566579; --line: #d6e0ec; --accent: #d99a1b; }
+  @media (prefers-color-scheme: dark) { :root { --ink: #e8eef6; --bg: #0c1626; --card: #142238; --muted: #9fb0c6; --line: #24364f; --accent: #f2b632; } }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 680px; margin: 0 auto; padding: 48px max(20px, env(safe-area-inset-right, 0px)) 64px max(20px, env(safe-area-inset-left, 0px)); }
+  h1 { font-size: 34px; line-height: 1.15; }
+  h2 { font-size: 21px; margin: 32px 0 6px; }
+  a { color: inherit; }
+  .plan { display: grid; gap: 10px; margin: 8px 0 0; padding: 0; list-style: none; }
+  .plan li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 8px; }
+  .plan li::before { content: ""; width: 10px; height: 10px; margin: 9px 0 0 6px; border-radius: 50%; background: var(--accent); }
+  .ask { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; display: grid; gap: 12px; margin-top: 12px; }
+  .mail { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .mail code { font: 600 16px/1.4 ui-monospace, Menlo, monospace; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 6px 10px; user-select: all; }
+  .copy { font: inherit; font-size: 15px; font-weight: 700; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 999px; padding: 6px 14px; cursor: pointer; text-decoration: none; }
+  pre { margin: 0; white-space: pre-wrap; font: 15px/1.5 ui-monospace, Menlo, monospace; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
+  .note { color: var(--muted); font-size: 15px; }
+</style>
+<link rel="stylesheet" href="../app.css">
+</head>
+<body>
+<main>
+  <header class="top">
+    <img src="icon.svg" alt="">
+    <div><h1>Skiworth</h1><p>Is your ski pass paying off? · coming soon</p></div>
+  </header>
+  <div class="get"><span class="badge soon"><small>Coming soon to the</small><b>App Store</b></span><span class="badge soon"><small>Coming soon to</small><b>Google Play</b></span></div>
+  <a class="try" href="calculator.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8 7h8M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01M8.5 15h.01M12 15h.01M15.5 15v2.5M8.5 18h.01M12 18h.01"/></svg><span><b>Try the pass calculator</b><small>Epic, Epic Local, Ikon or Ikon Base: which one pays off for your season?</small></span></a>
+
+  <p class="lead">A season pass costs $849 to $1,449. Whether it pays off depends on how many days you actually ski, where, and on which days. Skiworth will keep count for you: it notices when you are at a resort, logs the day at that resort's window price, and shows what your pass has saved so far and what each day really cost.</p>
+
+  <h2>What the app should do</h2>
+  <ul class="plan">
+    <li><span>Log ski days by itself at 75+ Epic and Ikon resorts in the US. You only confirm when it is unsure.</span></li>
+    <li><span>Value each day at the real window price, weekday or weekend, and show your cost per day.</span></li>
+    <li><span>Count limited days (Ikon 7 days, Ikon Base 5 days, Epic Local's 10 days at Vail and Beaver Creek) and warn you before you run out.</span></li>
+    <li><span>Remind you of blackout dates before you drive up.</span></li>
+    <li><span>A season recap to share. No account, no ads, your locations stay on your phone.</span></li>
+  </ul>
+
+  <h2 id="interest">Interested?</h2>
+  <div class="ask">
+    <p>We only build the app if enough skiers want it. Send us a short email, ideally with the answers below. It helps a lot.</p>
+    <div class="mail"><code id="addr">support@calmappslab.com</code><button class="copy" type="button" data-copy="addr">Copy address</button>
+      <a class="copy" href="mailto:support@calmappslab.com?subject=Skiworth%3A%20I%20am%20interested&amp;body=My%20pass%20(Epic%2FEpic%20Local%2FIkon%2FIkon%20Base%2Fother)%3A%0ASki%20days%20per%20season%3A%0AHome%20mountain%3A%0AWhat%20would%20the%20app%20be%20worth%20to%20you%20per%20season%3A%0AWhat%20do%20you%20use%20today%20to%20count%20your%20days%3A%0A">Open email</a></div>
+    <pre id="qs">Subject: Skiworth: I am interested
+
+My pass (Epic/Epic Local/Ikon/Ikon Base/other):
+Ski days per season:
+Home mountain:
+What would the app be worth to you per season:
+What do you use today to count your days:</pre>
+    <button class="copy" type="button" data-copy="qs" style="justify-self:start">Copy questions</button>
+    <p class="note">We use your address only to tell you once when the app is ready. No newsletter, never shared, deleted afterwards.</p>
+  </div>
+
+  <p class="note" style="margin-top:28px">Skiworth is an independent project by CalmAppsLab and is not affiliated with Vail Resorts (Epic Pass), Alterra Mountain Company (Ikon Pass) or any resort. Epic Pass and Ikon Pass are trademarks of their owners. · <a href="../">calmappslab.com</a></p>
+</main>
+<script>
+document.querySelectorAll('[data-copy]').forEach(b => b.onclick = async () => {
+  const el = document.getElementById(b.dataset.copy), old = b.textContent;
+  try { await navigator.clipboard.writeText(el.textContent); b.textContent = 'Copied'; }
+  catch (e) { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+  setTimeout(() => { b.textContent = old; }, 2000);
+});
+</script>
+</body>
+</html>

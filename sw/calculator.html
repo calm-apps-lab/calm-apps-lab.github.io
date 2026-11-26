@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Is my Epic or Ikon pass worth it? Ski pass calculator 2026/27</title>
+<meta name="description" content="Free ski pass calculator for 2026/27: enter the resorts and days you ski, see real window prices, cost per day and whether the Epic Pass, Epic Local, Ikon Pass or Ikon Base pays off for you. Independent, no sign-up.">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../fonts/barlow.css">
+<style>
+  :root {
+    color-scheme: light dark;
+    --ink: #14232c; --bg: #eef3f9; --card: #ffffff; --muted: #56656d; --line: #d6e1df; --accent: #1f5fa8; --accent-ink: #164a85;
+    --good: #1f8a4c; --bad: #b4452c; --chip: #e2eceb;
+    --f-display: "Barlow Semi Condensed", "Arial Narrow", system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #e8eef1; --bg: #10191b; --card: #182427; --muted: #9fb0b3; --line: #29393b; --accent: #6aa8ee; --accent-ink: #9cc6f5;
+      --good: #5cc98a; --bad: #f08a72; --chip: #223236; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 28px max(16px, env(safe-area-inset-right, 0px)) 140px max(16px, env(safe-area-inset-left, 0px)); display: grid; gap: 22px; }
+  .bar0 { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 15px; }
+  .bar0 a { color: var(--muted); text-decoration: none; }
+  .lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--card); }
+  .lang button { font: 700 14px/1 system-ui, sans-serif; border: 0; background: none; color: var(--muted); padding: 7px 12px; border-radius: 999px; cursor: pointer; }
+  .lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  header { display: flex; align-items: center; gap: 16px; }
+  header img { width: 60px; height: 60px; border-radius: 14px; flex: none; }
+  h1 { font: 700 34px/1.08 var(--f-display); margin: 0; text-wrap: balance; }
+  h2 { font: 700 24px/1.15 var(--f-display); margin: 8px 0 0; text-wrap: balance; }
+  .sub { color: var(--muted); margin: 2px 0 0; }
+  p { margin: 0; }
+  a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; display: grid; gap: 14px; }
+  .lbl { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips button { font: inherit; font-size: 15px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+  .chips button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  select, input[type=text], input[type=number] { font: inherit; padding: 9px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--ink); min-width: 0; }
+  select { width: 100%; }
+  .row2 { display: grid; gap: 14px; }
+  .trips { display: grid; gap: 12px; }
+  .trip { display: grid; gap: 8px; padding: 12px; border: 1px solid var(--line); border-radius: 14px; }
+  .trip .l1 { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+  .trip .l2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .trip .l3 { display: flex; flex-wrap: wrap; gap: 8px; }
+  .trip label { display: grid; gap: 4px; font-size: 13px; color: var(--muted); min-width: 0; }
+  .trip .x { border: 0; background: none; color: var(--muted); font-size: 22px; cursor: pointer; padding: 0 6px; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+  .seg button { font: inherit; font-size: 14px; border: 0; background: var(--bg); color: var(--ink); padding: 6px 12px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  .add { font: inherit; font-size: 15px; font-weight: 700; justify-self: start; border: 1px dashed var(--accent); background: none; color: var(--accent-ink); border-radius: 999px; padding: 7px 16px; cursor: pointer; }
+  .check { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; }
+  .check input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--accent); }
+  .res { display: grid; gap: 10px; }
+  .opt { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: baseline; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--line); }
+  .opt.win { border: 2px solid var(--good); }
+  .opt b { font-size: 18px; }
+  .opt .sum { font: 700 24px/1 var(--f-display); white-space: nowrap; }
+  .opt small { grid-column: 1 / -1; color: var(--muted); font-size: 14px; }
+  .verdict { font: 700 22px/1.2 var(--f-display); text-wrap: balance; }
+  .hint { color: var(--muted); font-size: 15px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .btn { font: inherit; font-size: 15px; font-weight: 700; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 999px; padding: 8px 16px; cursor: pointer; text-decoration: none; }
+  .bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: var(--card); border-top: 1px solid var(--line); box-shadow: 0 -4px 18px rgb(0 0 0 / .08);
+    padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+  .bar .in { max-width: 720px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) auto; gap: 10px; align-items: center; }
+  .bar .k { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar .v { font: 700 21px/1.1 var(--f-display); white-space: nowrap; }
+  .bar .v.win { color: var(--good); }
+  .bar a { font-size: 14px; font-weight: 700; white-space: nowrap; }
+  .bar .zero { grid-column: 1 / -1; color: var(--muted); font-size: 15px; }
+  .app { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: center; }
+  .app img { width: 56px; height: 56px; border-radius: 13px; }
+  details { border-top: 1px solid var(--line); padding: 12px 0; }
+  details:last-child { border-bottom: 1px solid var(--line); }
+  summary { font-weight: 700; cursor: pointer; }
+  details p { margin-top: 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: 15px; }
+  th, td { text-align: left; padding: 5px 8px 5px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  td.r, th.r { text-align: right; white-space: nowrap; }
+  .tw { overflow-x: auto; }
+  .note { color: var(--muted); font-size: 14px; }
+  footer { color: var(--muted); font-size: 14px; display: grid; gap: 6px; }
+  @media (min-width: 620px) { .row2 { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 430px) { .bar .in { grid-template-columns: repeat(3, minmax(0, 1fr)); } .bar a { display: none; } .bar .v { font-size: 19px; } }
+  [hidden] { display: none !important; }
+  .search { width: 100%; font: inherit; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--ink); }
+  .pick { display: grid; gap: 0; margin: 0 -18px; max-height: 320px; overflow-y: auto; border-top: 1px solid var(--line); }
+  .pick button { all: unset; box-sizing: border-box; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding: 9px 18px; border-bottom: 1px solid var(--line); cursor: pointer; }
+  .pick button:hover { background: var(--chip); }
+  .pick .nm { font-weight: 650; } .pick .meta { font-size: 13px; color: var(--muted); }
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 0 5px; margin-right: 3px; background: var(--chip); color: var(--muted); }
+  .tag.e { background: color-mix(in srgb, #3b6fd1 18%, transparent); color: #3b6fd1; } .tag.i { background: color-mix(in srgb, #e07a1f 18%, transparent); color: #c4620d; }
+  .sel { display: grid; gap: 10px; }
+  .srow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 10px; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: 14px; }
+  .srow .nm { font-weight: 650; } .srow .meta { font-size: 13px; color: var(--muted); }
+  .srow .ds { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 14px; }
+  .step { display: flex; align-items: center; gap: 4px; font-size: 14px; color: var(--muted); }
+  .step button { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: 600 20px/1 system-ui, sans-serif; cursor: pointer; }
+  .step b { min-width: 2ch; text-align: center; color: var(--ink); font-size: 17px; }
+  .cmp { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .cmp th, .cmp td { padding: 8px 6px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+  .cmp th:first-child, .cmp td:first-child { text-align: left; white-space: normal; }
+  .cmp tr.best td { font-weight: 700; color: var(--good); }
+  .cmp tr.mine td:first-child::after { content: " ★"; color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <div class="bar0"><a href="./">‹ Skiworth</a></div>
+  <header>
+    <img src="icon.svg" alt="">
+    <div><h1>Is my ski pass worth it?</h1><p class="sub">Epic, Epic Local, Ikon and Ikon Base · 2026/27 prices · 75 US resorts</p></div>
+  </header>
+  <p>Add the resorts you ski and how many weekdays and weekend days. The calculator values each day at that resort's window price, checks what each pass covers (including day limits) and shows which pass pays off for your season.</p>
+
+  <section class="card">
+    <div class="lbl">Your pass</div>
+    <div class="chips" id="pass"></div>
+    <label class="check"><span>What you paid (optional, e.g. launch or Gen Z price):</span><input type="number" id="paid" min="0" step="1" inputmode="decimal" style="width:7em"></label>
+  </section>
+
+  <section class="card">
+    <div class="lbl">Your ski days</div>
+    <div class="sel" id="sel"></div>
+    <input class="search" id="q" type="search" placeholder="Add a resort, e.g. Vail, Park City, Mammoth" autocomplete="off">
+    <div class="pick" id="pick" hidden></div>
+    <p class="note"><span class="tag e">E</span> Epic <span class="tag e">EL</span> Epic Local <span class="tag i">I</span> Ikon <span class="tag i">IB</span> Ikon Base · ° last season's price · ≈ online "from" price, the window is higher</p>
+  </section>
+
+  <section class="card" id="result" aria-live="polite">
+    <div class="lbl">Your season</div>
+    <div class="res" id="res"></div>
+    <div class="actions"><button class="btn" id="share" type="button">Copy link to this result</button><button class="btn" id="reset" type="button">Reset all</button></div>
+  </section>
+
+  <section class="card app">
+    <img src="icon.svg" alt="">
+    <p><b>Skiworth</b> will count your days automatically, value each at the real price and warn you before limited days run out. <a href="./#interest">Tell us if you want it</a></p>
+  </section>
+
+  <section>
+    <h2>Questions</h2>
+    <details><summary>Where do the prices come from?</summary><p>Adult one-day lift ticket prices from OnTheSnow resort pages, weekday and weekend sample dates for 2026/27, checked November 2026. Where only last season's price was published it is marked °; where only an online "from" price exists it is marked ≈ and the window price is usually higher. Resorts change prices by date and demand, so treat the result as an estimate.</p></details>
+    <details><summary>What does each pass cover?</summary><p>Epic Pass ($1,145): unlimited at Vail, Beaver Creek, Breckenridge, Park City, Heavenly and the other Epic resorts, 7 days at Telluride. Epic Local ($849): unlimited at Breckenridge, Keystone, Crested Butte and the regional resorts, holiday restrictions at Park City, Heavenly, Northstar, Kirkwood and Stowe, 10 days in total at Vail and Beaver Creek. Ikon Pass ($1,449): unlimited at 18 destinations such as Winter Park, Copper, Steamboat, Mammoth and Palisades Tahoe, 7 days at the others. Ikon Base ($1,099): unlimited at 15, 5 days at most others, not valid at Jackson Hole, Alta, Snowbasin or Sun Valley; blackout dates Dec 26–30, Jan 16–17 and Feb 13–14. Sources: OnTheSnow buyer's guides and ikonpass.com, November 2026.</p></details>
+    <details><summary>How are days beyond a limit counted?</summary><p>Days beyond a pass limit, at resorts the pass does not cover, or on blackout dates, are counted at the full window price. Pass holders often get discounted tickets on those days, so your real cost may be a little lower.</p></details>
+  </section>
+
+  <footer><p>Skiworth is independent and not affiliated with Vail Resorts, Alterra Mountain Company or any resort. Epic Pass and Ikon Pass are trademarks of their owners. Estimates only, prices as of November 2026. CalmAppsLab · <a href="./">Skiworth</a> · <a href="../">calmappslab.com</a></p></footer>
+</main>
+
+<div class="bar"><div class="in" id="barIn"></div></div>
+
+<script>
+// [name, state, weekday price, weekend price, quality ok|old|from, coverage {epic, local, ikon, base}: 'u' unlimited, 'h' holiday blackouts, number = day limit, 'v10' 10 days shared Vail + Beaver Creek]
+const R = [["Afton Alps", "MN", 88.0, 110.0, "ok", {"epic": "u", "local": "u"}], ["Alpine Valley", "OH", 69.0, 99.0, "ok", {"epic": "u", "local": "u"}], ["Alta", "UT", 224.0, 224.0, "ok", {"ikon": 7}], ["Alyeska", "AK", 119.0, 149.0, "ok", {"ikon": 7, "base": 5}], ["Arapahoe Basin", "CO", 119.0, 140.0, "old", {"ikon": "u", "base": "u"}], ["Aspen Snowmass", "CO", 279.0, 309.0, "ok", {"ikon": 7, "base": 5}], ["Attitash", "NH", 154.0, 154.0, "old", {"epic": "u", "local": "u"}], ["Beaver Creek", "CO", 334.0, 370.0, "ok", {"epic": "u", "local": "v10"}], ["Big Boulder", "PA", 121.0, 121.0, "old", {"epic": "u", "local": "u"}], ["Big Sky", "MT", 84.0, 84.0, "from", {"ikon": 7, "base": 5}], ["Blue Mountain PA", "PA", 55.0, 55.0, "ok", {"ikon": 7, "base": 5}], ["Boston Mills", "OH", 94.0, 94.0, "old", {"epic": "u", "local": "u"}], ["Boyne Mountain", "MI", 47.0, 47.0, "ok", {"ikon": 7, "base": 5}], ["Brandywine", "OH", 94.0, 94.0, "old", {"epic": "u", "local": "u"}], ["Breckenridge", "CO", 241.0, 293.0, "ok", {"epic": "u", "local": "u"}], ["Brighton", "UT", 159.0, 195.0, "ok", {"ikon": 7, "base": 5}], ["Camelback", "PA", 89.0, 89.0, "old", {"ikon": 7, "base": 5}], ["Copper Mountain", "CO", 279.0, 279.0, "ok", {"ikon": "u", "base": "u"}], ["Crested Butte", "CO", 145.0, 145.0, "ok", {"epic": "u", "local": "u"}], ["Crotched Mountain", "NH", 88.0, 122.0, "old", {"epic": "u", "local": "u"}], ["Crystal Mountain", "WA", 149.0, 199.0, "old", {"ikon": "u", "base": 5}], ["Deer Valley", "UT", 259.0, 309.0, "ok", {"ikon": 7, "base": 5}], ["Eldora", "CO", 199.0, 199.0, "ok", {"ikon": "u", "base": "u"}], ["Granite Peak", "WI", 69.0, 89.0, "ok", {"ikon": 7, "base": 5}], ["Heavenly", "CA", 219.0, 284.0, "ok", {"epic": "u", "local": "h"}], ["Hidden Valley MO", "MO", 83.0, 117.0, "old", {"epic": "u", "local": "u"}], ["Hidden Valley PA", "PA", 83.0, 117.0, "old", {"epic": "u", "local": "u"}], ["Hunter Mountain", "NY", 128.0, 179.0, "old", {"epic": "u", "local": "u"}], ["Jack Frost", "PA", 109.0, 109.0, "old", {"epic": "u", "local": "u"}], ["Jackson Hole", "WY", 288.15, 339.0, "ok", {"ikon": 7}], ["June Mountain", "CA", 139.0, 139.0, "old", {"ikon": "u", "base": "u"}], ["Keystone", "CO", 214.0, 250.0, "ok", {"epic": "u", "local": "u"}], ["Killington-Pico", "VT", 225.0, 225.0, "ok", {"ikon": 7, "base": 5}], ["Kirkwood", "CA", 170.0, 170.0, "ok", {"epic": "u", "local": "h"}], ["Liberty Mountain", "PA", 125.0, 123.0, "old", {"epic": "u", "local": "u"}], ["Loon Mountain", "NH", 159.0, 159.0, "ok", {"ikon": 7, "base": 5}], ["Lutsen Mountains", "MN", 89.0, 89.0, "ok", {"ikon": 7, "base": 5}], ["Mad River Mountain", "OH", 85.0, 85.0, "old", {"epic": "u", "local": "u"}], ["Mammoth Mountain", "CA", 209.0, 219.0, "ok", {"ikon": "u", "base": "u"}], ["Mount Snow", "VT", 157.0, 176.0, "ok", {"epic": "u", "local": "u"}], ["Mount Sunapee", "NH", 95.0, 123.0, "old", {"epic": "u", "local": "u"}], ["Mt. Bachelor", "OR", 164.0, 194.0, "ok", {"ikon": 7, "base": 5}], ["Mt. Brighton", "MI", 85.0, 85.0, "old", {"epic": "u", "local": "u"}], ["Northstar", "CA", 219.0, 242.0, "ok", {"epic": "u", "local": "h"}], ["Okemo", "VT", 169.0, 231.0, "ok", {"epic": "u", "local": "u"}], ["Palisades Tahoe", "CA", 289.0, 289.0, "ok", {"ikon": "u", "base": "u"}], ["Paoli Peaks", "IN", 61.0, 94.0, "old", {"epic": "u", "local": "u"}], ["Park City", "UT", 299.0, 321.0, "ok", {"epic": "u", "local": "h"}], ["Roundtop", "PA", 115.0, 115.0, "old", {"epic": "u", "local": "u"}], ["Schweitzer", "ID", 108.0, 138.0, "ok", {"ikon": "u", "base": 5}], ["Seven Springs", "PA", 110.0, 139.0, "ok", {"epic": "u", "local": "u"}], ["Sierra-at-Tahoe", "CA", 150.0, 150.0, "old", {"ikon": 7, "base": 5}], ["Snow Creek", "MO", 55.0, 55.0, "old", {"epic": "u", "local": "u"}], ["Snowbasin", "UT", 236.0, 236.0, "ok", {"ikon": 7}], ["Snowbird", "UT", 205.0, 225.0, "ok", {"ikon": 7, "base": 5}], ["Snowriver", "MI", 69.0, 69.0, "ok", {"ikon": 7, "base": 5}], ["Snowshoe", "WV", 100.0, 159.0, "ok", {"ikon": "u", "base": "u"}], ["Solitude", "UT", 169.0, 199.0, "ok", {"ikon": "u", "base": "u"}], ["Steamboat", "CO", 304.0, 304.0, "ok", {"ikon": "u", "base": 5}], ["Stevens Pass", "WA", 109.0, 149.0, "old", {"epic": "u", "local": "u"}], ["Stowe", "VT", 220.0, 220.0, "ok", {"epic": "u", "local": "h"}], ["Stratton", "VT", 201.0, 229.0, "ok", {"ikon": "u", "base": "u"}], ["Sugarbush", "VT", 133.0, 133.0, "ok", {"ikon": "u", "base": "u"}], ["Sugarloaf", "ME", 65.0, 85.0, "old", {"ikon": 7, "base": 5}], ["Sun Valley", "ID", 275.0, 275.0, "ok", {"ikon": 7}], ["Sunday River", "ME", 81.0, 117.0, "old", {"ikon": 7, "base": 5}], ["Taos", "NM", 135.0, 185.0, "ok", {"ikon": 7, "base": 5}], ["Telluride", "CO", 205.0, 285.0, "ok", {"epic": 7}], ["The Highlands", "MI", 47.0, 47.0, "ok", {"ikon": 7, "base": 5}], ["The Summit at Snoqualmie", "WA", 125.0, 135.0, "ok", {"ikon": 7, "base": 5}], ["Vail", "CO", 319.0, 353.0, "ok", {"epic": "u", "local": "v10"}], ["Whitetail", "PA", 125.0, 125.0, "old", {"epic": "u", "local": "u"}], ["Wildcat", "NH", 109.0, 139.0, "old", {"epic": "u", "local": "u"}], ["Wilmot", "WI", 79.0, 109.0, "old", {"epic": "u", "local": "u"}], ["Winter Park", "CO", 267.0, 267.0, "ok", {"ikon": "u", "base": "u"}]];
+const PASSES = [
+  { id: 'epic', n: 'Epic Pass', p: 1145, t: 'E', c: 'e' }, { id: 'local', n: 'Epic Local', p: 849, t: 'EL', c: 'e' },
+  { id: 'ikon', n: 'Ikon Pass', p: 1449, t: 'I', c: 'i' }, { id: 'base', n: 'Ikon Base', p: 1099, t: 'IB', c: 'i' },
+];
+const $ = id => document.getElementById(id);
+const usd = x => '$' + Math.round(x).toLocaleString('en-US');
+const S = { pass: 'epic', paid: 0, days: [] };
+try { Object.assign(S, JSON.parse(localStorage.getItem('sw-calc') || '{}')); } catch (e) {}
+// a shared link: ?p=epic&paid=999&d=resortIndex*weekdays*weekend~...
+try {
+  const u = new URLSearchParams(location.search);
+  if (PASSES.some(p => p.id === u.get('p'))) S.pass = u.get('p');
+  if (u.get('paid')) S.paid = Math.max(0, +u.get('paid') || 0);
+  if (u.get('d')) S.days = u.get('d').split('~').map(x => { const [n, wd, we] = x.split('*'); return { n: decodeURIComponent(n), wd: +wd || 0, we: +we || 0 }; }).filter(x => R.some(r => r[0] === x.n)).slice(0, 20);
+} catch (e) {}
+const save = () => { try { localStorage.setItem('sw-calc', JSON.stringify(S)); } catch (e) {} };
+const res = n => R.find(r => r[0] === n);
+const mark = r => r[4] === 'old' ? '°' : r[4] === 'from' ? '≈' : '';
+const tags = r => PASSES.filter(p => r[5][p.id]).map(p => `<span class="tag ${p.c}">${p.t}${typeof r[5][p.id] === 'number' ? ' ' + r[5][p.id] + 'd' : r[5][p.id] === 'v10' ? ' 10d' : ''}</span>`).join('');
+
+function chips() {
+  $('pass').innerHTML = PASSES.map(p => `<button type="button" data-p="${p.id}" aria-pressed="${p.id === S.pass}">${p.n} ${usd(p.p)}</button>`).join('');
+  $('pass').querySelectorAll('button').forEach(b => b.onclick = () => { S.pass = b.dataset.p; save(); chips(); result(); });
+  $('paid').value = S.paid || '';
+}
+
+function sel() {
+  $('sel').innerHTML = S.days.map((d, i) => { const r = res(d.n); return `<div class="srow"><div><div class="nm">${r[0]}, ${r[1]}</div><div class="meta">${tags(r)} weekday ${usd(r[2])}${mark(r)} · weekend ${usd(r[3])}${mark(r)}</div></div>
+    <button class="btn" type="button" data-del="${i}" aria-label="Remove">×</button>
+    <div class="ds"><span class="step">Weekdays <button type="button" data-i="${i}" data-k="wd" data-d="-1">−</button><b>${d.wd}</b><button type="button" data-i="${i}" data-k="wd" data-d="1">+</button></span>
+    <span class="step">Weekend & holidays <button type="button" data-i="${i}" data-k="we" data-d="-1">−</button><b>${d.we}</b><button type="button" data-i="${i}" data-k="we" data-d="1">+</button></span></div></div>`; }).join('') || '<p class="note">No resorts yet. Search below to add the first one.</p>';
+  $('sel').querySelectorAll('[data-d]').forEach(b => b.onclick = () => { const d = S.days[+b.dataset.i]; d[b.dataset.k] = Math.max(0, Math.min(150, d[b.dataset.k] + +b.dataset.d)); save(); sel(); result(); });
+  $('sel').querySelectorAll('[data-del]').forEach(b => b.onclick = () => { S.days.splice(+b.dataset.del, 1); save(); sel(); result(); });
+}
+
+function pick() {
+  const q = $('q').value.trim().toLowerCase();
+  if (!q) { $('pick').hidden = true; return; }
+  const list = R.filter(r => (r[0] + ' ' + r[1]).toLowerCase().includes(q) && !S.days.some(d => d.n === r[0])).slice(0, 12);
+  $('pick').hidden = false;
+  $('pick').innerHTML = list.map(r => `<button type="button" data-n="${r[0]}"><span><span class="nm">${r[0]}, ${r[1]}</span><br><span class="meta">${tags(r)} from ${usd(r[2])}${mark(r)}</span></span><span>+</span></button>`).join('') || '<p class="note" style="padding:10px 18px">No resort found. The list has 75 Epic and Ikon resorts in the US.</p>';
+  $('pick').querySelectorAll('button').forEach(b => b.onclick = () => { S.days.push({ n: b.dataset.n, wd: 2, we: 2 }); $('q').value = ''; $('pick').hidden = true; save(); sel(); result(); });
+}
+
+// covered value of a pass: weekend days are the pricier ones, so a day limit is used on them first
+function evalPass(p) {
+  let covered = 0, coveredDays = 0, extra = 0, extraDays = 0, vail = 10, top = null;
+  const price = p.id === S.pass && S.paid ? S.paid : p.p;
+  for (const d of S.days) {
+    const r = res(d.n), c = r[5][p.id];
+    const days = [...Array(d.we).fill(r[3]), ...Array(d.wd).fill(r[2])];
+    let limit = c === 'u' || c === 'h' ? Infinity : typeof c === 'number' ? c : c === 'v10' ? null : 0;
+    days.forEach(v => {
+      let ok = false;
+      if (limit === null) { if (vail > 0) { vail--; ok = true; } } else if (limit > 0) { limit--; ok = true; }
+      if (ok) { covered += v; coveredDays++; } else { extra += v; extraDays++; }
+    });
+    if ((c === 'u' || c === 'h') && (!top || r[3] > top[3])) top = r;
+  }
+  return { p, price, covered, coveredDays, extra, extraDays, total: price + extra, top };
+}
+
+function result() {
+  const all = S.days.reduce((s, d) => { const r = res(d.n); return s + d.wd * r[2] + d.we * r[3]; }, 0);
+  const nDays = S.days.reduce((s, d) => s + d.wd + d.we, 0);
+  if (!nDays) { $('res').innerHTML = '<p class="hint">Add at least one resort with ski days to see the result.</p>'; $('barIn').innerHTML = '<div class="zero">Add your ski days, the result appears here.</div>'; return; }
+  const ev = PASSES.map(evalPass), mine = ev.find(e => e.p.id === S.pass);
+  const rows = [...ev.map(e => ({ k: e.p.id, n: e.p.n, total: e.total, e })), { k: 'none', n: 'No pass, window tickets', total: all }];
+  const best = rows.reduce((a, b) => b.total < a.total ? b : a);
+  const saved = mine.covered - mine.price;
+  let verdict = saved >= 0 ? `Your ${mine.p.n} pays off: ${usd(saved)} saved.` : `Your ${mine.p.n} is ${usd(-saved)} short of paying off.`;
+  let hint = `${mine.coveredDays} of your ${nDays} days are covered, worth ${usd(mine.covered)} at window prices. Cost per covered day: ${mine.coveredDays ? usd(mine.price / mine.coveredDays) : '–'}.`;
+  if (mine.extraDays) hint += ` ${mine.extraDays} day${mine.extraDays > 1 ? 's are' : ' is'} not covered (limit, blackout or other resort): ${usd(mine.extra)} in tickets.`;
+  if (saved < 0 && mine.top) hint += ` About ${Math.ceil(-saved / mine.top[3])} more weekend days at ${mine.top[0]} would make it pay off.`;
+  if (best.k !== S.pass) hint += ` For these days the cheapest choice would be ${best.n} (${usd(best.total)} for the season).`;
+  $('res').innerHTML = `<p class="verdict">${verdict}</p><p class="hint">${hint}</p>
+    <div class="tw"><table class="cmp"><tr><th>Option</th><th>Pass</th><th>Extra tickets</th><th>Season total</th></tr>` +
+    rows.map(r => `<tr class="${r.k === best.k ? 'best' : ''} ${r.k === S.pass ? 'mine' : ''}"><td>${r.n}</td><td>${r.e ? usd(r.e.price) : '–'}</td><td>${r.e ? usd(r.e.extra) : usd(all)}</td><td>${usd(r.total)}</td></tr>`).join('') + '</table></div>';
+  const cell = (n, v, w) => `<div><div class="k">${n}</div><div class="v${w ? ' win' : ''}">${v}</div></div>`;
+  $('barIn').innerHTML = cell('Tickets value', usd(mine.covered), false) + cell(saved >= 0 ? 'Saved' : 'Still short', usd(Math.abs(saved)), saved >= 0) + cell('Per day', mine.coveredDays ? usd(mine.price / mine.coveredDays) : '–', false) + '<a href="#result">Details</a>';
+}
+
+$('q').oninput = pick;
+$('paid').oninput = () => { S.paid = Math.max(0, +$('paid').value || 0); save(); result(); };
+$('reset').onclick = () => { S.days = []; S.paid = 0; save(); chips(); sel(); result(); };
+$('share').onclick = async () => {
+  const d = S.days.map(x => [encodeURIComponent(x.n), x.wd, x.we].join('*')).join('~');
+  const url = location.origin + location.pathname + `?p=${S.pass}` + (S.paid ? `&paid=${S.paid}` : '') + (d ? '&d=' + d : '');
+  try { await navigator.clipboard.writeText(url); $('share').textContent = 'Link copied'; } catch (e) { $('share').textContent = url; }
+  setTimeout(() => { $('share').textContent = 'Copy link to this result'; }, 2500);
+};
+chips(); sel(); result();
+</script>
+</body>
+</html>
