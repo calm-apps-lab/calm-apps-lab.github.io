@@ -17,14 +17,16 @@
   .shots { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 4px -20px 8px; padding: 4px 20px 14px; scrollbar-width: thin; }
   .shots img { flex: none; height: min(440px, 72vh); width: auto; aspect-ratio: 9 / 16; border-radius: 18px; scroll-snap-align: start; box-shadow: 0 2px 10px rgb(0 0 0 / .14); }
 </style>
+<link rel="stylesheet" href="../app.css">
 </head>
 <body>
 <main>
-  <h1>Spades Reunion</h1>
-  <p style="color:var(--muted);margin:0">Support</p>
-  <hr>
-  <p><a class="store" href="https://apps.apple.com/app/id6831807188">Get it on the App Store</a></p>
-  <p>Classic four-player Spades at a 3D table: a career across eight rooms, a weekly Club Cup and a Deal of the Day. The game plays fully offline.</p>
+  <header class="top">
+    <img src="icon.webp" alt="">
+    <div><h1>Spades Reunion</h1><p>Classic Spades at a 3D table</p></div>
+  </header>
+  <div class="get"><a class="badge" href="https://apps.apple.com/app/id6831807188"><small>Download on the</small><b>App Store</b></a><span class="badge soon"><small>Coming soon to</small><b>Google Play</b></span></div>
+  <p class="lead">Classic four-player Spades at a 3D table: a career across eight rooms, a weekly Club Cup and a Deal of the Day. The game plays fully offline.</p>
 
   <div class="shots" role="region" aria-label="Screenshots" tabindex="0">
     <img src="shots/1.jpg" width="540" height="960" alt="Classic Spades at a 3D table">
