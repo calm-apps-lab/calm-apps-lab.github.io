@@ -8,132 +8,126 @@
 <link rel="icon" href="logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="fonts/home.css">
 <style>
-  :root {
-    color-scheme: light dark;
-    --bg: #f8f3e8; --card: #fffbf2; --ink: #1b1f3b; --muted: #615e72; --line: #e6dcc7; --gold: #c98a34;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg: #11152e; --card: #1a1f40; --ink: #efeadc; --muted: #a9a6c2; --line: #2c3263; --gold: #f2c27a; }
-  }
+  :root { color-scheme: light dark; --bg: #f8f3e8; --card: #fffbf2; --ink: #1b1f3b; --muted: #615e72; --line: #e6dcc7; --gold: #c98a34; --night: #161a3a; --night-ink: #efeadc; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #11152e; --card: #1a1f40; --ink: #efeadc; --muted: #a9a6c2; --line: #2c3263; --gold: #f2c27a; --night: #0b0e24; } }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 "Atkinson Hyperlegible", system-ui, sans-serif; }
-  main { max-width: 760px; margin: 0 auto; padding: 56px 20px 64px; display: grid; gap: 40px; }
-  header { display: flex; align-items: center; gap: 18px; }
-  header img { width: 72px; height: 72px; flex: none; }
+  .wrap { max-width: 760px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+  main { padding-block: 8px 64px; display: grid; gap: 34px; }
+  .brand { display: flex; align-items: center; gap: 18px; position: relative; z-index: 1; }
+  .brand img { width: 72px; height: 72px; flex: none; }
   h1 { font: 600 38px/1.1 Fraunces, Georgia, serif; margin: 0; letter-spacing: -.01em; }
   .tag { margin: 4px 0 0; color: var(--muted); }
-  .lead { margin: 0; font-size: 19px; max-width: 58ch; }
-  .apps { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
-  .app { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 22px; display: grid; gap: 12px; align-content: start; }
-  .app .top { display: flex; align-items: center; gap: 14px; }
-  .app img { width: 64px; height: 64px; border-radius: 15px; flex: none; }
-  h2 { font: 600 23px/1.2 Fraunces, Georgia, serif; margin: 0; }
+  .lead { margin: 0; font-size: 19px; max-width: 58ch; position: relative; z-index: 1; }
+  .sky { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .sky i { position: absolute; border-radius: 50%; background: var(--gold); opacity: .15; animation: tw 5s ease-in-out infinite; box-shadow: 0 0 6px var(--gold); }
+  @keyframes tw { 0%, 100% { opacity: .12; transform: scale(.8); } 50% { opacity: .9; transform: scale(1.15); } }
+  @media (prefers-reduced-motion: reduce) { .sky i { animation: none; opacity: .5; } }
+  .group { display: grid; gap: 14px; }
+  .group h2 { font: 600 24px/1.2 Fraunces, Georgia, serif; margin: 0; }
+  .group .gsub { margin: -10px 0 0; color: var(--muted); font-size: 15px; }
+  .apps { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .app { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 20px; display: grid; gap: 12px; align-content: start; }
+  .app .top { display: flex; align-items: center; gap: 14px; color: inherit; text-decoration: none; }
+  .app img { width: 60px; height: 60px; border-radius: 14px; flex: none; }
+  h3 { font: 600 22px/1.2 Fraunces, Georgia, serif; margin: 0; }
   .for { margin: 2px 0 0; color: var(--muted); font-size: 15px; }
   .app p { margin: 0; }
-  .links { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-weight: 700; }
-  .store { background: var(--ink); color: var(--bg); text-decoration: none; padding: 7px 16px; border-radius: 999px; }
-  .app .top { display: flex; align-items: center; gap: 14px; color: inherit; text-decoration: none; }
-  .app .top:hover h2 { text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 3px; }
-  .acts { display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .off, .soon { font-size: 13px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 1px 10px; }
+  .soon { border-style: dashed; }
+  .acts { display: flex; flex-wrap: wrap; gap: 10px; }
   .badge { display: inline-flex; flex-direction: column; justify-content: center; padding: 5px 16px; border-radius: 11px; background: var(--ink); color: var(--bg); text-decoration: none; line-height: 1.15; }
   .badge small { font-size: 11px; opacity: .85; } .badge b { font-size: 17px; }
   .trybtn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 11px; border: 2px solid var(--gold); color: var(--ink); text-decoration: none; font-weight: 700; }
   .trybtn svg { width: 22px; height: 22px; color: var(--gold); }
-  .trybtn:hover { background: color-mix(in srgb, var(--gold) 14%, transparent); }
-  .more { font-size: 14px; color: var(--muted); }
-  .more a { color: var(--muted); }
-  .off { justify-self: start; font-size: 14px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 1px 10px; }
-  h3 { font: 600 19px/1.2 Fraunces, Georgia, serif; margin: 8px 0 -22px; color: var(--muted); }
-  a { color: inherit; text-decoration-color: var(--gold); text-underline-offset: 3px; }
+  .more { font-size: 14px; color: var(--muted); } .more a { color: var(--muted); text-decoration-color: var(--gold); text-underline-offset: 3px; }
   .promise { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 0; padding: 0; list-style: none; color: var(--muted); }
   .promise li::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); margin-right: 8px; vertical-align: middle; }
   footer { border-top: 1px solid var(--line); padding-top: 20px; color: var(--muted); font-size: 15px; }
+
+  .hero-band { background: radial-gradient(120% 140% at 20% 0%, #2a2f66 0%, var(--night) 60%); color: var(--night-ink); }
+  .hero { position: relative; padding-block: 52px 44px; display: grid; gap: 20px; }
+  .hero .tag, .hero .lead { color: #cfc9e6; }
+  .sky i { background: #f2c27a; box-shadow: 0 0 7px #f2c27a; }
+  main { padding-top: 34px; }
+
+  .trybtn svg { flex: none; }
+  a { color: inherit; text-decoration-color: var(--gold); text-underline-offset: 3px; }
 </style>
 </head>
 <body>
-<main>
-  <header>
-    <img src="logo.svg" alt="">
-    <div>
-      <h1>CalmAppsLab</h1>
-      <p class="tag">Small, quiet apps</p>
-    </div>
-  </header>
-
+<div class="hero-band"><div class="wrap"><div class="hero"><div class="sky" aria-hidden="true"><i style="left:6%;top:22%;width:3.0px;height:3.0px;animation-delay:0s;animation-duration:4.0s"></i><i style="left:14%;top:70%;width:2.4px;height:2.4px;animation-delay:1.8s;animation-duration:5.3s"></i><i style="left:24%;top:38%;width:2.2px;height:2.2px;animation-delay:3.1s;animation-duration:6.6s"></i><i style="left:31%;top:86%;width:2.8px;height:2.8px;animation-delay:0.9s;animation-duration:7.9s"></i><i style="left:44%;top:14%;width:2.2px;height:2.2px;animation-delay:2.4s;animation-duration:4.0s"></i><i style="left:52%;top:60%;width:2.6px;height:2.6px;animation-delay:4.2s;animation-duration:5.3s"></i><i style="left:63%;top:30%;width:2.2px;height:2.2px;animation-delay:1.2s;animation-duration:6.6s"></i><i style="left:71%;top:78%;width:3.0px;height:3.0px;animation-delay:3.6s;animation-duration:7.9s"></i><i style="left:80%;top:18%;width:2.4px;height:2.4px;animation-delay:0.4s;animation-duration:4.0s"></i><i style="left:88%;top:52%;width:2.2px;height:2.2px;animation-delay:2.9s;animation-duration:5.3s"></i><i style="left:94%;top:84%;width:2.6px;height:2.6px;animation-delay:5.0s;animation-duration:6.6s"></i><i style="left:38%;top:8%;width:2.0px;height:2.0px;animation-delay:4.6s;animation-duration:7.9s"></i></div>
+  <div class="brand"><img src="logo.svg" alt=""><div><h1>CalmAppsLab</h1><p class="tag">Small, quiet apps</p></div></div>
   <p class="lead">We make simple apps that do one thing well and then get out of the way. They have no ads and no tracking, and what you enter stays on your phone.</p>
-
-  <section class="apps" aria-label="Available now">
-    <article class="app">
-      <a class="top" href="tw/">
-        <img src="tw/icon.svg" alt="">
-        <div><h2>Ticketwert</h2><p class="for">For skiers and hikers in Tirol</p></div>
-      </a>
-      <span class="off">Works offline</span>
-      <p>Shows how much your Tirol annual or season pass has paid back, one tap per ski day, pool or museum visit.</p>
-      <div class="acts"><a class="badge" href="https://apps.apple.com/app/id6835076160"><small>Download on the</small><b>App Store</b></a><a class="trybtn" href="tw/rechner.html?lang=en"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8 7h8M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01M8.5 15h.01M12 15h.01M15.5 15v2.5M8.5 18h.01M12 18h.01"/></svg>Pass calculator</a></div>
-      <p class="more"><a href="tw/">About the app</a> · <a href="tw/privacy.html">Privacy</a></p>
-    </article>
-    <article class="app">
-      <a class="top" href="sr/">
-        <img src="sr/icon.webp" alt="">
-        <div><h2>Spades Reunion</h2><p class="for">For card players</p></div>
-      </a>
-      <span class="off">Works offline</span>
-      <p>Classic four-player Spades at a 3D table: a career across eight rooms, a weekly Club Cup and a Deal of the Day.</p>
-      <div class="acts"><a class="badge" href="https://apps.apple.com/app/id6831807188"><small>Download on the</small><b>App Store</b></a></div>
-      <p class="more"><a href="sr/">About the app</a> · <a href="sr/privacy.html">Privacy</a></p>
-    </article>
-  </section>
-
-  <h3>Coming soon to the App Store and Google Play</h3>
-  <section class="apps" aria-label="Coming soon">
-    <article class="app">
-      <a class="top" href="pp/">
-        <img src="pp/icon.svg" alt="">
-        <div><h2>Sudoku Pause</h2><p class="for">For a calm break</p></div>
-      </a>
-      <span class="off">Works offline</span>
-      <p>Three calm puzzles a day: a warm-up, a picture to uncover and a Sudoku. Big numbers, no time pressure, hints that explain.</p>
-      <div class="acts"><a class="trybtn" href="pp/play/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M9.2 3.5v17M14.8 3.5v17M3.5 9.2h17M3.5 14.8h17"/></svg>Play online</a></div>
-      <p class="more"><a href="pp/">About the app</a> · <a href="pp/privacy.html">Privacy</a></p>
-    </article>
-    <article class="app">
-      <a class="top" href="dd/">
-        <img src="dd/icon.svg" alt="">
-        <div><h2>Dua Day</h2><p class="for">For children and their parents</p></div>
-      </a>
-      <span class="off">Works offline</span>
-      <p>Everyday duas as a little path through the day, from waking up to bedtime, with read-along words, stars and stickers.</p>
-      
-      <p class="more"><a href="dd/">About the app</a> · <a href="dd/privacy.html">Privacy</a></p>
-    </article>
-    <article class="app">
-      <a class="top" href="dn/">
-        <img src="dn/icon.svg" alt="">
-        <div><h2>Quran Nest</h2><p class="for">For children 4–8 and their parents</p></div>
-      </a>
-      <span class="off">Offline once the recitation is saved</span>
-      <p>Short surahs and a calm bedtime routine, with each word lighting up as it is recited and time to repeat every verse.</p>
-      
-      <p class="more"><a href="dn/">About the app</a> · <a href="dn/privacy.html">Privacy</a></p>
-    </article>
-    <article class="app">
-      <a class="top" href="gb/">
-        <img src="gb/icon.svg" alt="">
-        <div><h2>Gatebeam</h2><p class="for">For travellers and the people who pick them up</p></div>
-      </a>
-      
-      <p>Your flights and those of family and friends in one calm list: status, gate, baggage belt and where the aircraft is now.</p>
-      
-      <p class="more"><a href="gb/">About the app</a> · <a href="gb/privacy.html">Privacy</a></p>
-    </article>
-  </section>
-
-  <ul class="promise">
-    <li>No ads</li><li>No accounts</li><li>No data collected</li><li>Free</li>
-  </ul>
-
-  <footer>Contact: <a href="mailto:support@calmappslab.com">support@calmappslab.com</a></footer>
-</main>
+</div></div></div>
+<div class="wrap"><main>
+    <section class="group" aria-label="Everyday tools">
+      <h2>Everyday tools</h2><p class="gsub">Small helpers that save money and time</p>
+      <div class="apps">
+      <article class="app">
+        <a class="top" href="tw/"><img src="tw/icon.svg" alt=""><div><h3>Ticketwert</h3><p class="for">For skiers and hikers in Tirol</p></div></a>
+        <div class="chips"><span class="off">Works offline</span></div>
+        <p>Shows how much your Tirol annual or season pass has paid back, one tap per ski day, pool or museum visit.</p>
+        <div class="acts"><a class="badge" href="https://apps.apple.com/app/id6835076160"><small>Download on the</small><b>App Store</b></a><a class="trybtn" href="tw/rechner.html?lang=en"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8 7h8M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01M8.5 15h.01M12 15h.01M15.5 15v2.5M8.5 18h.01M12 18h.01"/></svg>Pass calculator</a></div>
+        <p class="more"><a href="tw/">About the app</a> · <a href="tw/privacy.html">Privacy</a></p>
+      </article>
+      <article class="app">
+        <a class="top" href="gb/"><img src="gb/icon.svg" alt=""><div><h3>Gatebeam</h3><p class="for">For travellers and the people who pick them up</p></div></a>
+        <div class="chips"><span class="soon">Coming soon</span></div>
+        <p>Your flights and those of family and friends in one calm list: status, gate, baggage belt and where the aircraft is now.</p>
+        
+        <p class="more"><a href="gb/">About the app</a> · <a href="gb/privacy.html">Privacy</a></p>
+      </article>
+      <article class="app">
+        <a class="top" href="fb/"><img src="fb/icon.svg" alt=""><div><h3>Kilometerwert</h3><p class="for">For people who drive their own car for work</p></div></a>
+        <div class="chips"><span class="soon">Coming soon</span></div>
+        <p>A mileage log that almost keeps itself: trips detected, business or private with one tap, the allowance worked out. In the works.</p>
+        <div class="acts"><a class="trybtn" href="fb/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg>Tell me when it is ready</a></div>
+        <p class="more"><a href="fb/">About the app</a></p>
+      </article>
+      </div>
+    </section>
+    <section class="group" aria-label="Puzzles & cards">
+      <h2>Puzzles & cards</h2><p class="gsub">A calm break, no ads</p>
+      <div class="apps">
+      <article class="app">
+        <a class="top" href="pp/"><img src="pp/icon.svg" alt=""><div><h3>Sudoku Pause</h3><p class="for">For a calm break</p></div></a>
+        <div class="chips"><span class="off">Works offline</span><span class="soon">Coming soon</span></div>
+        <p>Three calm puzzles a day: a warm-up, a picture to uncover and a Sudoku. Big numbers, no time pressure, hints that explain.</p>
+        <div class="acts"><a class="trybtn" href="pp/play/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M9.2 3.5v17M14.8 3.5v17M3.5 9.2h17M3.5 14.8h17"/></svg>Play online</a></div>
+        <p class="more"><a href="pp/">About the app</a> · <a href="pp/privacy.html">Privacy</a></p>
+      </article>
+      <article class="app">
+        <a class="top" href="sr/"><img src="sr/icon.webp" alt=""><div><h3>Spades Reunion</h3><p class="for">For card players</p></div></a>
+        <div class="chips"><span class="off">Works offline</span></div>
+        <p>Classic four-player Spades at a 3D table: a career across eight rooms, a weekly Club Cup and a Deal of the Day.</p>
+        <div class="acts"><a class="badge" href="https://apps.apple.com/app/id6831807188"><small>Download on the</small><b>App Store</b></a></div>
+        <p class="more"><a href="sr/">About the app</a> · <a href="sr/privacy.html">Privacy</a></p>
+      </article>
+      </div>
+    </section>
+    <section class="group" aria-label="Faith & family">
+      <h2>Faith & family</h2><p class="gsub">Gentle routines for children and parents</p>
+      <div class="apps">
+      <article class="app">
+        <a class="top" href="dd/"><img src="dd/icon.svg" alt=""><div><h3>Dua Day</h3><p class="for">For children and their parents</p></div></a>
+        <div class="chips"><span class="off">Works offline</span><span class="soon">Coming soon</span></div>
+        <p>Everyday duas as a little path through the day, from waking up to bedtime, with read-along words, stars and stickers.</p>
+        
+        <p class="more"><a href="dd/">About the app</a> · <a href="dd/privacy.html">Privacy</a></p>
+      </article>
+      <article class="app">
+        <a class="top" href="dn/"><img src="dn/icon.svg" alt=""><div><h3>Quran Nest</h3><p class="for">For children 4–8 and their parents</p></div></a>
+        <div class="chips"><span class="off">Offline once the recitation is saved</span><span class="soon">Coming soon</span></div>
+        <p>Short surahs and a calm bedtime routine, with each word lighting up as it is recited and time to repeat every verse.</p>
+        
+        <p class="more"><a href="dn/">About the app</a> · <a href="dn/privacy.html">Privacy</a></p>
+      </article>
+      </div>
+    </section>
+    <ul class="promise"><li>No ads</li><li>No accounts</li><li>No data collected</li><li>Free</li></ul>
+    <footer>Contact: <a href="mailto:support@calmappslab.com">support@calmappslab.com</a></footer>
+</main></div>
 </body>
 </html>
